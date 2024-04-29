@@ -73,9 +73,55 @@ jobs:
           name: release-artifacts-${{ matrix.boardpath }}-${{ matrix.firmware }}
           path: ./release/*.hex
 
-  release:
-    needs: [build_arythmatik]
+ build_mvmnt:
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+          module: ["MVMNT"]
+          firmware: ["MVMNT", "SyncLFO"]
+          board: ["arduino:avr:nano", "arduino:avr:nano:cpu=atmega328old", "lgt8fx:avr:328"]
+          include:
+            - board: arduino:avr:nano
+              boardpath: nano
+            - board: arduino:avr:nano:cpu=atmega328old
+              boardpath: nanoOldBootloader
+            - board: lgt8fx:avr:328
+              boardpath: lgt8f328p    
+  steps:
+  
+        - name: Checkout MVMNT repo
+        uses: actions/checkout@v4
+        with:
+           repository: modulove/A-RYTH-MATIK
+           
+      - name: Display repo
+        run: ls -R
 
+        - name: Setup Arduino CLI
+          uses: arduino/setup-arduino-cli@v1.1.1
+
+        - name: Install Arduino platform and libraries
+          run: |
+            arduino-cli core update-index
+            arduino-cli core install arduino:avr
+            arduino-cli core install lgt8fx:avr --additional-urls https://raw.githubusercontent.com/dbuezas/lgt8fx/master/package_lgt8fx_index.json
+            arduino-cli lib install FastLED
+
+        - name: Compile sketch and rename output file for release
+          working-directory: ./${{ matrix.module}}
+          run: |
+            arduino-cli compile -v -b ${{ matrix.board}} ${{ matrix.firmware}} -e --output-dir=./build/${{ matrix.boardpath }}
+            mkdir -p ./release && cp ./build/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.module}}_${{ matrix.firmware }}.${{ matrix.boardpath }}.hex
+
+        - name: Upload release artifacts
+          uses: actions/upload-artifact@v4
+          with:
+            name: release-artifacts-${{ matrix.boardpath}}-${{ matrix.firmware }}
+            path: ./${{ matrix.module}}/release/*.hex
+
+  release:
+    needs: [build_arythmatik, build_mvmnt]
+  
     runs-on: ubuntu-latest
     permissions:
         pages: write
