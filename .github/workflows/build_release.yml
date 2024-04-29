@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         module: ["A-RYTH-MATIK"]
-        firmware: ["ARYTHMATIK_Euclid", "ARYTHMATIK_Gate"]
+        firmware: ["ARYTHMATIK_Euclid", "ARYTHMATIK_Gate-seq"]
         board: ["arduino:avr:nano"]
         include:
           - board: arduino:avr:nano
