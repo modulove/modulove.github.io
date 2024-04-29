@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         module: ["A-RYTH-MATIK"]
-        firmware: ["BitGarden", "Uncertainty", "TimeBandit"]
+        firmware: ["Euclid", "Gate"]
         board: ["arduino:avr:nano", "arduino:avr:nano:cpu=atmega328old", "lgt8fx:avr:328"]
         include:
           - board: arduino:avr:nano
@@ -23,8 +23,9 @@ jobs:
     steps:
       - name: Clone repo
         uses: actions/checkout@master
-        with:
-          submodules: recursive
+          with:
+            repository: modulove/A-RYTH-MATIK
+            submodules: recursive
 
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1.1.1
@@ -36,7 +37,7 @@ jobs:
           arduino-cli core install lgt8fx:avr --additional-urls https://raw.githubusercontent.com/dbuezas/lgt8fx/master/package_lgt8fx_index.json
           arduino-cli lib install "Adafruit GFX Library"
           arduino-cli lib install "Adafruit SSD1306"
-          arduino-cli lib install SimpleRotary
+          arduino-cli lib install "FastGPIO"
       - name: Compile sketch and rename output file for release
         working-directory: ./${{ matrix.module}}
         run: |
@@ -58,7 +59,7 @@ jobs:
     strategy:
         matrix:
           module: ["SyncLFO"]
-          firmware: ["ADSR", "Baby4", "GenerativeSequencer", "MultiModeEnv", "Polyrhythm", "PerlinNoise", "TriggerDelay"]
+          firmware: ["MVMNT", "SyncLFO"]
           board: ["arduino:avr:nano", "arduino:avr:nano:cpu=atmega328old", "lgt8fx:avr:328"]
           include:
             - board: arduino:avr:nano
@@ -71,6 +72,8 @@ jobs:
     steps:
         - name: Clone repo
           uses: actions/checkout@master
+          with:
+            repository: modulove/MVMNT
 
         - name: Setup Arduino CLI
           uses: arduino/setup-arduino-cli@v1.1.1
