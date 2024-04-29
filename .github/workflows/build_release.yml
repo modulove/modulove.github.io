@@ -4,14 +4,8 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 permissions:
-  actions: read|write|none
-  checks: read|write|none
-  contents: read|write|none
-  deployments: read|write|none
-  id-token: read|write|none
-  packages: read|write|none
-  pages: read|write|none
-  statuses: read|write|none
+  id-token: write
+  pages: write
   
 jobs:
   build_arythmatik:
