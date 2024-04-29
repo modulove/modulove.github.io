@@ -61,7 +61,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: release-artifacts-${{ matrix.boardpath }}-${{ matrix.firmware }}
-          path: ./${{ matrix.module}}/release/*.hex
+          path: /release/*.hex
 
   release:
     needs: [build_arythmatik]
