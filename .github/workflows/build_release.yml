@@ -120,10 +120,10 @@ jobs:
           path: ./release/{{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
 
   release:
-  needs: [build_arythmatik, build_mvmnt]
+    needs: [build_arythmatik, build_mvmnt]
   
-  runs-on: ubuntu-latest
-  permissions:
+    runs-on: ubuntu-latest
+    permissions:
         pages: write
         id-token: write
         contents: write
