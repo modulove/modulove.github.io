@@ -58,10 +58,10 @@ jobs:
           cp ./build/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.module}}_${{ matrix.firmware }}.${{ matrix.boardpath }}.hex
 
       - name: Display builddir
-          run: ls -R ./build
+        run: ls -R ./build
 
       - name: Display releasedir
-          run: ls -R ./release
+        run: ls -R ./release
 
       - name: Upload release artifacts
         uses: actions/upload-artifact@v4
