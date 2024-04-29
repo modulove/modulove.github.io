@@ -46,14 +46,10 @@ jobs:
           arduino-cli lib install FastGPIO
           arduino-cli lib install SimpleRotary
       - name: Compile sketch and rename output file for release
-        working-directory: ${{ matrix.module}}
         run: |
-          ls -laR ${{ matrix.module}}
           mkdir -p ./build
           mkdir -p ./release
           arduino-cli compile -v -b ${{ matrix.board}} ${{ matrix.firmware}} -e --output-dir=./build/${{ matrix.boardpath }}
-          ls -laE ./build
-          ls -laE ./release*
           cp ./build/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.module}}_${{ matrix.firmware }}.${{ matrix.boardpath }}.hex
 
       - name: Upload release artifacts
