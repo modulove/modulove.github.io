@@ -42,7 +42,6 @@ jobs:
           arduino-cli lib install FastGPIO
           arduino-cli lib install SimpleRotary
       - name: Compile sketch and rename output file for release
-        working-directory: ${{ matrix.module}}
         
         run: |
           mkdir -p ./build/${{ matrix.boardpath }}
