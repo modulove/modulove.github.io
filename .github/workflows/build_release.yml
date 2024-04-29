@@ -7,6 +7,8 @@ permissions:
   id-token: write
   pages: write
   contents: write
+  deployments: write
+  packages: write
  
 jobs:
   build_arythmatik:
@@ -46,6 +48,7 @@ jobs:
       - name: Compile sketch and rename output file for release
         working-directory: ./${{ matrix.module}}
         run: |
+          ls -a ${{ matrix.module}}
           mkdir -p ./build
           mkdir -p ./release
           arduino-cli compile -v -b ${{ matrix.board}} ${{ matrix.firmware}} -e --output-dir=./build/${{ matrix.boardpath }}
