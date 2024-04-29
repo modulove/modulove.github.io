@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         module: ["A-RYTH-MATIK"]
-        firmware: ["ARYTHMATIK_Euclid"]
+        firmware: ["ARYTHMATIK_Euclid", "ARYTHMATIK_Gate"]
         board: ["arduino:avr:nano"]
         include:
           - board: arduino:avr:nano
@@ -92,7 +92,3 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: releases/**/*.hex
-
-  hugo_deploy:
-    needs: [release]
-    uses: ./.github/workflows/hugo.yml
