@@ -86,10 +86,11 @@ jobs:
             - board: arduino:avr:nano:cpu=atmega328old
               boardpath: nanoOldBootloader
             - board: lgt8fx:avr:328
-              boardpath: lgt8f328p    
-  steps:
-  
-        - name: Checkout MVMNT repo
+            boardpath: lgt8f328p
+
+    steps:
+
+      - name: Checkout A-RYTH-MATIK repo
         uses: actions/checkout@v4
         with:
            repository: modulove/MVMNT
@@ -97,32 +98,32 @@ jobs:
       - name: Display repo
         run: ls -R
 
-        - name: Setup Arduino CLI
-          uses: arduino/setup-arduino-cli@v1.1.1
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@v1.1.1
 
-        - name: Install Arduino platform and libraries
-          run: |
-            arduino-cli core update-index
-            arduino-cli core install arduino:avr
-            arduino-cli core install lgt8fx:avr --additional-urls https://raw.githubusercontent.com/dbuezas/lgt8fx/master/package_lgt8fx_index.json
-            arduino-cli lib install FastLED
+      - name: Install Arduino platform and libraries
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr
+          arduino-cli core install lgt8fx:avr --additional-urls https://raw.githubusercontent.com/dbuezas/lgt8fx/master/package_lgt8fx_index.json
+          arduino-cli lib install FastLED
 
-        - name: Compile sketch and rename output file for release
-          run: |
-            arduino-cli compile -v -b ${{ matrix.board}} Firmware/${{ matrix.firmware}}/${{ matrix.firmware}}.ino -e --output-dir=./build/${{ matrix.boardpath }}
-            mkdir -p ./release && cp ./build/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.hex
+      - name: Compile sketch and rename output file for release
+        run: |
+          arduino-cli compile -v -b ${{ matrix.board}} Firmware/${{ matrix.firmware}}/${{ matrix.firmware}}.ino -e --output-dir=./build/${{ matrix.boardpath }}
+          mkdir -p ./release && cp ./build/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.hex
 
-        - name: Upload release artifacts
-          uses: actions/upload-artifact@v4
-          with:
-            name: release-artifacts-${{ matrix.boardpath}}-${{ matrix.firmware }}
-            path: ./release/{{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-artifacts-${{ matrix.boardpath}}-${{ matrix.firmware }}
+          path: ./release/{{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
 
   release:
-    needs: [build_arythmatik, build_mvmnt]
+  needs: [build_arythmatik, build_mvmnt]
   
-    runs-on: ubuntu-latest
-    permissions:
+  runs-on: ubuntu-latest
+  permissions:
         pages: write
         id-token: write
         contents: write
