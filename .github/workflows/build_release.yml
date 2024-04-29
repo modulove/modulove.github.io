@@ -77,7 +77,7 @@ jobs:
             - board: arduino:avr:nano:cpu=atmega328old
               boardpath: nanoOldBootloader
             - board: lgt8fx:avr:328
-            boardpath: lgt8f328p
+              boardpath: lgt8f328p
 
     steps:
 
@@ -111,21 +111,20 @@ jobs:
           path: ./release/{{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
 
   release:
-    needs: [build_arythmatik, build_mvmnt]
+    needs: [build_arythmatik, build_synclfo]
+
     runs-on: ubuntu-latest
-    permissions:
-        pages: write
-        id-token: write
-        contents: write
-        
-  steps:
-    - name: Download release artifacts
-      uses: actions/download-artifact@v4
-      with:
+    steps:
+      - name: Download release artifacts
+        uses: actions/download-artifact@v4
+        with:
           path: releases/
 
-    - name: Create Release and attach files
-      uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
-      with:
-        files: releases/**/*.hex
+      - name: Display structure of downloaded files
+        run: ls -R
+
+      - name: Create Release and attach files
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: releases/**/*.hex
