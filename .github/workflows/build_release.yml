@@ -102,7 +102,7 @@ jobs:
       - name: Compile sketch and rename output file for release
         run: |
           arduino-cli compile -v -b ${{ matrix.board}} Firmware/${{ matrix.firmware}}/${{ matrix.firmware}}.ino -e --output-dir=./build/${{ matrix.boardpath }}
-          mkdir -p ./release && cp ./build/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.hex
+          mkdir -p ./release && cp ./build/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.hex
 
       - name: Upload release artifacts
         uses: actions/upload-artifact@v4
