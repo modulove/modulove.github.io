@@ -108,7 +108,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: release-artifacts-${{ matrix.boardpath}}-${{ matrix.firmware }}
-          path: ./release/{{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
+          path: ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
 
   release:
     needs: [build_arythmatik, build_synclfo]
