@@ -21,11 +21,12 @@ jobs:
             boardpath: lgt8f328p
 
     steps:
-      - name: Clone repo
-        uses: actions/checkout@master
+
+      - name: Checkout A-RYTH-MATIK repo
+        uses: actions/checkout@v4
           with:
             repository: modulove/A-RYTH-MATIK
-            submodules: recursive
+            path: modules
 
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1.1.1
