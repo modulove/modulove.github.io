@@ -48,7 +48,7 @@ jobs:
       - name: Compile sketch and rename output file for release
         working-directory: ${{ matrix.module}}
         run: |
-           ${{ matrix.module}}
+          ls -laR ${{ matrix.module}}
           mkdir -p ./build
           mkdir -p ./release
           arduino-cli compile -v -b ${{ matrix.board}} ${{ matrix.firmware}} -e --output-dir=./build/${{ matrix.boardpath }}
