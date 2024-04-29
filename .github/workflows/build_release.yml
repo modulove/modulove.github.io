@@ -15,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        module: ["A-RYTH-MATIK", "MVMNT"]
-        firmware: ["ARYTHMATIK_Euclid", "ARYTHMATIK_Gate"]
-        board: ["arduino:avr:nano", "arduino:avr:nano:cpu=atmega328old", "lgt8fx:avr:328"]
+        module: ["ARYTHMATIK"]
+        firmware: ["ARYTHMATIK_Euclid"]
+        board: ["arduino:avr:nano"]
         include:
           - board: arduino:avr:nano
             boardpath: nano
@@ -28,6 +28,7 @@ jobs:
         uses: actions/checkout@v4
         with:
            repository: modulove/A-RYTH-MATIK
+           path: ${{ matrix.module}}
 
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1.1.1
@@ -43,8 +44,9 @@ jobs:
           arduino-cli lib install SimpleRotary
       - name: Compile sketch and rename output file for release
         working-directory: ${{ matrix.module}}/Firmware/${{ matrix.firmware}}/
+        
         run: |
-          mkdir -p ./build
+          mkdir -p ./build/${{ matrix.boardpath }}
           mkdir -p ./release
           arduino-cli compile -v -b ${{ matrix.board}} ${{ matrix.firmware}} -e --output-dir=./build/${{ matrix.boardpath }}
           cp ./build/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.module}}_${{ matrix.firmware }}.${{ matrix.boardpath }}.hex
