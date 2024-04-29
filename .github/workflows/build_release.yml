@@ -44,9 +44,9 @@ jobs:
           arduino-cli lib install FastGPIO
           arduino-cli lib install SimpleRotary
       - name: Compile sketch and rename output file for release
-        pwd
         working-directory: ./${{ matrix.module}}
         run: |
+          pwd
           arduino-cli compile -v -b ${{ matrix.board}} ${{ matrix.firmware}} -e --output-dir=./build/${{ matrix.boardpath }}
           mkdir -p ./release
           cp ./build/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.module}}_${{ matrix.firmware }}.${{ matrix.boardpath }}.hex
