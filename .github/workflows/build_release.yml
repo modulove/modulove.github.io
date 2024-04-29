@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         module: ["A-RYTH-MATIK"]
-        firmware: ["Euclid", "Gate"]
+        firmware: ["ARYTHMATIK_Euclid", "ARYTHMATIK_Gate-seq"]
         board: ["arduino:avr:nano", "arduino:avr:nano:cpu=atmega328old", "lgt8fx:avr:328"]
         include:
           - board: arduino:avr:nano
@@ -24,9 +24,12 @@ jobs:
 
       - name: Checkout A-RYTH-MATIK repo
         uses: actions/checkout@v4
-          with:
-            repository: modulove/A-RYTH-MATIK
-            path: modules
+        with:
+           repository: modulove/A-RYTH-MATIK
+           sparse-checkout: |
+              ARYTHMATIK_Euclid.ino
+                  sparse-checkout-cone-mode: false
+           path: modules
 
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1.1.1
