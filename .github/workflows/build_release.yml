@@ -21,10 +21,6 @@ jobs:
         include:
           - board: arduino:avr:nano
             boardpath: nano
-          - board: arduino:avr:nano:cpu=atmega328old
-            boardpath: nanoOldBootloader
-          - board: lgt8fx:avr:328
-            boardpath: lgt8f328p
 
     steps:
 
@@ -46,7 +42,7 @@ jobs:
           arduino-cli lib install FastGPIO
           arduino-cli lib install SimpleRotary
       - name: Compile sketch and rename output file for release
-        working-directory: ./${{ matrix.module}}/Firmware/${{ matrix.firmware}}/
+        working-directory: ${{ matrix.module}}/Firmware/${{ matrix.firmware}}/
         run: |
           mkdir -p ./build
           mkdir -p ./release
