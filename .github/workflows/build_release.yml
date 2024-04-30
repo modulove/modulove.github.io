@@ -62,7 +62,7 @@ jobs:
           cp ./build/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.hex
           cp ./build_reversed/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.reversed.hex
           cp ./build_usd/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.usd.hex
-          cp ./build_reversed_usd/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}_USD.${{ matrix.boardpath }}.reversed.usd.hex
+          cp ./build_reversed_usd/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.reversed.usd.hex
           
       - name: Upload release artifacts
         uses: actions/upload-artifact@v4
