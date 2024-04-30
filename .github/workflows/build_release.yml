@@ -128,7 +128,7 @@ jobs:
     strategy:
         matrix:
             module: ["SCOPE"]
-            firmware: ["SCOPE"]
+            firmware: ["SCOPE", "SCOPE_DEBUG"]
             board: ["arduino:avr:nano", "arduino:avr:nano:cpu=atmega328old", "lgt8fx:avr:328"]
             include:
             - board: arduino:avr:nano
@@ -160,6 +160,7 @@ jobs:
           arduino-cli core install lgt8fx:avr --additional-urls https://raw.githubusercontent.com/dbuezas/lgt8fx/master/package_lgt8fx_index.json
           arduino-cli lib install "Adafruit GFX Library"
           arduino-cli lib install "Adafruit SSD1306"
+          arduino-cli lib install FastGPIO
           arduino-cli lib install fix_fft
           arduino-cli lib install SimpleRotary
           arduino-cli lib install Encoder
