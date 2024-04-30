@@ -90,7 +90,7 @@ jobs:
         run: ls -R
 
       - name: Setup Arduino CLI
-        uses: arduino/setup-arduino-cli@v1.1.1
+        uses: arduino/setup-arduino-cli@v1.8.6
 
       - name: Install Arduino platform and libraries
         run: |
