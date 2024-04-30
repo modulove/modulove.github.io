@@ -90,10 +90,11 @@ jobs:
         run: ls -R
 
       - name: Setup Arduino CLI
-        uses: arduino/setup-arduino-cli@v1.8.6
+        uses: arduino/setup-arduino-cli@v1.1.1
 
       - name: Install Arduino platform and libraries
         run: |
+          arduino-cli config init --dest-file ~/.arduino15/arduino-cli.yaml
           arduino-cli core update-index
           arduino-cli upgrade
           arduino-cli core install arduino:avr
