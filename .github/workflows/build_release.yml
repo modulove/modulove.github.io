@@ -98,15 +98,10 @@ jobs:
           arduino-cli core install arduino:avr
           arduino-cli core install lgt8fx:avr --additional-urls https://raw.githubusercontent.com/dbuezas/lgt8fx/master/package_lgt8fx_index.json
           arduino-cli lib install FastLED
-
-      - name: Set configuration
-        run: |
+          arduino-cli lib install FlexiTimer2
           arduino-cli config set library.enable_unsafe_install true 
-
-      - name: Install dependencies FlexiTimer2
-        run: |
           arduino-cli lib install --git-url https://github.com/PaulStoffregen/FlexiTimer2
-        
+     
       - name: Compile sketch and rename output file for release
         run: |
           arduino-cli compile -v -b ${{ matrix.board}} Firmware/${{ matrix.firmware}}/${{ matrix.firmware}}.ino -e --output-dir=./build/${{ matrix.boardpath }}
