@@ -69,7 +69,7 @@ jobs:
     strategy:
         matrix:
             module: ["MVMNT"]
-            firmware: ["MVMNT"]
+            firmware: ["MVMNT", "SyncLFO"]
             board: ["arduino:avr:nano", "arduino:avr:nano:cpu=atmega328old", "lgt8fx:avr:328"]
             include:
             - board: arduino:avr:nano
@@ -98,7 +98,6 @@ jobs:
           arduino-cli core install arduino:avr
           arduino-cli core install lgt8fx:avr --additional-urls https://raw.githubusercontent.com/dbuezas/lgt8fx/master/package_lgt8fx_index.json
           arduino-cli lib install FastLED
-          arduino-cli lib install FlexiTimer2
           arduino-cli config set library.enable_unsafe_install true 
           arduino-cli lib install --git-url https://github.com/PaulStoffregen/FlexiTimer2
      
