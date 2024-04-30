@@ -121,7 +121,7 @@ jobs:
           path: ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
 
 
-    build_scope:
+  build_scope:
     runs-on: ubuntu-latest
     strategy:
         matrix:
