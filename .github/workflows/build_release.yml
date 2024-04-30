@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         module: ["A-RYTH-MATIK"]
-        firmware: ["ARYTHMATIK_Euclid", "ARYTHMATIK_Gate-seq", "DEBUG"]
+        firmware: ["ARYTHMATIK_Euclid", "ARYTHMATIK_Gate-seq", "ARYTHMATIK_DEBUG"]
         board: ["arduino:avr:nano", "arduino:avr:nano:cpu=atmega328old", "lgt8fx:avr:328"]
         include:
           - board: arduino:avr:nano
