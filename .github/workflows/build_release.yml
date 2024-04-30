@@ -95,10 +95,17 @@ jobs:
       - name: Install Arduino platform and libraries
         run: |
           arduino-cli core update-index
+          arduino-cli upgrade
           arduino-cli core install arduino:avr
           arduino-cli core install lgt8fx:avr --additional-urls https://raw.githubusercontent.com/dbuezas/lgt8fx/master/package_lgt8fx_index.json
           arduino-cli lib install FastLED
-          arduino-cli config set library.enable_unsafe_install true 
+
+      - name: Enable external libs
+        run: | 
+          arduino-cli config set library.enable_unsafe_install true
+
+      - name: Get Libraries
+        run: |
           arduino-cli lib install --git-url https://github.com/PaulStoffregen/FlexiTimer2
      
       - name: Compile sketch and rename output file for release
