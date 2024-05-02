@@ -182,7 +182,7 @@ jobs:
           path: ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
           
   release:
-    needs: [build_arythmatik, build_arythmatik_beta, build_synclfo, build_scope]
+    needs: [build_arythmatik, build_synclfo, build_scope]
     
     runs-on: ubuntu-latest    
 steps:
