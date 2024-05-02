@@ -70,7 +70,7 @@ jobs:
           name: release-artifacts-${{ matrix.boardpath }}-${{ matrix.firmware }}
           path: ./release/*.hex
 
-    beat_arythmatik:
+    build_arythmatik_beta:
       runs-on: ubuntu-latest
       strategy:
       matrix:
@@ -240,7 +240,7 @@ build_scope:
           path: ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
           
 release:
-    needs: [build_arythmatik, beat_arythmatik, build_synclfo, build_scope]
+    needs: [build_arythmatik, build_arythmatik_beta, build_synclfo, build_scope]
     
     runs-on: ubuntu-latest    
     steps:
