@@ -85,9 +85,9 @@ jobs:
           - board: lgt8fx:avr:328
             boardpath: lgt8f328p
 
-    steps:
+steps:
 
-      - name: Checkout A-RYTH-MATIK Beta repo
+      - name: Checkout A-RYTH-MATIK beat repo
         uses: actions/checkout@v4
         with:
            repository: modulove/A-RYTH-MATIK
