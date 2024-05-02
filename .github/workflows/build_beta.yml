@@ -1,4 +1,4 @@
-name: Build and release beat
+name: Build and release more love
 on:
   push:
     tags:
@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         module: ["A-RYTH-MATIK"]
-        firmware: ["ARYTHMATIK_Euclid"]
+        firmware: ["ARYTHMATIK_Euclid", "ARYTHMATIK_Gate-seq", "ARYTHMATIK_DEBUG"]
         board: ["arduino:avr:nano", "arduino:avr:nano:cpu=atmega328old", "lgt8fx:avr:328"]
         include:
           - board: arduino:avr:nano
@@ -32,9 +32,10 @@ jobs:
         uses: actions/checkout@v4
         with:
            repository: modulove/A-RYTH-MATIK
-           fetch-depth: 0
-           ref: euclid-beat24-futurebeat
            
+      - name: Display repo
+        run: ls -R
+
       - name: Setup Arduino CLI
         uses: arduino/setup-arduino-cli@v1.1.1
 
@@ -58,10 +59,10 @@ jobs:
           arduino-cli compile -v -b ${{ matrix.board}} --build-property "build.extra_flags=-DENCODER_REVERSED" Firmware/${{ matrix.firmware}}/${{ matrix.firmware}}.ino -e --output-dir=./build_reversed/${{ matrix.boardpath }}
           arduino-cli compile -v -b ${{ matrix.board}} --build-property "build.extra_flags=-DPANEL_USD" Firmware/${{ matrix.firmware}}/${{ matrix.firmware}}.ino -e --output-dir=./build_usd/${{ matrix.boardpath }}
           arduino-cli compile -v -b ${{ matrix.board}} --build-property "build.extra_flags=-DENCODER_REVERSED -DPANEL_USD" Firmware/${{ matrix.firmware}}/${{ matrix.firmware}}.ino -e --output-dir=./build_reversed_usd/${{ matrix.boardpath }}
-          cp ./build/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.beat.hex
-          cp ./build_reversed/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.reversed.beat.hex
-          cp ./build_usd/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.usd.beat.hex
-          cp ./build_reversed_usd/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.reversed.usd.beat.hex
+          cp ./build/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.hex
+          cp ./build_reversed/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.reversed.hex
+          cp ./build_usd/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.usd.hex
+          cp ./build_reversed_usd/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.reversed.usd.hex
           
       - name: Upload release artifacts
         uses: actions/upload-artifact@v4
@@ -69,11 +70,122 @@ jobs:
           name: release-artifacts-${{ matrix.boardpath }}-${{ matrix.firmware }}
           path: ./release/*.hex
 
-         
-release:
-    needs: [build_arythmatik]
-    
-    runs-on: ubuntu-latest    
+  build_synclfo:
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+            module: ["MVMNT"]
+            firmware: ["MVMNT", "SyncLFO"]
+            board: ["arduino:avr:nano", "arduino:avr:nano:cpu=atmega328old", "lgt8fx:avr:328"]
+            include:
+            - board: arduino:avr:nano
+              boardpath: nano
+            - board: arduino:avr:nano:cpu=atmega328old
+              boardpath: nanoOldBootloader
+            - board: lgt8fx:avr:328
+              boardpath: lgt8f328p
+
+    steps:
+
+      - name: Checkout MVMNT repo
+        uses: actions/checkout@v4
+        with:
+           repository: modulove/MVMNT
+           
+      - name: Display repo
+        run: ls -R
+
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@v1.1.1
+
+      - name: Install Arduino platform and libraries
+        run: |
+          arduino-cli config init --dest-file ~/.arduino15/arduino-cli.yaml
+          arduino-cli core update-index
+          arduino-cli upgrade
+          arduino-cli core install arduino:avr
+          arduino-cli core install lgt8fx:avr --additional-urls https://raw.githubusercontent.com/dbuezas/lgt8fx/master/package_lgt8fx_index.json
+          arduino-cli lib install FastLED
+
+      - name: Enable external libs
+        run: | 
+          arduino-cli config set library.enable_unsafe_install true
+
+      - name: Get Libraries
+        run: |
+          arduino-cli lib install --git-url https://github.com/PaulStoffregen/FlexiTimer2
+     
+      - name: Compile sketch and rename output file for release
+        run: |
+          arduino-cli compile -v -b ${{ matrix.board}} Firmware/${{ matrix.firmware}}/${{ matrix.firmware}}.ino -e --output-dir=./build/${{ matrix.boardpath }}
+          mkdir -p ./release && cp ./build/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.hex
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-artifacts-${{ matrix.boardpath}}-${{ matrix.firmware }}
+          path: ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
+
+
+  build_scope:
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+            module: ["SCOPE"]
+            firmware: ["SCOPE", "SCOPE_DEBUG"]
+            board: ["arduino:avr:nano", "arduino:avr:nano:cpu=atmega328old", "lgt8fx:avr:328"]
+            include:
+            - board: arduino:avr:nano
+              boardpath: nano
+            - board: arduino:avr:nano:cpu=atmega328old
+              boardpath: nanoOldBootloader
+            - board: lgt8fx:avr:328
+              boardpath: lgt8f328p
+
+    steps:
+
+      - name: Checkout SCOPE repo
+        uses: actions/checkout@v4
+        with:
+           repository: modulove/SCOPE
+           
+      - name: Display repo
+        run: ls -R
+
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@v1.1.1
+
+      - name: Install Arduino platform and libraries
+        run: |
+          arduino-cli config init --dest-file ~/.arduino15/arduino-cli.yaml
+          arduino-cli core update-index
+          arduino-cli upgrade
+          arduino-cli core install arduino:avr
+          arduino-cli core install lgt8fx:avr --additional-urls https://raw.githubusercontent.com/dbuezas/lgt8fx/master/package_lgt8fx_index.json
+          arduino-cli lib install "Adafruit GFX Library"
+          arduino-cli lib install "Adafruit SSD1306"
+          arduino-cli lib install FastGPIO
+          arduino-cli lib install fix_fft
+          arduino-cli lib install SimpleRotary
+          arduino-cli lib install Encoder
+ 
+      - name: Compile sketch and rename output file for release
+        run: |
+          arduino-cli compile -v -b ${{ matrix.board}} Firmware/${{ matrix.firmware}}/${{ matrix.firmware}}.ino -e --output-dir=./build/${{ matrix.boardpath }}
+          arduino-cli compile -v -b ${{ matrix.board}} --build-property "build.extra_flags=-DENCODER_REVERSED" Firmware/${{ matrix.firmware}}/${{ matrix.firmware}}.ino -e --output-dir=./build_reversed/${{ matrix.boardpath }}
+          mkdir -p ./release && cp ./build/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.hex
+          cp ./build_reversed/${{ matrix.boardpath }}/${{ matrix.firmware }}.ino.hex ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}.reversed.hex
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-artifacts-${{ matrix.boardpath}}-${{ matrix.firmware }}
+          path: ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
+
+  release:
+    needs: [build_arythmatik, build_synclfo, build_scope]
+
+    runs-on: ubuntu-latest
     steps:
       - name: Download release artifacts
         uses: actions/download-artifact@v4
