@@ -69,10 +69,10 @@ jobs:
         with:
           name: release-artifacts-${{ matrix.boardpath }}-${{ matrix.firmware }}
           path: ./release/*.hex
-jobs:
-  beat_arythmatik:
-    runs-on: ubuntu-latest
-    strategy:
+
+    beat_arythmatik:
+      runs-on: ubuntu-latest
+      strategy:
       matrix:
         module: ["A-RYTH-MATIK"]
         firmware: ["ARYTHMATIK_Euclid", "ARYTHMATIK_Gate-seq", "ARYTHMATIK_DEBUG"]
