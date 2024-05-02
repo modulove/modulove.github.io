@@ -185,8 +185,8 @@ build_synclfo:
           name: release-artifacts-${{ matrix.boardpath}}-${{ matrix.firmware }}
           path: ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
 
+build_scope:
 
-  build_scope:
     runs-on: ubuntu-latest
     strategy:
         matrix:
@@ -237,14 +237,15 @@ build_synclfo:
 
       - name: Upload release artifacts
         uses: actions/upload-artifact@v4
+        
         with:
           name: release-artifacts-${{ matrix.boardpath}}-${{ matrix.firmware }}
           path: ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
-
-  release:
-    needs: [build_arythmatik,beat_arythmatik, build_synclfo, build_scope]
-
-    runs-on: ubuntu-latest
+          
+release:
+    needs: [build_arythmatik, beat_arythmatik, build_synclfo, build_scope]
+    
+    runs-on: ubuntu-latest    
     steps:
       - name: Download release artifacts
         uses: actions/download-artifact@v4
