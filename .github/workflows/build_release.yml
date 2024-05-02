@@ -128,8 +128,8 @@ steps:
           name: release-artifacts-${{ matrix.boardpath }}-${{ matrix.firmware }}
           path: ./release/*.hex
 
+build_synclfo:
 
-  build_synclfo:
     runs-on: ubuntu-latest
     strategy:
         matrix:
