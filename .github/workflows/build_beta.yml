@@ -1,4 +1,4 @@
-name: Build and release more love
+name: Build and release beat
 on:
   push:
     tags:
