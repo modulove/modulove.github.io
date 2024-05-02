@@ -71,7 +71,6 @@ jobs:
           path: ./release/*.hex
 
   build_synclfo:
-
     runs-on: ubuntu-latest
     strategy:
         matrix:
@@ -127,30 +126,33 @@ jobs:
           name: release-artifacts-${{ matrix.boardpath}}-${{ matrix.firmware }}
           path: ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
 
-  build_scope:
 
+  build_scope:
     runs-on: ubuntu-latest
     strategy:
-     matrix:
-        module: ["SCOPE"]
-        firmware: ["SCOPE", "SCOPE_DEBUG"]
-        board: ["arduino:avr:nano", "arduino:avr:nano:cpu=atmega328old", "lgt8fx:avr:328"]
-        include:
-        - board: arduino:avr:nano
-          boardpath: nano
-        - board: arduino:avr:nano:cpu=atmega328old
-          boardpath: nanoOldBootloader
-        - board: lgt8fx:avr:328
-          boardpath: lgt8f328p
+        matrix:
+            module: ["SCOPE"]
+            firmware: ["SCOPE", "SCOPE_DEBUG"]
+            board: ["arduino:avr:nano", "arduino:avr:nano:cpu=atmega328old", "lgt8fx:avr:328"]
+            include:
+            - board: arduino:avr:nano
+              boardpath: nano
+            - board: arduino:avr:nano:cpu=atmega328old
+              boardpath: nanoOldBootloader
+            - board: lgt8fx:avr:328
+              boardpath: lgt8f328p
 
     steps:
+
       - name: Checkout SCOPE repo
         uses: actions/checkout@v4
         with:
            repository: modulove/SCOPE
            
+      - name: Display repo
+        run: ls -R
+
       - name: Setup Arduino CLI
-        
         uses: arduino/setup-arduino-cli@v1.1.1
 
       - name: Install Arduino platform and libraries
@@ -176,16 +178,15 @@ jobs:
 
       - name: Upload release artifacts
         uses: actions/upload-artifact@v4
-        
         with:
           name: release-artifacts-${{ matrix.boardpath}}-${{ matrix.firmware }}
           path: ./release/${{ matrix.firmware }}.${{ matrix.boardpath }}*.hex
-          
+
   release:
     needs: [build_arythmatik, build_synclfo, build_scope]
-    
-    runs-on: ubuntu-latest    
-steps:
+
+    runs-on: ubuntu-latest
+    steps:
       - name: Download release artifacts
         uses: actions/download-artifact@v4
         with:
