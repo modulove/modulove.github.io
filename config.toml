@@ -90,10 +90,15 @@ paginate = 5
         url = "/mvmnt"
         weight = 3
       [[languages.en.menu.main]]
+        identifier = "scope"
+        name = "SCOPE"
+        url = "/scope"
+        weight = 4
+      [[languages.en.menu.main]]
         identifier = "about"
         name = "About"
         url = "/about"
-        weight = 4
+        weight = 5
 
 [module]
   [module.hugoVersion]

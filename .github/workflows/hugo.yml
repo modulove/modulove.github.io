@@ -73,7 +73,7 @@ jobs:
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
 
-      - name: Download latest firmware releases from A-RYTH-MATIK and MVMNT
+      - name: Download latest firmware releases from all repositories
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -110,6 +110,22 @@ jobs:
               wget -q -P public/releases "$url" || echo "Failed to download $url"
             fi
           done < /tmp/mvmnt_urls.txt
+
+          # Get the latest release from modulove/SCOPE
+          echo "Downloading SCOPE firmware..."
+          SCOPE_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            https://api.github.com/repos/modulove/SCOPE/releases/latest)
+
+          # Extract download URLs for .hex files
+          echo "$SCOPE_RELEASE" | jq -r '.assets[] | select(.name | endswith(".hex")) | .browser_download_url' > /tmp/scope_urls.txt
+
+          # Download each .hex file
+          while read url; do
+            if [ ! -z "$url" ]; then
+              echo "Downloading: $url"
+              wget -q -P public/releases "$url" || echo "Failed to download $url"
+            fi
+          done < /tmp/scope_urls.txt
 
           # List downloaded files
           echo "Downloaded firmware files:"

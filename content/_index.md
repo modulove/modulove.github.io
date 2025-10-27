@@ -27,6 +27,13 @@ Open-source firmware for DIY Eurorack modules. Choose your module below to explo
     <p>Smooth random CV and LFO generator. Bezier curve modulation for organic, evolving patches.</p>
     <p><strong>2 firmware options available</strong></p>
   </a>
+
+  <a href="/scope" class="module-card">
+    <div class="module-image">📊</div>
+    <h2>SCOPE</h2>
+    <p>Oscilloscope and spectrum analyzer. Visualize waveforms and analyze frequency content in real-time.</p>
+    <p><strong>1 firmware available</strong></p>
+  </a>
 </div>
 
 ---
