@@ -1,0 +1,42 @@
+<!-- Arduino Uploader Web Component -->
+<script type="module" src="https://unpkg.com/arduino-web-uploader"></script>
+
+<style>
+  .flash-firmware {
+    margin: 2em 0;
+    padding: 1.5em;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+
+  .flash-firmware button {
+    display: block;
+    width: 100%;
+    margin: 0.5em 0;
+    padding: 1em;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+
+  .flash-firmware button:hover {
+    background-color: #0052a3;
+  }
+
+  .flash-firmware button:active {
+    background-color: #004080;
+  }
+
+  .flash-firmware button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+
+  .upload-progress {
+    font-style: italic;
+  }
+</style>

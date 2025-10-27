@@ -1,0 +1,50 @@
+{{ if .Get "hex" }}
+<div class="flash-firmware">
+  <button
+    arduino-uploader
+    hex-href='/releases/{{ .Get "hex" | safeURL }}.nano.hex'
+    board="nano"
+    [optional]verify
+    [optional]port-filters='[{"usbProductId":46388,"usbVendorId":1241}]'
+  >
+      {{ with .Get "buttonText" }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }} to Arduino Nano
+      &nbsp;
+      <span class="upload-progress"></span>
+  </button>
+  <button
+    arduino-uploader
+    hex-href='/releases/{{ .Get "hex" | safeURL }}.nanoOldBootloader.hex'
+    board="nanoOldBootloader"
+    [optional]verify
+    [optional]port-filters='[{"usbProductId":46388,"usbVendorId":1241}]'
+  >
+      {{ with .Get "buttonText" }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }} to Arduino Nano (old bootloader)
+      &nbsp;
+      <span class="upload-progress"></span>
+  </button>
+
+  <div style="margin-top: 1em; font-style: italic;">Reversed Encoder Direction:</div>
+  <button
+    arduino-uploader
+    hex-href='/releases/{{ .Get "hex" | safeURL }}.nano.reversed.hex'
+    board="nano"
+    [optional]verify
+    [optional]port-filters='[{"usbProductId":46388,"usbVendorId":1241}]'
+  >
+      {{ with .Get "buttonText" }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }} to Arduino Nano - Reversed
+      &nbsp;
+      <span class="upload-progress"></span>
+  </button>
+  <button
+    arduino-uploader
+    hex-href='/releases/{{ .Get "hex" | safeURL }}.nanoOldBootloader.reversed.hex'
+    board="nanoOldBootloader"
+    [optional]verify
+    [optional]port-filters='[{"usbProductId":46388,"usbVendorId":1241}]'
+  >
+      {{ with .Get "buttonText" }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }} to Arduino Nano (old bootloader) - Reversed
+      &nbsp;
+      <span class="upload-progress"></span>
+  </button>
+</div>
+{{ end }}

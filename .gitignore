@@ -1,8 +1,27 @@
 # Generated files by hugo
+/public/
+/resources/_gen/
+/assets/jsconfig.json
+hugo_stats.json
 /pages/public/
 /pages/resources/_gen/
 /pages/assets/jsconfig.json
 /pages/hugo_stats.json
 
 # Temporary lock file while building
+.hugo_build.lock
 /pages/.hugo_build.lock
+
+# Hugo themes (downloaded during build)
+/themes/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

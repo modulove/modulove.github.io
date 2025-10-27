@@ -1,16 +1,18 @@
-# Sample workflow for building and deploying a Hugo site to GitHub Pages
+# Workflow for building and deploying a Hugo site to GitHub Pages
 name: Deploy Hugo site to Pages
 
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  # Allows this workflow to be called from other workflows.
+  # Allows this workflow to be called from other workflows
   workflow_call:
+  # Triggers on push to main branch
   push:
     branches:
-        - main
+      - main
     paths:
-      - pages/**
+      - '**'
+      - '!README.md'
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -34,52 +36,75 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.114.0
+      HUGO_VERSION: 0.128.0
     steps:
       - name: Install Hugo CLI
         run: |
           wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
           && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+
       - name: Install Dart Sass
         run: sudo snap install dart-sass
+
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: recursive
+          fetch-depth: 0
+
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v4
+
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+
+      - name: Install Hugo theme
+        run: |
+          git clone https://github.com/panr/hugo-theme-terminal.git themes/terminal
+
       - name: Build with Hugo
-        working-directory: ./pages
         env:
-          # For maximum backward compatibility with Hugo modules
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
         run: |
           hugo \
+            --gc \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
 
-      - name: Download release files
-        id: download-release-files
-        uses: dsaltares/fetch-gh-release-asset@master
-        with:
-          repo: "modulove/A-RYTH-MATIK"
-          version:  ${{ github.event.release.id }}
-          regex: true
-          file: ".*\\.hex"
-          target: "pages/public/releases/"
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download latest firmware releases from A-RYTH-MATIK
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p public/releases
+
+          # Get the latest release from modulove/A-RYTH-MATIK
+          LATEST_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            https://api.github.com/repos/modulove/A-RYTH-MATIK/releases/latest)
+
+          # Extract download URLs for .hex files
+          echo "$LATEST_RELEASE" | jq -r '.assets[] | select(.name | endswith(".hex")) | .browser_download_url' > /tmp/hex_urls.txt
+
+          # Download each .hex file
+          while read url; do
+            if [ ! -z "$url" ]; then
+              echo "Downloading: $url"
+              wget -q -P public/releases "$url" || echo "Failed to download $url"
+            fi
+          done < /tmp/hex_urls.txt
+
+          # List downloaded files
+          echo "Downloaded firmware files:"
+          ls -lh public/releases/
 
       - name: Display structure of Hugo build files
-        run: ls -R ./pages/public
+        run: ls -R ./public
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: ./pages/public
+          path: ./public
 
   # Deployment job
   deploy:
@@ -91,4 +116,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
