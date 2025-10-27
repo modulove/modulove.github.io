@@ -43,7 +43,7 @@ Our firmware leverages:
 We welcome contributions! Check out our repositories on GitHub:
 
 - [A-RYTH-MATIK Firmware](https://github.com/modulove/A-RYTH-MATIK)
-- [libModulove Library](https://github.com/modulove/libModulove)
+- [libModulove Library](https://github.com/awonak/libModulove)
 
 ## Contact
 
