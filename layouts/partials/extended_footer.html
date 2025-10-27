@@ -1,42 +1,181 @@
-<!-- Arduino Uploader Web Component -->
-<script type="module" src="https://unpkg.com/arduino-web-uploader"></script>
+<!-- Arduino Web Uploader -->
+<script src="https://github.com/dbuezas/arduino-web-uploader/releases/download/v1.0.0/main.js"></script>
 
 <style>
+  /* Module Cards on Homepage */
+  .module-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2em;
+    margin: 3em 0;
+  }
+
+  .module-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2em;
+    text-align: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .module-card h2 {
+    margin-top: 0.5em;
+    font-size: 1.8em;
+  }
+
+  .module-card p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+  }
+
+  .module-image {
+    width: 100%;
+    max-width: 250px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 3em;
+  }
+
+  /* Firmware Section */
+  .firmware-section {
+    margin: 3em 0;
+    padding: 2em;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border-left: 4px solid #0066cc;
+  }
+
+  .firmware-section h3 {
+    margin-top: 0;
+    color: #0088ff;
+  }
+
+  .firmware-header {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2em;
+    margin-bottom: 2em;
+  }
+
+  @media (max-width: 768px) {
+    .firmware-header {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .firmware-image {
+    width: 100%;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+  }
+
+  .firmware-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .firmware-description h4 {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: #00aaff;
+  }
+
+  .firmware-description ul {
+    margin: 0.5em 0;
+    padding-left: 1.5em;
+  }
+
+  /* Flash Buttons */
   .flash-firmware {
     margin: 2em 0;
-    padding: 1.5em;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    padding: 0;
+  }
+
+  .flash-firmware > div {
+    margin-top: 1.5em;
+    padding-top: 1.5em;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-style: italic;
+    opacity: 0.8;
   }
 
   .flash-firmware button {
     display: block;
     width: 100%;
-    margin: 0.5em 0;
-    padding: 1em;
+    margin: 0.8em 0;
+    padding: 1em 1.5em;
     font-size: 1em;
+    font-weight: 600;
     cursor: pointer;
-    background-color: #0066cc;
+    background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%);
     color: white;
     border: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
   }
 
   .flash-firmware button:hover {
-    background-color: #0052a3;
+    background: linear-gradient(135deg, #0052a3 0%, #0066cc 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.5);
   }
 
   .flash-firmware button:active {
-    background-color: #004080;
+    transform: translateY(0);
   }
 
   .flash-firmware button:disabled {
-    background-color: #cccccc;
+    background: rgba(128, 128, 128, 0.5);
     cursor: not-allowed;
+    box-shadow: none;
   }
 
   .upload-progress {
     font-style: italic;
+    font-size: 0.9em;
+    opacity: 0.8;
+  }
+
+  /* Feature Lists */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1em;
+    margin: 1.5em 0;
+  }
+
+  .feature {
+    padding: 1em;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+  }
+
+  .feature strong {
+    color: #00aaff;
+    display: block;
+    margin-bottom: 0.5em;
   }
 </style>

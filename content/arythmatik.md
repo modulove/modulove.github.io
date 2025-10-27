@@ -1,144 +1,211 @@
 ---
-title: "A-RYTH-MATIK"
+title: "A-RYTH-MATIK Firmware"
 layout: "single"
 ---
 
 # A-RYTH-MATIK Firmware Collection
 
-The A-RYTH-MATIK is a versatile 6-channel gate/trigger generator based on the excellent Hagiwo design. This collection offers multiple firmware options, each providing a unique approach to rhythm generation.
+The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on the Hagiwo design. Choose from multiple firmware options below, each offering a unique approach to rhythm generation.
 
-## Available Firmware
+**Hardware:** Arduino Nano · OLED Display (SSD1306) · Rotary Encoder · 6 Output Channels
 
-### Euclidean Rhythms
+---
 
-Generate complex polyrhythmic patterns using Euclidean algorithms. Configure each output with steps, hits, rotation offset, and rest padding.
+<div class="firmware-section">
 
-**Features:**
-- 6 independent Euclidean rhythm generators
-- Adjustable steps, hits, rotation, and rest per channel
-- Multiple output modes: trigger, gate, flip
-- Save/load patterns to memory banks
-- Individual channel reset and randomization
-- Interactive OLED display with visual feedback
+## Euclidean Rhythms
 
-**Usage:**
-- **CLK Input**: Clock source to advance patterns
-- **RST Input**: Reset all patterns to first step
+<div class="firmware-header">
+  <div class="firmware-image">🔢</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>6 independent Euclidean rhythm generators</li>
+      <li>Adjustable steps, hits, rotation, and rest per channel</li>
+      <li>Multiple output modes: trigger, gate, flip</li>
+      <li>Save/load patterns to memory banks</li>
+      <li>Individual channel reset and randomization</li>
+      <li>Interactive OLED with visual feedback</li>
+    </ul>
+  </div>
+</div>
+
+**Perfect for:** Mathematical polyrhythms, complex evolving patterns, generative music
+
+**Controls:**
 - **Encoder Short Press**: Toggle between menu options
 - **Encoder Long Press**: Access global settings
 - **Encoder Double Click**: Reset all patterns
+- **CLK Input**: Clock source to advance patterns
+- **RST Input**: Reset all patterns to first step
 
 {{< encoder_firmware_button hex="ARYTHMATIK_Euclid" buttonText="Flash Euclidean Firmware" >}}
 
+</div>
+
 ---
 
-### Buds
+<div class="firmware-section">
 
-Organic, evolving gate sequences that grow and change over time. Perfect for generative patches.
+## Buds
 
-**Features:**
-- Algorithmic pattern generation
-- Organic evolution of gate patterns
-- Visual feedback on OLED display
-- Probability-based gate generation
+<div class="firmware-header">
+  <div class="firmware-image">🌱</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>Organic, evolving gate sequences</li>
+      <li>Algorithmic pattern generation</li>
+      <li>Probability-based gate generation</li>
+      <li>Visual feedback on OLED display</li>
+      <li>Patterns grow and mutate over time</li>
+    </ul>
+  </div>
+</div>
 
-**Usage:**
+**Perfect for:** Generative patches, organic rhythms, evolving patterns
+
+**Controls:**
+- **Encoder**: Adjust evolution parameters
 - **CLK Input**: Clock source
 - **RST Input**: Reset pattern evolution
-- **Encoder**: Adjust evolution parameters
 
 {{< encoder_firmware_button hex="ARYTHMATIK_Buds" buttonText="Flash Buds Firmware" >}}
 
+</div>
+
 ---
 
-### Gate Sequencer
+<div class="firmware-section">
 
-Classic step sequencer functionality with per-step gate control.
+## Gate Sequencer
 
-**Features:**
-- 6 channels of gate sequencing
-- Per-step gate on/off control
-- Pattern length adjustment
-- Step probability control
-- Save/load sequences
+<div class="firmware-header">
+  <div class="firmware-image">▶️</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>Classic step sequencer with 6 channels</li>
+      <li>Per-step gate on/off control</li>
+      <li>Adjustable pattern length</li>
+      <li>Step probability control</li>
+      <li>Save/load sequences</li>
+      <li>Visual step display</li>
+    </ul>
+  </div>
+</div>
 
-**Usage:**
+**Perfect for:** Traditional sequencing, rhythmic patterns, hands-on control
+
+**Controls:**
+- **Encoder**: Navigate and edit sequence steps
 - **CLK Input**: Advance sequencer
 - **RST Input**: Return to first step
-- **Encoder**: Navigate and edit sequence steps
 
 {{< encoder_firmware_button hex="ARYTHMATIK_Gate-seq" buttonText="Flash Gate Sequencer Firmware" >}}
 
+</div>
+
 ---
 
-### Pong
+<div class="firmware-section">
 
-Bouncing ball rhythm generator inspired by the classic game. Creates rhythmic patterns as virtual balls bounce between outputs.
+## Pong
 
-**Features:**
-- Physics-based rhythm generation
-- Multiple balls with different speeds
-- Gravity and bounce parameters
-- Visual representation on display
+<div class="firmware-header">
+  <div class="firmware-image">🏓</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>Physics-based rhythm generation</li>
+      <li>Multiple balls with different speeds</li>
+      <li>Adjustable gravity and bounce parameters</li>
+      <li>Visual representation on display</li>
+      <li>Chaotic yet musical patterns</li>
+    </ul>
+  </div>
+</div>
 
-**Usage:**
+**Perfect for:** Experimental rhythms, chaotic patterns, visual performance
+
+**Controls:**
+- **Encoder**: Adjust physics parameters
 - **CLK Input**: Update ball physics
 - **RST Input**: Reset ball positions
-- **Encoder**: Adjust physics parameters
 
 {{< encoder_firmware_button hex="ARYTHMATIK_Pong" buttonText="Flash Pong Firmware" >}}
 
+</div>
+
 ---
 
-### Labor (Experimental)
+<div class="firmware-section">
 
-Experimental rhythm laboratory with various algorithmic approaches and parameter modulation.
+## Labor (Experimental)
 
-**Features:**
-- Multiple experimental rhythm algorithms
-- Deep parameter control
-- Modulation options
-- Research-focused feature set
+<div class="firmware-header">
+  <div class="firmware-image">🧪</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>Multiple experimental rhythm algorithms</li>
+      <li>Deep parameter control</li>
+      <li>Modulation options</li>
+      <li>Research-focused feature set</li>
+      <li>Bleeding-edge algorithms</li>
+    </ul>
+  </div>
+</div>
 
-**Usage:**
+**Perfect for:** Experimentation, discovering new rhythms, research
+
+**Controls:**
+- **Encoder**: Navigate experimental parameters
 - **CLK Input**: Clock source
 - **RST Input**: Reset current algorithm
-- **Encoder**: Navigate experimental parameters
 
 {{< encoder_firmware_button hex="ARYTHMATIK_Labor" buttonText="Flash Labor Firmware" >}}
+
+</div>
 
 ---
 
 ## Hardware Requirements
 
-- Arduino Nano or Arduino Nano (Old Bootloader)
-- OLED Display (SSD1306, 128x64)
-- Rotary Encoder with button
-- 6 output channels with LEDs
-- Clock and Reset inputs
+- **Arduino Nano** or **Arduino Nano (Old Bootloader)**
+- **OLED Display**: SSD1306, 128x64 pixels, I2C
+- **Rotary Encoder** with push button
+- **6 output channels** with LED indicators
+- **Clock (CLK)** and **Reset (RST)** inputs
+
+---
 
 ## Installation Instructions
 
-1. **Connect Your Module**
-   - Connect your Arduino Nano to your computer via USB
-   - Ensure the module is powered
+### 1. Connect Your Module
+- Connect your Arduino Nano to your computer via USB
+- Ensure the module is powered
 
-2. **Select Firmware**
-   - Choose the firmware that matches your needs
-   - Click the appropriate button above (Nano or Old Bootloader)
+### 2. Select Firmware
+- Choose the firmware that matches your needs above
+- Click the appropriate button (Nano or Old Bootloader)
 
-3. **Flash Firmware**
-   - Your browser will prompt you to select the serial port
-   - Select the port corresponding to your Arduino
-   - Wait for the upload to complete (typically 10-30 seconds)
+### 3. Flash Firmware
+- Your browser will prompt you to select the serial port
+- Select the port corresponding to your Arduino
+- Wait for the upload to complete (typically 10-30 seconds)
 
-4. **Verify**
-   - The module should boot up with the new firmware
-   - Check the OLED display for confirmation
+### 4. Verify
+- The module should boot up with the new firmware
+- Check the OLED display for confirmation
+
+---
 
 ## Encoder Direction
 
-Some modules have reversed encoder direction. If rotating the encoder moves parameters in the opposite direction than expected, use the "Reversed" firmware variants.
+Some modules have reversed encoder direction. If rotating the encoder moves parameters in the opposite direction than expected, use the **"Reversed"** firmware variants.
+
+---
 
 ## Troubleshooting
 
@@ -155,13 +222,15 @@ Some modules have reversed encoder direction. If rotating the encoder moves para
 **Wrong encoder direction:**
 - Use the reversed encoder firmware variant
 
+---
+
 ## Resources
 
-- [GitHub Repository](https://github.com/modulove/A-RYTH-MATIK)
-- [Build Guide & Schematic](https://github.com/modulove/A-RYTH-MATIK/blob/main/README.md)
-- [Quick Start PDF](https://github.com/modulove/A-RYTH-MATIK/blob/main/A-Ryth-Matik_QuickStart.pdf)
-- [Report Issues](https://github.com/modulove/A-RYTH-MATIK/issues)
+- [GitHub Repository](https://github.com/modulove/A-RYTH-MATIK) - Source code
+- [Build Guide & Schematic](https://github.com/modulove/A-RYTH-MATIK/blob/main/README.md) - Assembly instructions
+- [Quick Start PDF](https://github.com/modulove/A-RYTH-MATIK/blob/main/A-Ryth-Matik_QuickStart.pdf) - Hardware guide
+- [Report Issues](https://github.com/modulove/A-RYTH-MATIK/issues) - Bug reports and feature requests
 
 ---
 
-*Based on the Hagiwo design with love from the Modulove community*
+*Based on the Hagiwo design · Enhanced by the Modulove community*

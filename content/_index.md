@@ -5,40 +5,74 @@ layout: "home"
 
 # Welcome to Modulove Firmware
 
-Open-source firmware for DIY Eurorack modules. Flash firmware directly from your browser to your Arduino-based modules.
+**Flash firmware directly from your browser** - No Arduino IDE required!
 
-## Available Modules
-
-### [A-RYTH-MATIK](/arythmatik)
-
-A versatile 6-channel gate/trigger generator based on the Hagiwo design. Multiple firmware options available:
-
-- **Euclidean Rhythms** - Generate complex polyrhythmic patterns
-- **Buds** - Organic, evolving gate sequences
-- **Gate Sequencer** - Classic step sequencer
-- **Pong** - Bouncing ball rhythm generator
-- **Labor** - Experimental rhythm laboratory
-
-## Getting Started
-
-1. Connect your Arduino Nano to your computer via USB
-2. Navigate to the firmware page for your module
-3. Click the flash button corresponding to your Arduino board
-4. Follow the browser prompts to select your device
-5. Wait for the upload to complete
-
-## Requirements
-
-- Chrome, Edge, or Opera browser (Web Serial API support required)
-- Arduino Nano or compatible board
-- USB cable
-
-## Resources
-
-- [GitHub Repository](https://github.com/modulove/A-RYTH-MATIK)
-- [Build Guide](https://github.com/modulove/A-RYTH-MATIK/blob/main/README.md)
-- [Quick Start PDF](https://github.com/modulove/A-RYTH-MATIK/blob/main/A-Ryth-Matik_QuickStart.pdf)
+Open-source firmware for DIY Eurorack modules. Choose your module below to explore available firmware and flash directly to your Arduino Nano.
 
 ---
 
-*Built with love for the DIY modular community*
+## Select Your Module
+
+<div class="module-cards">
+  <a href="/arythmatik" class="module-card">
+    <div class="module-image">🎛️</div>
+    <h2>A-RYTH-MATIK</h2>
+    <p>6-channel gate/trigger generator with multiple rhythm algorithms. Euclidean, generative, sequencer, and experimental modes.</p>
+    <p><strong>5 firmware options available</strong></p>
+  </a>
+
+  <a href="#" class="module-card" style="opacity: 0.5; cursor: not-allowed;">
+    <div class="module-image">🌊</div>
+    <h2>MVMNT (SyncLFO)</h2>
+    <p>Multi-channel LFO and modulation source. Multiple firmware for various modulation needs.</p>
+    <p><strong>Coming soon...</strong></p>
+  </a>
+</div>
+
+---
+
+## How It Works
+
+<div class="features">
+  <div class="feature">
+    <strong>1. Connect</strong>
+    Plug your Arduino Nano into your computer via USB
+  </div>
+  <div class="feature">
+    <strong>2. Select</strong>
+    Choose your module and the firmware you want to flash
+  </div>
+  <div class="feature">
+    <strong>3. Flash</strong>
+    Click the flash button and select your device port
+  </div>
+  <div class="feature">
+    <strong>4. Done!</strong>
+    Your module boots up with the new firmware
+  </div>
+</div>
+
+---
+
+## Browser Requirements
+
+This site uses the **Web Serial API** to flash firmware directly from your browser.
+
+**Supported browsers:**
+- ✅ Chrome (recommended)
+- ✅ Edge
+- ✅ Opera
+
+**Not supported:** Safari, Firefox
+
+---
+
+## Resources
+
+- [A-RYTH-MATIK GitHub](https://github.com/modulove/A-RYTH-MATIK) - Source code and build guide
+- [Quick Start PDF](https://github.com/modulove/A-RYTH-MATIK/blob/main/A-Ryth-Matik_QuickStart.pdf) - Hardware assembly guide
+- [Report Issues](https://github.com/modulove/A-RYTH-MATIK/issues) - Bug reports and feature requests
+
+---
+
+*Built with ❤️ for the DIY modular community*
