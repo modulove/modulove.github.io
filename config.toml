@@ -95,10 +95,15 @@ paginate = 5
         url = "/scope"
         weight = 4
       [[languages.en.menu.main]]
+        identifier = "mod1"
+        name = "MOD1"
+        url = "/mod1"
+        weight = 5
+      [[languages.en.menu.main]]
         identifier = "about"
         name = "About"
         url = "/about"
-        weight = 5
+        weight = 6
 
 [module]
   [module.hugoVersion]

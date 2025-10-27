@@ -34,6 +34,13 @@ Open-source firmware for DIY Eurorack modules. Choose your module below to explo
     <p>Oscilloscope and spectrum analyzer. Visualize waveforms and analyze frequency content in real-time.</p>
     <p><strong>1 firmware available</strong></p>
   </a>
+
+  <a href="/mod1" class="module-card">
+    <div class="module-image">🔧</div>
+    <h2>MOD1</h2>
+    <p>Versatile utility module collection. LFOs, envelopes, logic, clocks, sequencers, and more in one compact module.</p>
+    <p><strong>12 firmware options available</strong></p>
+  </a>
 </div>
 
 ---

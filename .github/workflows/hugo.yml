@@ -127,6 +127,22 @@ jobs:
             fi
           done < /tmp/scope_urls.txt
 
+          # Get the latest release from modulove/MOD1
+          echo "Downloading MOD1 firmware..."
+          MOD1_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            https://api.github.com/repos/modulove/MOD1/releases/latest)
+
+          # Extract download URLs for .hex files
+          echo "$MOD1_RELEASE" | jq -r '.assets[] | select(.name | endswith(".hex")) | .browser_download_url' > /tmp/mod1_urls.txt
+
+          # Download each .hex file
+          while read url; do
+            if [ ! -z "$url" ]; then
+              echo "Downloading: $url"
+              wget -q -P public/releases "$url" || echo "Failed to download $url"
+            fi
+          done < /tmp/mod1_urls.txt
+
           # List downloaded files
           echo "Downloaded firmware files:"
           ls -lh public/releases/
