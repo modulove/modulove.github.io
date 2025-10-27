@@ -85,10 +85,15 @@ paginate = 5
         url = "/arythmatik"
         weight = 2
       [[languages.en.menu.main]]
+        identifier = "mvmnt"
+        name = "MVMNT"
+        url = "/mvmnt"
+        weight = 3
+      [[languages.en.menu.main]]
         identifier = "about"
         name = "About"
         url = "/about"
-        weight = 3
+        weight = 4
 
 [module]
   [module.hugoVersion]

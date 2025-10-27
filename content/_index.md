@@ -21,11 +21,11 @@ Open-source firmware for DIY Eurorack modules. Choose your module below to explo
     <p><strong>5 firmware options available</strong></p>
   </a>
 
-  <a href="#" class="module-card" style="opacity: 0.5; cursor: not-allowed;">
+  <a href="/mvmnt" class="module-card">
     <div class="module-image">🌊</div>
     <h2>MVMNT (SyncLFO)</h2>
-    <p>Multi-channel LFO and modulation source. Multiple firmware for various modulation needs.</p>
-    <p><strong>Coming soon...</strong></p>
+    <p>Smooth random CV and LFO generator. Bezier curve modulation for organic, evolving patches.</p>
+    <p><strong>2 firmware options available</strong></p>
   </a>
 </div>
 
