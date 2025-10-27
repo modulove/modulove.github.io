@@ -2,6 +2,41 @@
 <script src="https://github.com/dbuezas/arduino-web-uploader/releases/download/v1.0.0/main.js"></script>
 
 <style>
+  /* CSS Variables for Theme Colors */
+  :root {
+    --accent-orange: #ff6b35;
+    --accent-teal: #00d9ff;
+    --accent-purple: #b19cd9;
+    --bg-light: #f5f5f5;
+    --bg-light-card: #ffffff;
+    --text-light: #2c2c2c;
+    --text-light-secondary: #666666;
+    --border-light: #e0e0e0;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --bg-dark: #1a1a1a;
+    --bg-dark-card: #2a2a2a;
+    --text-dark: #e0e0e0;
+    --text-dark-secondary: #b0b0b0;
+    --border-dark: #404040;
+    --shadow-dark: rgba(0, 0, 0, 0.5);
+  }
+
+  /* Light Theme (Default) */
+  @media (prefers-color-scheme: light) {
+    body {
+      background-color: var(--bg-light) !important;
+      color: var(--text-light) !important;
+    }
+  }
+
+  /* Dark Theme */
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: var(--bg-dark) !important;
+      color: var(--text-dark) !important;
+    }
+  }
+
   /* Module Cards on Homepage */
   .module-cards {
     display: grid;
@@ -11,31 +46,59 @@
   }
 
   .module-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    background: var(--bg-light-card);
+    border: 2px solid var(--border-light);
+    border-radius: 16px;
     padding: 2em;
     text-align: center;
     transition: all 0.3s ease;
     text-decoration: none;
-    color: inherit;
+    color: var(--text-light);
     display: block;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .module-card {
+      background: var(--bg-dark-card);
+      border-color: var(--border-dark);
+      color: var(--text-dark);
+    }
   }
 
   .module-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 12px 24px var(--shadow-light);
+    border-color: var(--accent-orange);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .module-card:hover {
+      box-shadow: 0 12px 24px var(--shadow-dark);
+      border-color: var(--accent-teal);
+    }
   }
 
   .module-card h2 {
     margin-top: 0.5em;
     font-size: 1.8em;
+    color: var(--text-light);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .module-card h2 {
+      color: var(--text-dark);
+    }
   }
 
   .module-card p {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-light-secondary);
     line-height: 1.6;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .module-card p {
+      color: var(--text-dark-secondary);
+    }
   }
 
   .module-image {
@@ -43,27 +106,48 @@
     max-width: 250px;
     height: 200px;
     object-fit: cover;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent-orange), var(--accent-purple));
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
     font-size: 3em;
+    opacity: 0.9;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .module-image {
+      background: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
+    }
   }
 
   /* Firmware Section */
   .firmware-section {
     margin: 3em 0;
     padding: 2em;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 12px;
-    border-left: 4px solid #0066cc;
+    background: var(--bg-light-card);
+    border-radius: 16px;
+    border-left: 4px solid var(--accent-orange);
+    box-shadow: 0 2px 8px var(--shadow-light);
   }
 
-  .firmware-section h3 {
-    margin-top: 0;
-    color: #0088ff;
+  @media (prefers-color-scheme: dark) {
+    .firmware-section {
+      background: var(--bg-dark-card);
+      border-left-color: var(--accent-teal);
+      box-shadow: 0 2px 8px var(--shadow-dark);
+    }
+  }
+
+  .firmware-section h2 {
+    color: var(--accent-orange);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .firmware-section h2 {
+      color: var(--accent-teal);
+    }
   }
 
   .firmware-header {
@@ -82,12 +166,19 @@
   .firmware-image {
     width: 100%;
     height: 200px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent-orange), var(--accent-purple));
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2em;
+    opacity: 0.9;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .firmware-image {
+      background: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
+    }
   }
 
   .firmware-description {
@@ -99,12 +190,25 @@
   .firmware-description h4 {
     margin-top: 0;
     font-size: 1.2em;
-    color: #00aaff;
+    color: var(--accent-orange);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .firmware-description h4 {
+      color: var(--accent-teal);
+    }
   }
 
   .firmware-description ul {
     margin: 0.5em 0;
     padding-left: 1.5em;
+    color: var(--text-light-secondary);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .firmware-description ul {
+      color: var(--text-dark-secondary);
+    }
   }
 
   /* Flash Buttons */
@@ -116,31 +220,49 @@
   .flash-firmware > div {
     margin-top: 1.5em;
     padding-top: 1.5em;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 2px solid var(--border-light);
     font-style: italic;
     opacity: 0.8;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .flash-firmware > div {
+      border-top-color: var(--border-dark);
+    }
   }
 
   .flash-firmware button {
     display: block;
     width: 100%;
     margin: 0.8em 0;
-    padding: 1em 1.5em;
+    padding: 1.2em 1.5em;
     font-size: 1em;
     font-weight: 600;
     cursor: pointer;
-    background: linear-gradient(135deg, #0066cc 0%, #0088ff 100%);
+    background: linear-gradient(135deg, var(--accent-orange) 0%, #ff8c5a 100%);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .flash-firmware button {
+      background: linear-gradient(135deg, var(--accent-teal) 0%, #33e0ff 100%);
+      box-shadow: 0 4px 12px rgba(0, 217, 255, 0.3);
+    }
   }
 
   .flash-firmware button:hover {
-    background: linear-gradient(135deg, #0052a3 0%, #0066cc 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 102, 204, 0.5);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.5);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .flash-firmware button:hover {
+      box-shadow: 0 6px 16px rgba(0, 217, 255, 0.5);
+    }
   }
 
   .flash-firmware button:active {
@@ -148,34 +270,125 @@
   }
 
   .flash-firmware button:disabled {
-    background: rgba(128, 128, 128, 0.5);
+    background: var(--text-light-secondary);
     cursor: not-allowed;
     box-shadow: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .flash-firmware button:disabled {
+      background: var(--text-dark-secondary);
+    }
   }
 
   .upload-progress {
     font-style: italic;
     font-size: 0.9em;
     opacity: 0.8;
+    color: var(--text-light-secondary);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .upload-progress {
+      color: var(--text-dark-secondary);
+    }
   }
 
   /* Feature Lists */
   .features {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1em;
-    margin: 1.5em 0;
+    gap: 1.5em;
+    margin: 2em 0;
   }
 
   .feature {
-    padding: 1em;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
+    padding: 1.5em;
+    background: var(--bg-light-card);
+    border: 2px solid var(--border-light);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .feature {
+      background: var(--bg-dark-card);
+      border-color: var(--border-dark);
+    }
+  }
+
+  .feature:hover {
+    border-color: var(--accent-orange);
+    box-shadow: 0 4px 12px var(--shadow-light);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .feature:hover {
+      border-color: var(--accent-teal);
+      box-shadow: 0 4px 12px var(--shadow-dark);
+    }
   }
 
   .feature strong {
-    color: #00aaff;
+    color: var(--accent-orange);
     display: block;
     margin-bottom: 0.5em;
+    font-size: 1.1em;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .feature strong {
+      color: var(--accent-teal);
+    }
+  }
+
+  /* Additional refinements for clean monochrome look */
+  hr {
+    border: none;
+    border-top: 2px solid var(--border-light);
+    margin: 3em 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    hr {
+      border-top-color: var(--border-dark);
+    }
+  }
+
+  /* Links */
+  a {
+    color: var(--accent-orange);
+    transition: color 0.3s ease;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    a {
+      color: var(--accent-teal);
+    }
+  }
+
+  a:hover {
+    color: #ff8c5a;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    a:hover {
+      color: #33e0ff;
+    }
+  }
+
+  /* Code blocks and inline code */
+  code {
+    background: var(--bg-light-card);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: 0.2em 0.4em;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    code {
+      background: var(--bg-dark-card);
+      border-color: var(--border-dark);
+    }
   }
 </style>
