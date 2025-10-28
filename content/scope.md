@@ -7,9 +7,9 @@ layout: "single"
 
 # SCOPE - Oscilloscope & Spectrum Analyzer
 
-SCOPE is a **visual analysis tool** for your Eurorack system. View your audio signals as waveforms or analyze their frequency spectrum in real-time on a crisp OLED display.
+SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and audio signals as waveforms or analyze their frequency spectrum in real-time on a OLED display.
 
-**Hardware:** Arduino Nano · OLED Display (128x64, SPI) · Rotary Encoder · Audio Input
+**Hardware:** Arduino Nano · OLED Display (128x64) · Rotary Encoder · CV/Audio Input - Trigger Input
 
 ---
 
@@ -26,13 +26,11 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your audio si
       <li>Spectrum Analyzer mode - see frequency content</li>
       <li>Adjustable timebase and sensitivity</li>
       <li>Auto-trigger for stable waveform display</li>
-      <li>Save/load settings to EEPROM</li>
-      <li>Configurable encoder direction</li>
     </ul>
   </div>
 </div>
 
-**Perfect for:** Signal analysis, debugging patches, visualizing modulation, frequency analysis
+**Perfect for:** Signal analysis, visualizing modulation, frequency analysis
 
 **Modes:**
 - **Oscilloscope**: Real-time waveform display with adjustable timebase
@@ -53,14 +51,11 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your audio si
 
 ---
 
-## Hardware Requirements
+## Hardware
 
-- **Arduino Nano** or **Arduino Nano (Old Bootloader)**
-- **OLED Display**: SSD1306, 128x64 pixels, SPI interface
+- **Arduino Nano**
+- **OLED Display**: SSD1306, 128x64 pixels
 - **Rotary Encoder** with push button
-- **Audio Input**: AC-coupled audio signal
-
-**Note:** SCOPE uses SPI interface for the OLED display (not I2C like other modules)
 
 ---
 
@@ -91,17 +86,15 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your audio si
 
 ### Oscilloscope Mode
 
-The oscilloscope displays incoming audio as a waveform over time.
+The oscilloscope displays incoming CV or audio as a waveform over time.
 
 **Parameters:**
 - **Timebase**: Adjusts how fast the waveform scrolls (zoom in/out on time axis)
 - **Sensitivity**: Adjusts vertical scale (amplitude)
-- **Trigger Level**: Sets the voltage level for triggering display update
 
 **Tips:**
 - Use slower timebase for LFOs and slow modulation
 - Use faster timebase for audio-rate signals
-- Adjust trigger level for stable waveform display
 
 ### Spectrum Analyzer Mode
 
@@ -110,12 +103,6 @@ The spectrum analyzer shows the frequency content of your signal using FFT (Fast
 **Display:**
 - Horizontal axis: Frequency (low to high, left to right)
 - Vertical axis: Amplitude of each frequency bin
-- Great for analyzing harmonic content, seeing resonant frequencies
-
-**Tips:**
-- Use with VCOs to see harmonic overtones
-- Analyze filter responses
-- Check for unwanted high-frequency noise
 
 ### Global Settings
 
@@ -155,39 +142,9 @@ The configuration tool allows you to:
 - Verify correct board selection (Nano vs Old Bootloader)
 - Try the opposite bootloader version
 
-**Display not working:**
-- Verify SPI connections (MOSI, SCK, CS, DC, RST)
-- Check display power (3.3V or 5V depending on display)
-- Ensure display is SSD1306 compatible
-
-**No signal visible:**
-- Check audio input connections
-- Adjust sensitivity/gain
-- Try different trigger settings
-- Verify signal is AC-coupled (no DC offset)
-
 **Wrong encoder direction:**
 - Use Global Settings menu to reverse encoder direction
 - Or use the web configuration tool
-
----
-
-## Technical Specifications
-
-**Display:**
-- Resolution: 128x64 pixels
-- Interface: SPI (faster than I2C)
-- Refresh rate: ~30 FPS
-
-**Oscilloscope:**
-- Sample rate: Adjustable via timebase
-- Resolution: 8-bit ADC (0-5V input range)
-- Trigger modes: Auto, Normal
-
-**Spectrum Analyzer:**
-- FFT Size: 128 points
-- Frequency range: DC to Nyquist (sample rate dependent)
-- Display: Logarithmic amplitude scale
 
 ---
 

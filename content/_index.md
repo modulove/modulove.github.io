@@ -1,13 +1,13 @@
 ---
-title: "Modulove Firmware"
+title: "Modulove Firmware Hub"
 layout: "home"
 ---
 
-# Welcome to Modulove Firmware
+# Welcome to Modulove Firmware Archive
 
 **Flash firmware directly from your browser** - No Arduino IDE required!
 
-Open-source firmware for DIY Eurorack modules. Choose your module below to explore available firmware and flash directly to your Arduino Nano.
+Here you find the Open-source firmware for our Eurorack modules. Choose your module below to explore available firmware and flash directly to your module.
 
 ---
 
@@ -94,10 +94,9 @@ This site uses the **Web Serial API** to flash firmware directly from your brows
 
 ## Resources
 
-- [A-RYTH-MATIK GitHub](https://github.com/modulove/A-RYTH-MATIK) - Source code and build guide
-- [Quick Start PDF](https://github.com/modulove/A-RYTH-MATIK/blob/main/A-Ryth-Matik_QuickStart.pdf) - Hardware assembly guide
-- [Report Issues](https://github.com/modulove/A-RYTH-MATIK/issues) - Bug reports and feature requests
+- [Modulove GitHub](https://github.com/modulove/) - Source code
+- [Modulove website](https://modulove.io) - Website
 
 ---
 
-*Built with ❤️ for the DIY modular community*
+*Built with ❤️ for the Eurorack modular community*

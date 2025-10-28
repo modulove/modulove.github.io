@@ -5,13 +5,13 @@ layout: "single"
 
 # About Modulove
 
-Modulove is an open-source project dedicated to creating accessible, DIY-friendly firmware for Eurorack modular synthesizers.
+Modulove is an open community driven project dedicated to creating accessible, DIY-friendly firmware for Eurorack modular synthesizer modules.
 
 ## Philosophy
 
 We believe in:
 
-- **Open Source**: All our firmware is freely available and open for modification
+- **Open Source**: Firmware is made available and is open for modifications
 - **Community Driven**: Built by modular enthusiasts, for modular enthusiasts
 - **Accessible DIY**: Making modular synthesis accessible to everyone
 - **Innovation**: Pushing the boundaries of what's possible with simple hardware
@@ -42,13 +42,12 @@ Our firmware leverages:
 
 We welcome contributions! Check out our repositories on GitHub:
 
-- [A-RYTH-MATIK Firmware](https://github.com/modulove/A-RYTH-MATIK)
+- [Modulove Github](https://github.com/modulove)
 - [libModulove Library](https://github.com/awonak/libModulove)
 
 ## Contact
 
-- GitHub: [github.com/modulove](https://github.com/modulove)
-- Issues & Support: [GitHub Issues](https://github.com/modulove/A-RYTH-MATIK/issues)
+- Questions & Support: [Website](https://modulove.io/contact/)
 
 ---
 
