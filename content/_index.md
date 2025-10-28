@@ -15,28 +15,39 @@ Open-source firmware for DIY Eurorack modules. Choose your module below to explo
 
 <div class="module-cards">
   <a href="/arythmatik" class="module-card">
-    <img src="/images/arythmatik/A-RYTH-MATIK@2x.webp" alt="A-RYTH-MATIK module" class="module-card-image">
+    <div class="module-card-image-container">
+      <img src="/images/arythmatik/A-RYTH-MATIK@2x.webp" alt="A-RYTH-MATIK module" class="module-card-image module-card-image-default">
+      <img src="/images/arythmatik/A-RYTH-MATIK-W@2x.webp" alt="A-RYTH-MATIK module" class="module-card-image module-card-image-hover">
+    </div>
     <h2>A-RYTH-MATIK</h2>
     <p>6-channel gate/trigger generator with multiple rhythm algorithms. Euclidean, generative, sequencer, and experimental modes.</p>
     <p><strong>5 firmware options available</strong></p>
   </a>
 
   <a href="/mvmnt" class="module-card">
-    <img src="/images/mvmnt/MVMNT@2x.webp" alt="MVMNT module" class="module-card-image">
+    <div class="module-card-image-container">
+      <img src="/images/mvmnt/MVMNT@2x.webp" alt="MVMNT module" class="module-card-image module-card-image-default">
+      <img src="/images/mvmnt/MVMNT-W@2x.webp" alt="MVMNT module" class="module-card-image module-card-image-hover">
+    </div>
     <h2>MVMNT (SyncLFO)</h2>
     <p>Smooth random CV and LFO generator. Bezier curve modulation for organic, evolving patches.</p>
     <p><strong>2 firmware options available</strong></p>
   </a>
 
   <a href="/scope" class="module-card">
-    <img src="/images/scope/SCOPE@2x.webp" alt="SCOPE module" class="module-card-image">
+    <div class="module-card-image-container">
+      <img src="/images/scope/SCOPE@2x.webp" alt="SCOPE module" class="module-card-image module-card-image-default">
+      <img src="/images/scope/SCOPE-W@2x.webp" alt="SCOPE module" class="module-card-image module-card-image-hover">
+    </div>
     <h2>SCOPE</h2>
     <p>Oscilloscope and spectrum analyzer. Visualize waveforms and analyze frequency content in real-time.</p>
     <p><strong>1 firmware available</strong></p>
   </a>
 
   <a href="/mod1" class="module-card">
-    <div class="module-image">🔧</div>
+    <div class="module-card-image-container">
+      <img src="/images/mod1/MDL_HAGIWO-MOD1__3LFO.jpg" alt="MOD1 module" class="module-card-image module-card-image-single">
+    </div>
     <h2>MOD1</h2>
     <p>Versatile utility module collection. LFOs, envelopes, logic, clocks, sequencers, and more in one compact module.</p>
     <p><strong>12 firmware options available</strong></p>

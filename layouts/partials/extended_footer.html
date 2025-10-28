@@ -12,13 +12,13 @@
   /* Pink Panther Color Scheme - Light Mode */
   :root {
     --background-light: #fbf5ef;
-    --foreground-light: #100f0f;
-    --accent-light: #ee82cf;
+    --foreground-light: #1a1918;
+    --accent-light: #d6459e;
     --accent-secondary-light: #ff6b35;
-    --muted-light: #6f6e69;
+    --muted-light: #4a4946;
     --subtle-light: #cecdc3;
     --card-bg-light: #fffcf7;
-    --shadow-light: rgba(16, 15, 15, 0.1);
+    --shadow-light: rgba(16, 15, 15, 0.15);
   }
 
   /* Pink Panther Color Scheme - Dark Mode */
@@ -159,14 +159,84 @@
     color: var(--accent);
   }
 
-  .module-card-image {
+  .module-card-image-container {
+    position: relative;
     width: 100%;
     max-width: 250px;
     height: 200px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .module-card-image {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     border-radius: 6px;
-    margin: 0 auto;
-    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Default image (black) - shown normally in dark mode */
+  .module-card-image-default {
+    opacity: 1;
+  }
+
+  /* Hover image (white) - hidden normally in dark mode */
+  .module-card-image-hover {
+    opacity: 0;
+  }
+
+  /* Show white image on hover in dark mode */
+  [data-theme="dark"] .module-card:hover .module-card-image-hover {
+    opacity: 1;
+  }
+
+  [data-theme="dark"] .module-card:hover .module-card-image-default {
+    opacity: 0;
+  }
+
+  /* Light mode: show white image by default, black on hover */
+  [data-theme="light"] .module-card-image-default {
+    opacity: 0;
+  }
+
+  [data-theme="light"] .module-card-image-hover {
+    opacity: 1;
+  }
+
+  [data-theme="light"] .module-card:hover .module-card-image-default {
+    opacity: 1;
+  }
+
+  [data-theme="light"] .module-card:hover .module-card-image-hover {
+    opacity: 0;
+  }
+
+  /* Auto-detect system theme preference for image switching */
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) .module-card-image-default {
+      opacity: 0;
+    }
+
+    :root:not([data-theme="dark"]) .module-card-image-hover {
+      opacity: 1;
+    }
+
+    :root:not([data-theme="dark"]) .module-card:hover .module-card-image-default {
+      opacity: 1;
+    }
+
+    :root:not([data-theme="dark"]) .module-card:hover .module-card-image-hover {
+      opacity: 0;
+    }
+  }
+
+  /* Single image (no hover variant) like MOD1 */
+  .module-card-image-single {
+    opacity: 1 !important;
   }
 
   .module-image {
