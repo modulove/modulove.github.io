@@ -3,6 +3,8 @@ title: "MVMNT Firmware"
 layout: "single"
 ---
 
+<img src="https://dl.modulove.de/module/mvmnt/img/SyncLFO_Logo_Gradient.png" alt="MVMNT Logo" class="module-header-logo">
+
 # MVMNT Firmware Collection
 
 MVMNT (also known as SyncLFO) is a **smooth random CV and LFO generator** based on Hagiwo's Bezier Curve design. It breathes life into your patches with organic, evolving modulation.
@@ -39,7 +41,7 @@ MVMNT (also known as SyncLFO) is a **smooth random CV and LFO generator** based 
 - **FREQ**: Sets the rate of modulation
 - **TRIG Input**: Track & Hold - freezes current voltage
 
-{{< firmware_button hex="MVMNT" buttonText="Flash MVMNT Firmware" >}}
+{{< firmware_button hex="MVMNT" buttonText="Flash MVMNT Firmware" oledImage="https://dl.modulove.de/module/mvmnt/img/SyncLFO_Firmware_UI_SmoothRandom_887x512.png" >}}
 
 </div>
 
@@ -71,7 +73,7 @@ MVMNT (also known as SyncLFO) is a **smooth random CV and LFO generator** based 
 - **SYNC Input**: External clock for tempo sync
 - **Multiple Outputs**: Different waveforms and polarities
 
-{{< firmware_button hex="SyncLFO" buttonText="Flash SyncLFO Firmware" >}}
+{{< firmware_button hex="SyncLFO" buttonText="Flash SyncLFO Firmware" oledImage="https://dl.modulove.de/module/mvmnt/img/SyncLFO_Firmware_UI_SyncLFO_887x512.png" >}}
 
 </div>
 

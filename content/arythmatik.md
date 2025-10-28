@@ -3,6 +3,8 @@ title: "A-RYTH-MATIK Firmware"
 layout: "single"
 ---
 
+<img src="https://dl.modulove.de/module/arythmatik/img/A-Ryth-Matik_Logo_Gradient.png" alt="A-RYTH-MATIK Logo" class="module-header-logo">
+
 # A-RYTH-MATIK Firmware Collection
 
 The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on the Hagiwo design. Choose from multiple firmware options below, each offering a unique approach to rhythm generation.
@@ -39,7 +41,7 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
 - **CLK Input**: Clock source to advance patterns
 - **RST Input**: Reset all patterns to first step
 
-{{< encoder_firmware_button hex="ARYTHMATIK_Euclid" buttonText="Flash Euclidean Firmware" >}}
+{{< encoder_firmware_button hex="ARYTHMATIK_Euclid" buttonText="Flash Euclidean Firmware" oledImage="https://dl.modulove.de/module/arythmatik/img/A-Ryth-Matik_Firmware_UI_Euclidean_887x512.png" >}}
 
 </div>
 
@@ -102,7 +104,7 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
 - **CLK Input**: Advance sequencer
 - **RST Input**: Return to first step
 
-{{< encoder_firmware_button hex="ARYTHMATIK_Gate-seq" buttonText="Flash Gate Sequencer Firmware" >}}
+{{< encoder_firmware_button hex="ARYTHMATIK_Gate-seq" buttonText="Flash Gate Sequencer Firmware" oledImage="https://dl.modulove.de/module/arythmatik/img/A-Ryth-Matik_Firmware_UI_Gate_887x512.png" >}}
 
 </div>
 

@@ -3,6 +3,8 @@ title: "SCOPE Firmware"
 layout: "single"
 ---
 
+<img src="https://dl.modulove.de/module/scope/img/SCOPE_Logo_Gradient.png" alt="SCOPE Logo" class="module-header-logo">
+
 # SCOPE - Oscilloscope & Spectrum Analyzer
 
 SCOPE is a **visual analysis tool** for your Eurorack system. View your audio signals as waveforms or analyze their frequency spectrum in real-time on a crisp OLED display.
@@ -45,7 +47,7 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your audio si
 
 [🛠️ Configure SCOPE Settings](/config/scope.html){: .button}
 
-{{< firmware_button hex="SCOPE" buttonText="Flash SCOPE Firmware" >}}
+{{< firmware_button hex="SCOPE" buttonText="Flash SCOPE Firmware" oledImage="https://dl.modulove.de/module/scope/img/SCOPE_Firmware_UI_Main_887x512.png" >}}
 
 </div>
 

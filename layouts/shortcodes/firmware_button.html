@@ -1,4 +1,10 @@
 {{ if .Get "hex" }}
+{{ if .Get "oledImage" }}
+<div class="oled-preview-container">
+  <img src="{{ .Get "oledImage" }}" alt="{{ .Get "buttonText" }} OLED preview" class="oled-preview-image">
+</div>
+{{ end }}
+
 <div class="flash-firmware">
   <button
     class="flash-button flash-button-nano"
