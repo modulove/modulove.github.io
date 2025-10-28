@@ -130,7 +130,7 @@ paginate = 5
         identifier = "website"
         name = "Visit our website"
         url = "https://modulove.io/"
-        weight = 7
+        weight = 9
 
 [markup]
   [markup.goldmark]
