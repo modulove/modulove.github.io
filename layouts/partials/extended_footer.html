@@ -1,39 +1,118 @@
 <!-- Arduino Web Uploader -->
 <script src="https://github.com/dbuezas/arduino-web-uploader/releases/download/v1.0.0/main.js"></script>
 
+<!-- Theme Toggle Button -->
+<div class="theme-toggle-container">
+  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode">
+    <span class="theme-toggle-icon">☀️/🌙</span>
+  </button>
+</div>
+
 <style>
-  /* CSS Variables for Theme Colors */
+  /* Pink Panther Color Scheme - Light Mode */
   :root {
-    --accent-orange: #ff6b35;
-    --accent-teal: #00d9ff;
-    --accent-purple: #b19cd9;
-    --bg-light: #f5f5f5;
-    --bg-light-card: #ffffff;
-    --text-light: #2c2c2c;
-    --text-light-secondary: #666666;
-    --border-light: #e0e0e0;
-    --shadow-light: rgba(0, 0, 0, 0.1);
-    --bg-dark: #1a1a1a;
-    --bg-dark-card: #2a2a2a;
-    --text-dark: #e0e0e0;
-    --text-dark-secondary: #b0b0b0;
-    --border-dark: #404040;
-    --shadow-dark: rgba(0, 0, 0, 0.5);
+    --background-light: #fbf5ef;
+    --foreground-light: #100f0f;
+    --accent-light: #ee82cf;
+    --accent-secondary-light: #ff6b35;
+    --muted-light: #6f6e69;
+    --subtle-light: #cecdc3;
+    --card-bg-light: #fffcf7;
+    --shadow-light: rgba(16, 15, 15, 0.1);
   }
 
-  /* Light Theme (Default) */
+  /* Pink Panther Color Scheme - Dark Mode */
+  [data-theme="dark"] {
+    --background: #1a170f;
+    --foreground: #eceae5;
+    --accent: #ee82cf;
+    --accent-secondary: #00d9ff;
+    --muted: #878580;
+    --subtle: #343331;
+    --card-bg: #232019;
+    --shadow: rgba(0, 0, 0, 0.5);
+  }
+
+  /* Auto-detect system theme preference */
   @media (prefers-color-scheme: light) {
-    body {
-      background-color: var(--bg-light) !important;
-      color: var(--text-light) !important;
+    :root:not([data-theme="dark"]) {
+      --background: var(--background-light);
+      --foreground: var(--foreground-light);
+      --accent: var(--accent-light);
+      --accent-secondary: var(--accent-secondary-light);
+      --muted: var(--muted-light);
+      --subtle: var(--subtle-light);
+      --card-bg: var(--card-bg-light);
+      --shadow: var(--shadow-light);
     }
   }
 
-  /* Dark Theme */
   @media (prefers-color-scheme: dark) {
-    body {
-      background-color: var(--bg-dark) !important;
-      color: var(--text-dark) !important;
+    :root:not([data-theme="light"]) {
+      --background: #1a170f;
+      --foreground: #eceae5;
+      --accent: #ee82cf;
+      --accent-secondary: #00d9ff;
+      --muted: #878580;
+      --subtle: #343331;
+      --card-bg: #232019;
+      --shadow: rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  /* Force light theme when explicitly set */
+  [data-theme="light"] {
+    --background: var(--background-light);
+    --foreground: var(--foreground-light);
+    --accent: var(--accent-light);
+    --accent-secondary: var(--accent-secondary-light);
+    --muted: var(--muted-light);
+    --subtle: var(--subtle-light);
+    --card-bg: var(--card-bg-light);
+    --shadow: var(--shadow-light);
+  }
+
+  /* Apply theme colors to body */
+  body {
+    background-color: var(--background) !important;
+    color: var(--foreground) !important;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Theme Toggle Button */
+  .theme-toggle-container {
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+    z-index: 1000;
+  }
+
+  .theme-toggle {
+    background: var(--accent);
+    color: var(--background);
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    padding: 0.8em 1.2em;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px var(--shadow);
+  }
+
+  .theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px var(--shadow);
+  }
+
+  @media (max-width: 768px) {
+    .theme-toggle-container {
+      bottom: 1em;
+      right: 1em;
+    }
+
+    .theme-toggle {
+      padding: 0.6em 1em;
+      font-size: 1em;
     }
   }
 
@@ -46,59 +125,38 @@
   }
 
   .module-card {
-    background: var(--bg-light-card);
-    border: 2px solid var(--border-light);
+    background: var(--card-bg);
+    border: 2px solid var(--subtle);
     border-radius: 16px;
     padding: 2em;
     text-align: center;
     transition: all 0.3s ease;
     text-decoration: none;
-    color: var(--text-light);
+    color: var(--foreground);
     display: block;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .module-card {
-      background: var(--bg-dark-card);
-      border-color: var(--border-dark);
-      color: var(--text-dark);
-    }
   }
 
   .module-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 24px var(--shadow-light);
-    border-color: var(--accent-orange);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .module-card:hover {
-      box-shadow: 0 12px 24px var(--shadow-dark);
-      border-color: var(--accent-teal);
-    }
+    box-shadow: 0 12px 24px var(--shadow);
+    border-color: var(--accent);
   }
 
   .module-card h2 {
     margin-top: 0.5em;
     font-size: 1.8em;
-    color: var(--text-light);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .module-card h2 {
-      color: var(--text-dark);
-    }
+    color: var(--foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   .module-card p {
-    color: var(--text-light-secondary);
+    color: var(--muted);
     line-height: 1.6;
   }
 
-  @media (prefers-color-scheme: dark) {
-    .module-card p {
-      color: var(--text-dark-secondary);
-    }
+  .module-card p strong {
+    color: var(--accent);
   }
 
   .module-image {
@@ -107,47 +165,35 @@
     height: 200px;
     object-fit: cover;
     border-radius: 12px;
-    background: linear-gradient(135deg, var(--accent-orange), var(--accent-purple));
+    background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
     font-size: 3em;
     opacity: 0.9;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .module-image {
-      background: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
-    }
+    border: 4px solid var(--accent);
   }
 
   /* Firmware Section */
   .firmware-section {
     margin: 3em 0;
     padding: 2em;
-    background: var(--bg-light-card);
+    background: var(--card-bg);
     border-radius: 16px;
-    border-left: 4px solid var(--accent-orange);
-    box-shadow: 0 2px 8px var(--shadow-light);
+    border-left: 4px solid var(--accent);
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: all 0.3s ease;
   }
 
-  @media (prefers-color-scheme: dark) {
-    .firmware-section {
-      background: var(--bg-dark-card);
-      border-left-color: var(--accent-teal);
-      box-shadow: 0 2px 8px var(--shadow-dark);
-    }
+  .firmware-section:hover {
+    box-shadow: 0 4px 16px var(--shadow);
   }
 
   .firmware-section h2 {
-    color: var(--accent-orange);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .firmware-section h2 {
-      color: var(--accent-teal);
-    }
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   .firmware-header {
@@ -166,19 +212,14 @@
   .firmware-image {
     width: 100%;
     height: 200px;
-    background: linear-gradient(135deg, var(--accent-orange), var(--accent-purple));
+    background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 2em;
     opacity: 0.9;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .firmware-image {
-      background: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
-    }
+    border: 4px solid var(--accent);
   }
 
   .firmware-description {
@@ -190,25 +231,23 @@
   .firmware-description h4 {
     margin-top: 0;
     font-size: 1.2em;
-    color: var(--accent-orange);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .firmware-description h4 {
-      color: var(--accent-teal);
-    }
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   .firmware-description ul {
     margin: 0.5em 0;
-    padding-left: 1.5em;
-    color: var(--text-light-secondary);
+    padding-left: 2em;
+    color: var(--muted);
   }
 
-  @media (prefers-color-scheme: dark) {
-    .firmware-description ul {
-      color: var(--text-dark-secondary);
-    }
+  .firmware-description li {
+    margin: 0.3em 0;
+  }
+
+  .firmware-description li::marker {
+    color: var(--accent);
   }
 
   /* Flash Buttons */
@@ -220,15 +259,10 @@
   .flash-firmware > div {
     margin-top: 1.5em;
     padding-top: 1.5em;
-    border-top: 2px solid var(--border-light);
+    border-top: 2px solid var(--subtle);
     font-style: italic;
     opacity: 0.8;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .flash-firmware > div {
-      border-top-color: var(--border-dark);
-    }
+    color: var(--muted);
   }
 
   .flash-firmware button {
@@ -239,30 +273,20 @@
     font-size: 1em;
     font-weight: 600;
     cursor: pointer;
-    background: linear-gradient(135deg, var(--accent-orange) 0%, #ff8c5a 100%);
-    color: white;
-    border: none;
+    background: var(--accent);
+    color: var(--background);
+    border: 4px solid var(--accent);
     border-radius: 12px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .flash-firmware button {
-      background: linear-gradient(135deg, var(--accent-teal) 0%, #33e0ff 100%);
-      box-shadow: 0 4px 12px rgba(0, 217, 255, 0.3);
-    }
+    box-shadow: 0 4px 12px var(--shadow);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   .flash-firmware button:hover {
+    background: color-mix(in srgb, var(--accent) 85%, var(--background));
     transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.5);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .flash-firmware button:hover {
-      box-shadow: 0 6px 16px rgba(0, 217, 255, 0.5);
-    }
+    box-shadow: 0 6px 16px var(--shadow);
   }
 
   .flash-firmware button:active {
@@ -270,28 +294,18 @@
   }
 
   .flash-firmware button:disabled {
-    background: var(--text-light-secondary);
+    background: var(--subtle);
+    border-color: var(--subtle);
+    color: var(--muted);
     cursor: not-allowed;
     box-shadow: none;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .flash-firmware button:disabled {
-      background: var(--text-dark-secondary);
-    }
   }
 
   .upload-progress {
     font-style: italic;
     font-size: 0.9em;
     opacity: 0.8;
-    color: var(--text-light-secondary);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .upload-progress {
-      color: var(--text-dark-secondary);
-    }
+    color: var(--muted);
   }
 
   /* Feature Lists */
@@ -304,91 +318,144 @@
 
   .feature {
     padding: 1.5em;
-    background: var(--bg-light-card);
-    border: 2px solid var(--border-light);
+    background: var(--card-bg);
+    border: 2px solid var(--subtle);
     border-radius: 12px;
     transition: all 0.3s ease;
   }
 
-  @media (prefers-color-scheme: dark) {
-    .feature {
-      background: var(--bg-dark-card);
-      border-color: var(--border-dark);
-    }
-  }
-
   .feature:hover {
-    border-color: var(--accent-orange);
-    box-shadow: 0 4px 12px var(--shadow-light);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .feature:hover {
-      border-color: var(--accent-teal);
-      box-shadow: 0 4px 12px var(--shadow-dark);
-    }
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px var(--shadow);
   }
 
   .feature strong {
-    color: var(--accent-orange);
+    color: var(--accent);
     display: block;
     margin-bottom: 0.5em;
     font-size: 1.1em;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .feature strong {
-      color: var(--accent-teal);
-    }
-  }
-
-  /* Additional refinements for clean monochrome look */
-  hr {
-    border: none;
-    border-top: 2px solid var(--border-light);
-    margin: 3em 0;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    hr {
-      border-top-color: var(--border-dark);
-    }
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   /* Links */
   a {
-    color: var(--accent-orange);
+    color: var(--accent);
     transition: color 0.3s ease;
   }
 
-  @media (prefers-color-scheme: dark) {
-    a {
-      color: var(--accent-teal);
-    }
-  }
-
   a:hover {
-    color: #ff8c5a;
+    color: color-mix(in srgb, var(--accent) 75%, var(--foreground));
   }
 
-  @media (prefers-color-scheme: dark) {
-    a:hover {
-      color: #33e0ff;
-    }
+  /* Horizontal Rules */
+  hr {
+    border: none;
+    background: var(--accent);
+    height: 2px;
+    margin: 3em 0;
   }
 
-  /* Code blocks and inline code */
+  /* Code blocks */
   code {
-    background: var(--bg-light-card);
-    border: 1px solid var(--border-light);
+    background: var(--card-bg);
+    border: 1px solid var(--subtle);
     border-radius: 6px;
     padding: 0.2em 0.4em;
+    color: color-mix(in srgb, var(--foreground) 70%, var(--accent));
   }
 
-  @media (prefers-color-scheme: dark) {
-    code {
-      background: var(--bg-dark-card);
-      border-color: var(--border-dark);
-    }
+  pre {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--subtle);
+    border-radius: 12px;
+  }
+
+  /* Lists */
+  ul li::marker,
+  ol li::marker {
+    color: var(--accent);
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--foreground);
+  }
+
+  h1 {
+    text-decoration-color: var(--accent);
+  }
+
+  /* Tables */
+  table,
+  th,
+  td {
+    border-color: var(--subtle);
+  }
+
+  th {
+    background: var(--card-bg);
+    color: var(--accent);
+  }
+
+  /* Blockquotes */
+  blockquote {
+    border-color: var(--accent);
+  }
+
+  blockquote:before {
+    color: var(--accent);
   }
 </style>
+
+<script>
+  // Theme toggle functionality
+  (function() {
+    const toggleButton = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+
+    // Get stored theme preference or use system preference
+    function getInitialTheme() {
+      const stored = localStorage.getItem('theme');
+      if (stored) {
+        return stored;
+      }
+
+      // Check system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        return 'light';
+      }
+
+      return 'dark';
+    }
+
+    // Apply theme
+    function setTheme(theme) {
+      html.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+    }
+
+    // Initialize theme
+    const initialTheme = getInitialTheme();
+    setTheme(initialTheme);
+
+    // Toggle theme on button click
+    if (toggleButton) {
+      toggleButton.addEventListener('click', function() {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+      });
+    }
+
+    // Listen for system theme changes
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        // Only auto-switch if user hasn't manually set a preference
+        if (!localStorage.getItem('theme')) {
+          setTheme(e.matches ? 'dark' : 'light');
+        }
+      });
+    }
+  })();
+</script>
