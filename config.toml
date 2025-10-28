@@ -107,6 +107,11 @@ paginate = 5
         name = "About"
         url = "/about"
         weight = 6
+      [[languages.en.menu.main]]
+        identifier = "website"
+        name = "Visit our website"
+        url = "https://modulove.io/"
+        weight = 7
 
 [module]
   [module.hugoVersion]
