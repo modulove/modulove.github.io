@@ -11,24 +11,13 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 
 ---
 
-<div class="firmware-section">
-
-## 3-Channel LFO
-
-<div class="firmware-header">
-  <div class="firmware-image">〰️</div>
-  <div class="firmware-description">
-    <h4>Features</h4>
-    <ul>
-      <li>3 independent LFO outputs</li>
-      <li>Selectable waveforms: Triangle, Square, Sine, Random Slope</li>
-      <li>Individual frequency control per channel</li>
-      <li>Global CV frequency input affects all channels</li>
-      <li>Frequency range: 0.02 - 5Hz</li>
-      <li>Waveform selection saved to EEPROM</li>
-    </ul>
-  </div>
-</div>
+{{< mod1_firmware title="3-Channel LFO" hex="MOD1_3LFO" buttonText="Flash 3-Channel LFO" image="3lfo" >}}
+- 3 independent LFO outputs
+- Selectable waveforms: Triangle, Square, Sine, Random Slope
+- Individual frequency control per channel
+- Global CV frequency input affects all channels
+- Frequency range: 0.02 - 5Hz
+- Waveform selection saved to EEPROM
 
 **Perfect for:** Multi-source modulation, complex movement, parallel LFO routing
 
@@ -38,31 +27,17 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 - **POT3**: LFO3 Frequency
 - **F1 Input**: Global frequency CV (affects all channels)
 - **Button**: Change waveform (Triangle → Square → Sine → Random Slope)
-
-{{< firmware_button hex="MOD1_3LFO" buttonText="Flash 3-Channel LFO" >}}
-
-</div>
+{{< /mod1_firmware >}}
 
 ---
 
-<div class="firmware-section">
-
-## ADSR Envelope Generator
-
-<div class="firmware-header">
-  <div class="firmware-image">📈</div>
-  <div class="firmware-description">
-    <h4>Features</h4>
-    <ul>
-      <li>Classic ADSR envelope with CV output</li>
-      <li>Attack phase gate output (gate-to-trigger conversion)</li>
-      <li>Decay-to-release phase gate output (trigger-to-gate conversion)</li>
-      <li>6-level sustain control via button</li>
-      <li>PWM envelope output</li>
-      <li>Sustain level saved to EEPROM</li>
-    </ul>
-  </div>
-</div>
+{{< mod1_firmware title="ADSR Envelope Generator" hex="MOD1_ADSR" buttonText="Flash ADSR Envelope" image="adsr" >}}
+- Classic ADSR envelope with CV output
+- Attack phase gate output (gate-to-trigger conversion)
+- Decay-to-release phase gate output (trigger-to-gate conversion)
+- 6-level sustain control via button
+- PWM envelope output
+- Sustain level saved to EEPROM
 
 **Perfect for:** VCA control, filter modulation, percussion shaping
 
@@ -75,10 +50,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 - **F3 Output**: Decay-to-release phase gate
 - **F4 Output**: ADSR envelope CV
 - **Button**: Cycle through 6 sustain levels
-
-{{< firmware_button hex="MOD1_ADSR" buttonText="Flash ADSR Envelope" >}}
-
-</div>
+{{< /mod1_firmware >}}
 
 ---
 
@@ -116,23 +88,12 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 
 ---
 
-<div class="firmware-section">
-
-## Envelope Generator (AR)
-
-<div class="firmware-header">
-  <div class="firmware-image">⚡</div>
-  <div class="firmware-description">
-    <h4>Features</h4>
-    <ul>
-      <li>Attack-Release envelope generator</li>
-      <li>3 outputs: EG, Inverted EG, End-of-cycle pulse</li>
-      <li>Self-patchable for LFO or clock functionality</li>
-      <li>Output level control</li>
-      <li>Exponential curves via lookup table</li>
-    </ul>
-  </div>
-</div>
+{{< mod1_firmware title="Envelope Generator (AR)" hex="MOD1_EG" buttonText="Flash AR Envelope" image="eg" >}}
+- Attack-Release envelope generator
+- 3 outputs: EG, Inverted EG, End-of-cycle pulse
+- Self-patchable for LFO or clock functionality
+- Output level control
+- Exponential curves via lookup table
 
 **Perfect for:** Percussion, fast envelopes, gate-to-trigger conversion
 
@@ -145,31 +106,17 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 - **F3 Output**: Inverted EG output
 - **F4 Output**: EG output
 - **Button**: Manual trigger
-
-{{< firmware_button hex="MOD1_EG" buttonText="Flash AR Envelope" >}}
-
-</div>
+{{< /mod1_firmware >}}
 
 ---
 
-<div class="firmware-section">
-
-## Euclidean Rhythm Sequencer
-
-<div class="firmware-header">
-  <div class="firmware-image">🔢</div>
-  <div class="firmware-description">
-    <h4>Features</h4>
-    <ul>
-      <li>8 or 16-step Euclidean rhythm generator</li>
-      <li>Adjustable number of hits (0-8)</li>
-      <li>Output probability control (randomize triggers)</li>
-      <li>Step length: 8 steps ↔ 16 steps</li>
-      <li>CV control for number of hits</li>
-      <li>Reset input</li>
-    </ul>
-  </div>
-</div>
+{{< mod1_firmware title="Euclidean Rhythm Sequencer" hex="MOD1_Euclid" buttonText="Flash Euclidean Sequencer" image="euclid" >}}
+- 8 or 16-step Euclidean rhythm generator
+- Adjustable number of hits (0-8)
+- Output probability control (randomize triggers)
+- Step length: 8 steps ↔ 16 steps
+- CV control for number of hits
+- Reset input
 
 **Perfect for:** Generative rhythms, polyrhythmic patterns, controlled randomness
 
@@ -182,31 +129,17 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 - **F3 Input**: Number of hits CV
 - **F4 Output**: Trigger output
 - **Button**: Manual reset
-
-{{< firmware_button hex="MOD1_Euclid" buttonText="Flash Euclidean Sequencer" >}}
-
-</div>
+{{< /mod1_firmware >}}
 
 ---
 
-<div class="firmware-section">
-
-## LFO (Single Channel)
-
-<div class="firmware-header">
-  <div class="firmware-image">🌊</div>
-  <div class="firmware-description">
-    <h4>Features</h4>
-    <ul>
-      <li>5 waveforms: Sine, Triangle, Sawtooth, Square, Random Slope</li>
-      <li>Continuous waveform selection via pot</li>
-      <li>Frequency CV input</li>
-      <li>Waveform CV input</li>
-      <li>Output level CV input</li>
-      <li>Switchable frequency range (saved to EEPROM)</li>
-    </ul>
-  </div>
-</div>
+{{< mod1_firmware title="LFO (Single Channel)" hex="MOD1_LFO" buttonText="Flash Single LFO" image="lfo" >}}
+- 5 waveforms: Sine, Triangle, Sawtooth, Square, Random Slope
+- Continuous waveform selection via pot
+- Frequency CV input
+- Waveform CV input
+- Output level CV input
+- Switchable frequency range (saved to EEPROM)
 
 **Perfect for:** Classic modulation, CV mixing, voltage-controlled waveshaping
 
@@ -219,10 +152,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 - **F3 Input**: Output level CV
 - **F4 Output**: LFO output
 - **Button**: Change frequency range
-
-{{< firmware_button hex="MOD1_LFO" buttonText="Flash Single LFO" >}}
-
-</div>
+{{< /mod1_firmware >}}
 
 ---
 
@@ -260,25 +190,14 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 
 ---
 
-<div class="firmware-section">
-
-## Random CV Sequencer
-
-<div class="firmware-header">
-  <div class="firmware-image">🎲</div>
-  <div class="firmware-description">
-    <h4>Features</h4>
-    <ul>
-      <li>Quantized random CV output (C2-C5 range)</li>
-      <li>Step lengths: 3, 4, 5, 8, 16, 32</li>
-      <li>Output level sets top note (0-36 semitones)</li>
-      <li>Trigger probability control</li>
-      <li>Scale selection via button (multiple scales)</li>
-      <li>Serial tuning menu (hold button at boot)</li>
-      <li>Calibration table stored in EEPROM</li>
-    </ul>
-  </div>
-</div>
+{{< mod1_firmware title="Random CV Sequencer" hex="MOD1_randomCVsequencer" buttonText="Flash Random CV Seq" image="random_cv_seq" >}}
+- Quantized random CV output (C2-C5 range)
+- Step lengths: 3, 4, 5, 8, 16, 32
+- Output level sets top note (0-36 semitones)
+- Trigger probability control
+- Scale selection via button (multiple scales)
+- Serial tuning menu (hold button at boot)
+- Calibration table stored in EEPROM
 
 **Perfect for:** Generative melodies, random sequences, quantized randomness
 
@@ -291,10 +210,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 - **F3 Output**: CV output (quantized)
 - **F4 Output**: Trigger output
 - **Button**: Re-randomize / Scale select (long press)
-
-{{< firmware_button hex="MOD1_randomCVsequencer" buttonText="Flash Random CV Seq" >}}
-
-</div>
+{{< /mod1_firmware >}}
 
 ---
 
@@ -336,24 +252,13 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 
 ---
 
-<div class="firmware-section">
-
-## Sync LFO
-
-<div class="firmware-header">
-  <div class="firmware-image">🔄</div>
-  <div class="firmware-description">
-    <h4>Features</h4>
-    <ul>
-      <li>Clock-synchronized LFO</li>
-      <li>5 waveforms: Sine, Triangle, Sawtooth, Square, Random</li>
-      <li>Division rate control</li>
-      <li>Waveform selection via pot or CV</li>
-      <li>Output level control</li>
-      <li>External clock input via button or F1</li>
-    </ul>
-  </div>
-</div>
+{{< mod1_firmware title="Sync LFO" hex="MOD1_SyncLFO" buttonText="Flash Sync LFO" image="sync_lfo" >}}
+- Clock-synchronized LFO
+- 5 waveforms: Sine, Triangle, Sawtooth, Square, Random
+- Division rate control
+- Waveform selection via pot or CV
+- Output level control
+- External clock input via button or F1
 
 **Perfect for:** Tempo-synced modulation, rhythmic LFO, clocked movement
 
@@ -366,10 +271,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 - **F3 Input**: Waveform select CV
 - **F4 Output**: LFO output
 - **Button**: Use external clock
-
-{{< firmware_button hex="MOD1_SyncLFO" buttonText="Flash Sync LFO" >}}
-
-</div>
+{{< /mod1_firmware >}}
 
 ---
 
