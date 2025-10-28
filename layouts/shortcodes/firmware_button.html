@@ -1,6 +1,7 @@
 {{ if .Get "hex" }}
 <div class="flash-firmware">
   <button
+    class="flash-button flash-button-nano"
     arduino-uploader
     hex-href='/releases/{{ .Get "hex" | safeURL }}.nano.hex'
     board="nano"
@@ -11,7 +12,17 @@
       &nbsp;
       <span class="upload-progress"></span>
   </button>
+
+  <div class="advanced-options">
+    <label class="checkbox-label">
+      <input type="checkbox" class="bootloader-toggle">
+      <span>Show old bootloader option</span>
+    </label>
+  </div>
+
   <button
+    class="flash-button flash-button-old-bootloader"
+    style="display: none;"
     arduino-uploader
     hex-href='/releases/{{ .Get "hex" | safeURL }}.nanoOldBootloader.hex'
     board="nanoOldBootloader"
