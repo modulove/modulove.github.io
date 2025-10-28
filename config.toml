@@ -4,6 +4,9 @@ title = "Modulove Firmware"
 theme = "terminal"
 paginate = 5
 
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
 [params]
   # dir name of your main content (default is `content/posts`).
   # the list of set content will show up on your index page (baseurl).
@@ -14,6 +17,9 @@ paginate = 5
 
   # Enable theme toggle button
   showThemeToggle = true
+
+  # Enable search
+  showSearch = true
 
   # if you set this to 0, only submenu trigger will be visible
   showMenuItems = 5
@@ -75,6 +81,9 @@ paginate = 5
     [languages.en.params.logo]
       logoText = "Modulove Firmware"
       logoHomeLink = "/"
+      # Path to logo SVG files in static folder
+      logoPath = "/images/modulove-wortmarke.svg"
+      logoSimplePath = "/images/modulove-heart.svg"
 
     [languages.en.menu]
       [[languages.en.menu.main]]
@@ -112,6 +121,11 @@ paginate = 5
         name = "Visit our website"
         url = "https://modulove.io/"
         weight = 7
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
 
 [module]
   [module.hugoVersion]

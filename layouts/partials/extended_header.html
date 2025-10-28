@@ -1,0 +1,48 @@
+<!-- Theme Toggle Button in Header -->
+<button onclick="window.toggleTheme()" class="header-theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
+  <span class="theme-icon">☀️/🌙</span>
+</button>
+
+<style>
+  .header-theme-toggle {
+    background: transparent;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.5em 0.8em;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 1em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header-theme-toggle:hover {
+    background: var(--accent);
+    color: var(--background);
+  }
+
+  .theme-icon {
+    line-height: 1;
+  }
+
+  /* Position the toggle in the header */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header .header-theme-toggle {
+    margin-left: auto;
+  }
+
+  @media (max-width: 768px) {
+    .header-theme-toggle {
+      padding: 0.4em 0.6em;
+      font-size: 0.9em;
+    }
+  }
+</style>
