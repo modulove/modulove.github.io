@@ -1,0 +1,71 @@
+{{ $hex := .Get "hex" }}
+{{ $buttonText := .Get "buttonText" }}
+{{ $imageSlug := .Get "image" }}
+
+<div class="firmware-section mod1-firmware">
+  <h2>{{ .Get "title" }}</h2>
+
+  <div class="mod1-firmware-layout">
+    {{ if $imageSlug }}
+    <div class="mod1-image-container">
+      <a href="https://modulove.io/wp-content/uploads/2025/04/MDL_HAGIWO-MOD1__{{ $imageSlug }}.jpg"
+         class="mod1-image-link"
+         data-lightbox="mod1-{{ $imageSlug }}">
+        <img
+          src="https://modulove.io/wp-content/uploads/2025/04/MDL_HAGIWO-MOD1__{{ $imageSlug }}-300x1024.jpg"
+          alt="{{ .Get "title" }} module design"
+          class="mod1-module-image"
+          loading="lazy">
+        <div class="image-overlay">
+          <span>🔍 Click to enlarge</span>
+        </div>
+      </a>
+    </div>
+    {{ end }}
+
+    <div class="mod1-content">
+      <div class="firmware-description">
+        <h4>Features</h4>
+        {{ .Inner }}
+      </div>
+
+      {{ if $hex }}
+      <div class="flash-firmware">
+        <button
+          class="flash-button flash-button-nano"
+          arduino-uploader
+          hex-href='/releases/{{ $hex | safeURL }}.nano.hex'
+          board="nano"
+          [optional]verify
+          [optional]port-filters='[{"usbProductId":46388,"usbVendorId":1241}]'
+        >
+          {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }} to Arduino Nano
+          &nbsp;
+          <span class="upload-progress"></span>
+        </button>
+
+        <div class="advanced-options">
+          <label class="checkbox-label">
+            <input type="checkbox" class="bootloader-toggle">
+            <span>Show old bootloader option</span>
+          </label>
+        </div>
+
+        <button
+          class="flash-button flash-button-old-bootloader"
+          style="display: none;"
+          arduino-uploader
+          hex-href='/releases/{{ $hex | safeURL }}.nanoOldBootloader.hex'
+          board="nanoOldBootloader"
+          [optional]verify
+          [optional]port-filters='[{"usbProductId":46388,"usbVendorId":1241}]'
+        >
+          {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }} to Arduino Nano (old bootloader)
+          &nbsp;
+          <span class="upload-progress"></span>
+        </button>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>

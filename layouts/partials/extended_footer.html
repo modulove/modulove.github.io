@@ -441,6 +441,143 @@
     opacity: 0.8;
     color: var(--muted);
   }
+
+  /* MOD1 Firmware Layout with Images */
+  .mod1-firmware-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2em;
+    align-items: start;
+  }
+
+  @media (max-width: 968px) {
+    .mod1-firmware-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .mod1-image-container {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .mod1-image-link {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 4px solid var(--accent);
+    transition: all 0.3s ease;
+    cursor: zoom-in;
+  }
+
+  .mod1-image-link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px var(--shadow);
+    border-color: var(--accent-secondary);
+  }
+
+  .mod1-module-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .mod1-image-link:hover .mod1-module-image {
+    transform: scale(1.05);
+  }
+
+  .image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, var(--background), transparent);
+    padding: 1em;
+    text-align: center;
+    font-size: 0.85em;
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .mod1-image-link:hover .image-overlay {
+    opacity: 1;
+  }
+
+  .mod1-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+  }
+
+  /* Lightbox Modal */
+  .lightbox-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    cursor: zoom-out;
+  }
+
+  .lightbox-modal.active {
+    display: flex;
+  }
+
+  .lightbox-content {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    border: 4px solid var(--accent);
+    border-radius: 8px;
+    box-shadow: 0 0 40px var(--shadow);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 2em;
+    right: 2em;
+    font-size: 2.5em;
+    color: var(--accent);
+    cursor: pointer;
+    background: var(--background);
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    width: 1.5em;
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: all 0.3s ease;
+  }
+
+  .lightbox-close:hover {
+    background: var(--accent);
+    color: var(--background);
+    transform: rotate(90deg);
+  }
+
+  @media (max-width: 768px) {
+    .lightbox-close {
+      top: 1em;
+      right: 1em;
+      font-size: 2em;
+    }
+
+    .lightbox-content {
+      max-width: 95%;
+      max-height: 85vh;
+    }
+  }
 </style>
 
 <script>
@@ -515,6 +652,55 @@
         if (reversedSection) {
           reversedSection.style.display = this.checked ? 'block' : 'none';
         }
+      });
+    });
+
+    // Lightbox functionality for MOD1 images
+    const lightboxLinks = document.querySelectorAll('.mod1-image-link');
+    let lightboxModal = document.querySelector('.lightbox-modal');
+
+    // Create lightbox modal if it doesn't exist
+    if (!lightboxModal && lightboxLinks.length > 0) {
+      lightboxModal = document.createElement('div');
+      lightboxModal.className = 'lightbox-modal';
+      lightboxModal.innerHTML = `
+        <span class="lightbox-close">×</span>
+        <img src="" alt="" class="lightbox-content">
+      `;
+      document.body.appendChild(lightboxModal);
+
+      const lightboxContent = lightboxModal.querySelector('.lightbox-content');
+      const closeButton = lightboxModal.querySelector('.lightbox-close');
+
+      // Close lightbox on click
+      lightboxModal.addEventListener('click', function(e) {
+        if (e.target === lightboxModal || e.target === closeButton) {
+          lightboxModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+
+      // Close on Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightboxModal.classList.contains('active')) {
+          lightboxModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    }
+
+    // Add click handlers to all MOD1 image links
+    lightboxLinks.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const imgSrc = this.getAttribute('href');
+        const imgAlt = this.querySelector('img').getAttribute('alt');
+        const lightboxContent = lightboxModal.querySelector('.lightbox-content');
+
+        lightboxContent.src = imgSrc;
+        lightboxContent.alt = imgAlt;
+        lightboxModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
       });
     });
   });
