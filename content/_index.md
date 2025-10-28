@@ -3,7 +3,7 @@ title: "Modulove Firmware Hub"
 layout: "home"
 ---
 
-# Welcome to Modulove Firmware Archive
+# Welcome to the Modulove Firmware Archive
 
 **Flash firmware directly from your browser** - No Arduino IDE required!
 
