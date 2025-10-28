@@ -1,0 +1,101 @@
+{{ $uf2 := .Get "uf2" }}
+{{ $buttonText := .Get "buttonText" }}
+
+<div class="flash-firmware rp2350-upload">
+  <div class="rp2350-instructions">
+    <h4>Upload Instructions for RP2350:</h4>
+    <ol>
+      <li><strong>Disconnect Eurorack power</strong> before connecting USB</li>
+      <li>Hold <strong>BOOTSEL</strong> button while connecting USB (or hold BOOTSEL + press RESET)</li>
+      <li>Device appears as <strong>RPI-RP2</strong> USB drive</li>
+      <li>Download firmware and drag to the RPI-RP2 drive</li>
+      <li>Module will automatically reboot with new firmware</li>
+    </ol>
+  </div>
+
+  <a
+    href="/releases/{{ $uf2 | safeURL }}.uf2"
+    download="{{ $uf2 }}.uf2"
+    class="flash-button rp2350-download-button"
+  >
+    {{ with $buttonText }}{{ . | plainify }}{{ else -}} Download Firmware {{ end }}
+    <span class="file-format">(.uf2 file for RP2350)</span>
+  </a>
+
+  <div class="rp2350-safety-warning">
+    ⚠️ <strong>Safety:</strong> Always disconnect eurorack power before connecting USB! Only use USB power during firmware updates.
+  </div>
+</div>
+
+<style>
+  .rp2350-upload {
+    background: var(--card-bg);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 1.5em;
+    margin: 2em 0;
+  }
+
+  .rp2350-instructions {
+    margin-bottom: 1.5em;
+    padding: 1em;
+    background: var(--background);
+    border-left: 4px solid var(--accent);
+    border-radius: 4px;
+  }
+
+  .rp2350-instructions h4 {
+    margin-top: 0;
+    color: var(--accent);
+    font-size: 1.1em;
+  }
+
+  .rp2350-instructions ol {
+    margin: 0.5em 0 0 1.5em;
+    padding: 0;
+  }
+
+  .rp2350-instructions li {
+    margin: 0.5em 0;
+    color: var(--foreground);
+  }
+
+  .rp2350-download-button {
+    display: inline-block;
+    text-decoration: none;
+    background: var(--accent);
+    color: var(--background);
+    padding: 1em 1.5em;
+    border-radius: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+
+  .rp2350-download-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow);
+    background: color-mix(in srgb, var(--accent) 85%, var(--background));
+  }
+
+  .file-format {
+    display: block;
+    font-size: 0.85em;
+    font-weight: normal;
+    opacity: 0.9;
+    margin-top: 0.3em;
+  }
+
+  .rp2350-safety-warning {
+    margin-top: 1.5em;
+    padding: 1em;
+    background: color-mix(in srgb, var(--accent) 10%, var(--background));
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+</style>
+{{end}}

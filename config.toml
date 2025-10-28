@@ -112,10 +112,20 @@ paginate = 5
         url = "/mod1"
         weight = 5
       [[languages.en.menu.main]]
+        identifier = "utf9"
+        name = "UTF-9"
+        url = "/utf9"
+        weight = 6
+      [[languages.en.menu.main]]
+        identifier = "mod2"
+        name = "MOD2"
+        url = "/mod2"
+        weight = 7
+      [[languages.en.menu.main]]
         identifier = "about"
         name = "About"
         url = "/about"
-        weight = 6
+        weight = 8
       [[languages.en.menu.main]]
         identifier = "website"
         name = "Visit our website"

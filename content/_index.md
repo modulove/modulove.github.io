@@ -52,6 +52,20 @@ Here you find the Open-source firmware for our Eurorack modules. Choose your mod
     <p>Versatile utility module collection. LFOs, envelopes, logic, clocks, sequencers, and more in one compact module.</p>
     <p><strong>12 firmware options available</strong></p>
   </a>
+
+  <a href="/utf9" class="module-card">
+    <div class="module-image">🥁</div>
+    <h2>UTF-9-SAMPLIFIED</h2>
+    <p>Sample-based drum module. 4-track step sequencer with MIDI support. Choose from 6 drumkit flavors.</p>
+    <p><strong>6 drumkit firmware options</strong></p>
+  </a>
+
+  <a href="/mod2" class="module-card">
+    <div class="module-image">⚡</div>
+    <h2>MOD2</h2>
+    <p>RP2350-based digital percussion. 5 synthesis algorithms for kicks, claps, hats, and experimental sounds.</p>
+    <p><strong>5 firmware options (RP2350)</strong></p>
+  </a>
 </div>
 
 ---

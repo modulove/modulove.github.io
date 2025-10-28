@@ -143,6 +143,38 @@ jobs:
             fi
           done < /tmp/mod1_urls.txt
 
+          # Get the latest release from modulove/utf-9-samplified
+          echo "Downloading UTF-9-SAMPLIFIED firmware..."
+          UTF9_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            https://api.github.com/repos/modulove/utf-9-samplified/releases/latest)
+
+          # Extract download URLs for .hex files
+          echo "$UTF9_RELEASE" | jq -r '.assets[] | select(.name | endswith(".hex")) | .browser_download_url' > /tmp/utf9_urls.txt
+
+          # Download each .hex file
+          while read url; do
+            if [ ! -z "$url" ]; then
+              echo "Downloading: $url"
+              wget -q -P public/releases "$url" || echo "Failed to download $url"
+            fi
+          done < /tmp/utf9_urls.txt
+
+          # Get the latest release from modulove/MOD2
+          echo "Downloading MOD2 firmware..."
+          MOD2_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            https://api.github.com/repos/modulove/MOD2/releases/latest)
+
+          # Extract download URLs for .uf2 files (RP2350 format)
+          echo "$MOD2_RELEASE" | jq -r '.assets[] | select(.name | endswith(".uf2")) | .browser_download_url' > /tmp/mod2_urls.txt
+
+          # Download each .uf2 file
+          while read url; do
+            if [ ! -z "$url" ]; then
+              echo "Downloading: $url"
+              wget -q -P public/releases "$url" || echo "Failed to download $url"
+            fi
+          done < /tmp/mod2_urls.txt
+
           # List downloaded files
           echo "Downloaded firmware files:"
           ls -lh public/releases/
