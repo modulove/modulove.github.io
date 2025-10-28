@@ -35,28 +35,7 @@
       {{ if $hex }}
       <div class="flash-firmware">
         <button
-          class="flash-button flash-button-nano"
-          arduino-uploader
-          hex-href='/releases/{{ $hex | safeURL }}.nano.hex'
-          board="nano"
-          [optional]verify
-          [optional]port-filters='[{"usbProductId":46388,"usbVendorId":1241}]'
-        >
-          {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }} to Arduino Nano
-          &nbsp;
-          <span class="upload-progress"></span>
-        </button>
-
-        <div class="advanced-options">
-          <label class="checkbox-label">
-            <input type="checkbox" class="bootloader-toggle">
-            <span>Show old bootloader option</span>
-          </label>
-        </div>
-
-        <button
           class="flash-button flash-button-old-bootloader"
-          style="display: none;"
           arduino-uploader
           hex-href='/releases/{{ $hex | safeURL }}.nanoOldBootloader.hex'
           board="nanoOldBootloader"
@@ -64,6 +43,27 @@
           [optional]port-filters='[{"usbProductId":46388,"usbVendorId":1241}]'
         >
           {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }} to Arduino Nano (old bootloader)
+          &nbsp;
+          <span class="upload-progress"></span>
+        </button>
+
+        <div class="advanced-options">
+          <label class="checkbox-label">
+            <input type="checkbox" class="bootloader-toggle">
+            <span>Show new bootloader option</span>
+          </label>
+        </div>
+
+        <button
+          class="flash-button flash-button-nano"
+          style="display: none;"
+          arduino-uploader
+          hex-href='/releases/{{ $hex | safeURL }}.nano.hex'
+          board="nano"
+          [optional]verify
+          [optional]port-filters='[{"usbProductId":46388,"usbVendorId":1241}]'
+        >
+          {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }} to Arduino Nano
           &nbsp;
           <span class="upload-progress"></span>
         </button>

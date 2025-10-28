@@ -159,6 +159,16 @@
     color: var(--accent);
   }
 
+  .module-card-image {
+    width: 100%;
+    max-width: 250px;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 6px;
+    margin: 0 auto;
+    display: block;
+  }
+
   .module-image {
     width: 100%;
     max-width: 250px;
@@ -681,21 +691,35 @@
   // Checkbox toggle functionality for firmware buttons
   document.addEventListener('DOMContentLoaded', function() {
     // Handle bootloader toggle checkboxes - show only ONE button at a time
+    // Default is old bootloader, checkbox switches to new bootloader
     document.querySelectorAll('.bootloader-toggle').forEach(function(checkbox) {
       checkbox.addEventListener('change', function() {
         const flashFirmwareDiv = this.closest('.flash-firmware');
         const nanoButton = flashFirmwareDiv.querySelector('.flash-button-nano');
         const oldBootloaderButton = flashFirmwareDiv.querySelector('.flash-button-old-bootloader');
 
+        // Also handle reversed encoder buttons if they exist
+        const reversedSection = flashFirmwareDiv.querySelector('.reversed-encoder-section');
+        const reversedNanoButton = reversedSection ? reversedSection.querySelector('.flash-button-reversed') : null;
+        const reversedOldButton = reversedSection ? reversedSection.querySelector('.flash-button-reversed-old') : null;
+
         if (nanoButton && oldBootloaderButton) {
           if (this.checked) {
-            // Show old bootloader, hide nano
-            nanoButton.style.display = 'none';
-            oldBootloaderButton.style.display = 'block';
-          } else {
-            // Show nano, hide old bootloader
+            // Show new bootloader, hide old bootloader
             nanoButton.style.display = 'block';
             oldBootloaderButton.style.display = 'none';
+            if (reversedNanoButton && reversedOldButton) {
+              reversedNanoButton.style.display = 'block';
+              reversedOldButton.style.display = 'none';
+            }
+          } else {
+            // Show old bootloader, hide new bootloader
+            nanoButton.style.display = 'none';
+            oldBootloaderButton.style.display = 'block';
+            if (reversedNanoButton && reversedOldButton) {
+              reversedNanoButton.style.display = 'none';
+              reversedOldButton.style.display = 'block';
+            }
           }
         }
       });
@@ -724,12 +748,13 @@
               bootloaderToggle.parentElement.style.display = 'block';
             }
             // Restore button visibility based on bootloader checkbox state
-            const showOldBootloader = bootloaderToggle && bootloaderToggle.checked;
+            // Default is old bootloader (unchecked), new bootloader when checked
+            const showNewBootloader = bootloaderToggle && bootloaderToggle.checked;
             normalButtons.forEach(btn => {
               if (btn.classList.contains('flash-button-nano')) {
-                btn.style.display = showOldBootloader ? 'none' : 'block';
+                btn.style.display = showNewBootloader ? 'block' : 'none';
               } else if (btn.classList.contains('flash-button-old-bootloader')) {
-                btn.style.display = showOldBootloader ? 'block' : 'none';
+                btn.style.display = showNewBootloader ? 'none' : 'block';
               }
             });
           }
