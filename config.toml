@@ -82,8 +82,8 @@ paginate = 5
       logoText = "Modulove Firmware"
       logoHomeLink = "/"
       # Path to logo SVG files in static folder
-      logoPath = "/images/modulove-wortmarke.svg"
-      logoSimplePath = "/images/modulove-heart.svg"
+      logoPath = "/images/logos/Modulove_Wordmark.svg"
+      logoSimplePath = "/images/logos/Modulove_Heart_Icon_SVG.svg"
 
     [languages.en.menu]
       [[languages.en.menu.main]]
