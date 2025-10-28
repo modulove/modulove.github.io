@@ -54,24 +54,13 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 
 ---
 
-<div class="firmware-section">
-
-## Clock Divider/Multiplier
-
-<div class="firmware-header">
-  <div class="firmware-image">⏱️</div>
-  <div class="firmware-description">
-    <h4>Features</h4>
-    <ul>
-      <li>3 independent clock outputs</li>
-      <li>Division/multiplication rates: 1, 2, 3, 4, 8, 16</li>
-      <li>Mode switching: Divider ↔ Multiplier</li>
-      <li>Pin change interrupts for zero-latency edge detection</li>
-      <li>Direct port manipulation for fastest I/O</li>
-      <li>Mode stored in EEPROM</li>
-    </ul>
-  </div>
-</div>
+{{< mod1_firmware title="Clock Divider/Multiplier" hex="MOD1_clock_div_multi" buttonText="Flash Clock Div/Multi" image="clock" >}}
+- 3 independent clock outputs
+- Division/multiplication rates: 1, 2, 3, 4, 8, 16
+- Mode switching: Divider ↔ Multiplier
+- Pin change interrupts for zero-latency edge detection
+- Direct port manipulation for fastest I/O
+- Mode stored in EEPROM
 
 **Perfect for:** Polyrhythms, tempo variations, synchronized modulation
 
@@ -81,10 +70,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 - **POT3**: Output 3 rate
 - **F1 Input**: Clock input
 - **Button**: Toggle Divider/Multiplier mode
-
-{{< firmware_button hex="MOD1_clock_div_multi" buttonText="Flash Clock Div/Multi" >}}
-
-</div>
+{{< /mod1_firmware >}}
 
 ---
 
@@ -214,23 +200,12 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 
 ---
 
-<div class="firmware-section">
-
-## Square Wave VCO
-
-<div class="firmware-header">
-  <div class="firmware-image">🎹</div>
-  <div class="firmware-description">
-    <h4>Features</h4>
-    <ul>
-      <li>V/Oct tracking square wave oscillator</li>
-      <li>Octave control with CV input</li>
-      <li>Vibrato LFO with depth control</li>
-      <li>Chiptune-style octave LFO (toggle on/off)</li>
-      <li>Audio-rate output</li>
-    </ul>
-  </div>
-</div>
+{{< mod1_firmware title="Square Wave VCO" hex="MOD1_square_vco" buttonText="Flash Square VCO" image="vco" >}}
+- V/Oct tracking square wave oscillator
+- Octave control with CV input
+- Vibrato LFO with depth control
+- Chiptune-style octave LFO (toggle on/off)
+- Audio-rate output
 
 **Perfect for:** Audio oscillator, chiptune sounds, square wave bass
 
@@ -245,10 +220,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 - **Button**: Octave LFO on/off
 
 **Note:** Remove capacitor from D11 output circuit for proper audio operation
-
-{{< firmware_button hex="MOD1_square_vco" buttonText="Flash Square VCO" >}}
-
-</div>
+{{< /mod1_firmware >}}
 
 ---
 
@@ -312,24 +284,13 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 
 ---
 
-<div class="firmware-section">
-
-## Trigger Burst
-
-<div class="firmware-header">
-  <div class="firmware-image">💥</div>
-  <div class="firmware-description">
-    <h4>Features</h4>
-    <ul>
-      <li>Clock-syncable trigger burst generator</li>
-      <li>Burst counts: 1, 3, 4, 6, 8, 16</li>
-      <li>Burst frequency divisions: /2, /3, /4, /6, /8, /16</li>
-      <li>Internal clock (~280 BPM max) or external clock</li>
-      <li>CV control for burst number</li>
-      <li>Manual or trigger input activation</li>
-    </ul>
-  </div>
-</div>
+{{< mod1_firmware title="Trigger Burst" hex="MOD1_TiggerBurst" buttonText="Flash Trigger Burst" image="burst" >}}
+- Clock-syncable trigger burst generator
+- Burst counts: 1, 3, 4, 6, 8, 16
+- Burst frequency divisions: /2, /3, /4, /6, /8, /16
+- Internal clock (~280 BPM max) or external clock
+- CV control for burst number
+- Manual or trigger input activation
 
 **Perfect for:** Trigger multiplication, rhythmic bursts, drum fills
 
@@ -342,10 +303,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 - **F3 Input**: Burst number CV
 - **F4 Output**: Trigger burst output
 - **Button**: Manual trigger
-
-{{< firmware_button hex="MOD1_TiggerBurst" buttonText="Flash Trigger Burst" >}}
-
-</div>
+{{< /mod1_firmware >}}
 
 ---
 

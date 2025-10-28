@@ -2,17 +2,20 @@
 {{ $buttonText := .Get "buttonText" }}
 {{ $imageSlug := .Get "image" }}
 
+{{ $imageMap := dict "3lfo" "3LFO" "adsr" "ADSR" "eg" "ENV" "euclid" "EUCLID" "lfo" "LFO" "random_cv_seq" "RND_SEQ" "sync_lfo" "SyncLFO" "clock" "CLOCK" "vco" "VCO" "burst" "BURST" }}
+{{ $imageFile := index $imageMap $imageSlug }}
+
 <div class="firmware-section mod1-firmware">
   <h2>{{ .Get "title" }}</h2>
 
   <div class="mod1-firmware-layout">
-    {{ if $imageSlug }}
+    {{ if $imageFile }}
     <div class="mod1-image-container">
-      <a href="https://modulove.io/wp-content/uploads/2025/04/MDL_HAGIWO-MOD1__{{ $imageSlug }}.jpg"
+      <a href="/images/mod1/MDL_HAGIWO-MOD1__{{ $imageFile }}.jpg"
          class="mod1-image-link"
          data-lightbox="mod1-{{ $imageSlug }}">
         <img
-          src="https://modulove.io/wp-content/uploads/2025/04/MDL_HAGIWO-MOD1__{{ $imageSlug }}-300x1024.jpg"
+          src="/images/mod1/MDL_HAGIWO-MOD1__{{ $imageFile }}.jpg"
           alt="{{ .Get "title" }} module design"
           class="mod1-module-image"
           loading="lazy">
