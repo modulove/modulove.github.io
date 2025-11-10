@@ -54,7 +54,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 
 ---
 
-{{< mod1_firmware title="Chipz" hex="MOD1_chipz" buttonText="Flash Chipz" image="clock" >}}
+{{< mod1_firmware title="Chipz" hex="MOD1_Chipz" buttonText="Flash Chipz" image="clock" >}}
 - 2 independent pwm outputs
 - Clock input and internal Clock fallback
 - Can be used with headphones
