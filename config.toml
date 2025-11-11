@@ -13,16 +13,16 @@ paginate = 5
   contentTypeName = "posts"
 
   # ["orange", "blue", "red", "green", "pink"]
-  themeColor = "grey"
+  themeColor = "pink"
 
   # Enable theme toggle button
-  showThemeToggle = true
+  showThemeToggle = false
 
   # Enable search
   showSearch = true
 
   # if you set this to 0, only submenu trigger will be visible
-  showMenuItems = 5
+  showMenuItems = 7
 
   # show selector to switch language
   showLanguageSelector = false
@@ -46,7 +46,7 @@ paginate = 5
   favicon = "favicon.ico"
 
   # Provide a string as a prefix for the last update date. By default, it looks like this: 2020-xx-xx [Updated: 2020-xx-xx] :: Author
-  # updatedDatePrefix = "Updated"
+  updatedDatePrefix = "Updated"
 
   # whether to show a page's estimated reading time
   # readingTime = false # default
@@ -64,7 +64,7 @@ paginate = 5
   [languages.en]
     languageName = "English"
     title = "Modulove // Firmware"
-    subtitle = "Open-source Eurorack firmware for DIY modular synthesizers."
+    subtitle = "Open-source Eurorack firmware for DIY modules my modulove ."
     owner = "Modulove"
     keywords = "eurorack, modular, synthesizer, firmware, arduino, diy"
     copyright = ""
