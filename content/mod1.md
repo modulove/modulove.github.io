@@ -240,6 +240,30 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 
 ---
 
+
+{{< mod1_firmware title="3D Knot Oscillator" hex="MOD1_knotoscillator" buttonText="Flash 3D Knot Oscillator" image="vco" >}}
+
+ * Three beautiful knot patterns:
+ * 0. Trefoil Knot
+ * 1. Lissajous Curve  
+ * 2. Torus Knot
+ * 
+ * View on oscilloscope in X-Y mode!
+
+**Perfect for:** complex sounding oscillatoors or just fancy Laser patterns :)
+
+**Controls:**
+- **POT1**: Knot selection
+- **POT2**: Waveform variation
+- **POT3**: Frequency
+- **F1 Input**: Knot morph
+- **F2 Output**: X - Left component of complex signal
+- **F3 Output**: Y - Right component of complex signal
+- **Button**: change modes
+{{< /mod1_firmware >}}
+
+---
+
 {{< mod1_firmware title="Square Wave VCO" hex="MOD1_square_vco" buttonText="Flash Square VCO" image="vco" >}}
 - V/Oct tracking square wave oscillator
 - Octave control with CV input
