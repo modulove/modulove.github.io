@@ -65,6 +65,22 @@ Sine wave-based kick drum with 6 controllable parameters - pitch, decay, punch, 
 
 ---
 
+### Sample
+
+Sample player
+
+{{< rp2350_button uf2="MOD2_sample" buttonText="Download Sample Firmware" >}}
+
+---
+
+### VCO
+
+VCO
+
+{{< rp2350_button uf2="MOD2_vco" buttonText="Download VCO Firmware" >}}
+
+---
+
 ## Features
 
 - **RP2350 Processor**: 150 MHz dual-core ARM Cortex-M33
