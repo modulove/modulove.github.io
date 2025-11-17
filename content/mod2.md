@@ -13,15 +13,17 @@ MOD2 is a **digital percussion synthesizer** built on the powerful RP2350 microc
 
 ## Firmware Options
 
-Choose from 5 different percussion synthesis algorithms:
+Choose from 6 different (percussion) synthesis algorithms:
 
-### Kick Drum
 
-Sine wave-based kick drum with 6 controllable parameters - pitch, decay, punch, and more.
+### Braids test
 
-{{< rp2350_button uf2="MOD2_kick" buttonText="Download Kick Drum Firmware" >}}
+braids based synth module with 47 sound engines 
+
+{{< rp2350_button uf2="MOD2_braids" buttonText="Download Braids Firmware" >}}
 
 ---
+
 
 ### Clap
 
@@ -52,6 +54,14 @@ Two-operator FM percussion synthesis - create metallic, bell-like, and experimen
 White/blue noise-based hi-hat with tone shaping and envelope control.
 
 {{< rp2350_button uf2="MOD2_hihat" buttonText="Download Hi-Hat Firmware" >}}
+
+---
+
+### Kick Drum
+
+Sine wave-based kick drum with 6 controllable parameters - pitch, decay, punch, and more.
+
+{{< rp2350_button uf2="MOD2_kick" buttonText="Download Kick Drum Firmware" >}}
 
 ---
 
