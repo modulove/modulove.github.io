@@ -2,6 +2,7 @@
 {{ $buttonText := .Get "buttonText" }}
 {{ $firmwareName := .Get "name" }}
 {{ $safeName := replace (replace $uf2 "_" "") "-" "" }}
+
 <div class="web-flash-container" id="webflash-{{ $uf2 }}">
   <div class="flash-options">
     <button class="flash-button web-flash-button" onclick="webFlash{{ $safeName }}()">
@@ -51,7 +52,7 @@
 </div>
 
 <script>
-async function webFlash{{ $safeName }}()
+async function webFlash{{ $safeName }}() {
   const statusDiv = document.getElementById('status-{{ $uf2 }}');
   const progressDiv = document.getElementById('progress-{{ $uf2 }}');
   const progressBar = document.getElementById('progressbar-{{ $uf2 }}');
