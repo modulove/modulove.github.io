@@ -8,14 +8,13 @@
       <li><strong>Disconnect Eurorack power</strong> before connecting USB</li>
       <li>Hold <strong>BOOTSEL</strong> button while connecting USB (or hold BOOTSEL + press RESET)</li>
       <li>Device appears as <strong>RPI-RP2</strong> USB drive</li>
-      <li>Download firmware and drag to the RPI-RP2 drive</li>
+      <li>Click download button and save directly to the RPI-RP2 drive when prompted</li>
       <li>Module will automatically reboot with new firmware</li>
     </ol>
   </div>
 
   <a
     href="/releases/{{ $uf2 | safeURL }}.uf2"
-    download="{{ $uf2 }}.uf2"
     class="flash-button rp2350-download-button"
   >
     {{ with $buttonText }}{{ . | plainify }}{{ else -}} Download Firmware {{ end }}
