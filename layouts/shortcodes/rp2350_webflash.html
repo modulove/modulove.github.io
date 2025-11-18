@@ -1,11 +1,11 @@
 {{ $uf2 := .Get "uf2" }}
 {{ $buttonText := .Get "buttonText" }}
 {{ $firmwareName := .Get "name" }}
-{{ $safeName := replace (replace $uf2 "_" "") "-" "" }}
+{{ $safeName := replaceRE "[^a-zA-Z0-9]" "" $uf2 }}
 
 <div class="web-flash-container" id="webflash-{{ $uf2 }}">
   <div class="flash-options">
-    <button class="flash-button web-flash-button" onclick="webFlash{{ $safeName }}()">
+    <button class="flash-button web-flash-button" onclick="webFlash{{ $safeName | safeJS }}()">
       🚀 One-Click Flash {{ with $firmwareName }}{{ . }}{{ else }}Firmware{{ end }}
       <span class="file-format">Web-based flashing (Chrome/Edge)</span>
     </button>
@@ -52,7 +52,7 @@
 </div>
 
 <script>
-async function webFlash{{ $safeName }}() {
+async function webFlash{{ $safeName | safeJS }}() {
   const statusDiv = document.getElementById('status-{{ $uf2 }}');
   const progressDiv = document.getElementById('progress-{{ $uf2 }}');
   const progressBar = document.getElementById('progressbar-{{ $uf2 }}');
