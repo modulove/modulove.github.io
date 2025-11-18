@@ -13,17 +13,15 @@ MOD2 is a **digital percussion synthesizer** built on the powerful RP2350 microc
 
 ## Firmware Options
 
-Choose from 6 different (percussion) synthesis algorithms:
+Choose from 7 different synthesis algorithms, plus 2 sample-based firmware from Hagiwo's Patreon:
 
+### Braids
 
-### Braids test
-
-braids based synth module with 47 sound engines 
+Macro oscillator with 47 different synthesis engines - from classic waveforms to granular synthesis and physical modeling.
 
 {{< rp2350_button uf2="MOD2_braids" buttonText="Download Braids Firmware" >}}
 
 ---
-
 
 ### Clap
 
@@ -45,7 +43,7 @@ Sine/triangle wave-based claves with LED envelope visualization and tunable para
 
 Two-operator FM percussion synthesis - create metallic, bell-like, and experimental drum sounds.
 
-{{< rp2350_button uf2="MOD2_fmdrum" buttonText="Download FM Drum Firmware" >}}
+{{< rp2350_button uf2="MOD2_fm_drum" buttonText="Download FM Drum Firmware" >}}
 
 ---
 
@@ -65,19 +63,31 @@ Sine wave-based kick drum with 6 controllable parameters - pitch, decay, punch, 
 
 ---
 
-### Sample
+### VCO
 
-Sample player
+Six-waveform voltage controlled oscillator with 1V/Oct tracking and PolyBLEP anti-aliasing.
 
-{{< rp2350_button uf2="MOD2_sample" buttonText="Download Sample Firmware" >}}
+{{< rp2350_button uf2="MOD2_vco" buttonText="Download VCO Firmware" >}}
 
 ---
 
-### VCO
+## Sample-Based Firmware (Patreon Exclusive)
 
-VCO
+The following firmware require pre-compiled sample data and are available from Hagiwo's Patreon:
 
-{{< rp2350_button uf2="MOD2_vco" buttonText="Download VCO Firmware" >}}
+### Break Beats
+
+The legendary "Amen Break" and "Think Break" samples - two of the most iconic drum breaks in music history.
+
+{{< patreon_button patreonUrl="https://www.patreon.com/posts/code-for-mod2-133952127" buttonText="Get Break Beats from Patreon" description="Classic break beats featuring the Amen Break and Think Break samples." >}}
+
+---
+
+### Sample Player
+
+18-slot customizable sample player with variable playback speed and high-quality audio.
+
+{{< patreon_button patreonUrl="https://www.patreon.com/posts/code-for-mod2-131363551" buttonText="Get Sample Player from Patreon" description="Customizable sample player with 18 slots for your own audio samples." >}}
 
 ---
 
@@ -124,6 +134,7 @@ The RP2350 uses a simple drag-and-drop method for firmware updates:
 ## Resources
 
 - [GitHub Repository](https://github.com/modulove/MOD2) - Source code and hardware files
+- [Hagiwo's Patreon](https://www.patreon.com/user?u=30636742) - Support the creator
 - [Report Issues](https://github.com/modulove/MOD2/issues) - Bug reports and feature requests
 
 ---

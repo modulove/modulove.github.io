@@ -1,0 +1,102 @@
+{{ $patreonUrl := .Get "patreonUrl" }}
+{{ $buttonText := .Get "buttonText" }}
+{{ $description := .Get "description" }}
+
+<div class="flash-firmware patreon-exclusive">
+  <div class="patreon-badge">
+    <span class="badge-text">PATREON EXCLUSIVE</span>
+  </div>
+
+  <div class="patreon-info">
+    <p>{{ $description }}</p>
+    <p><strong>This firmware requires pre-compiled sample data that is not included in the open-source repository.</strong></p>
+    <p>Support the creator and get this firmware from Hagiwo's Patreon!</p>
+  </div>
+
+  <a
+    href="{{ $patreonUrl | safeURL }}"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="flash-button patreon-button"
+  >
+    {{ with $buttonText }}{{ . | plainify }}{{ else }}Get from Patreon{{ end }}
+    <span class="file-format">(Opens Hagiwo's Patreon)</span>
+  </a>
+
+  <div class="patreon-support-note">
+    💖 <strong>Support Hagiwo:</strong> By downloading from Patreon, you support the continued development of MOD2 firmware and hardware.
+  </div>
+</div>
+
+<style>
+  .patreon-exclusive {
+    background: var(--card-bg);
+    border: 2px solid #ff424d;
+    border-radius: 8px;
+    padding: 1.5em;
+    margin: 2em 0;
+    position: relative;
+  }
+
+  .patreon-badge {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background: #ff424d;
+    color: white;
+    padding: 0.3em 0.8em;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .patreon-info {
+    margin: 1em 0 1.5em 0;
+    padding: 1em;
+    background: var(--background);
+    border-left: 4px solid #ff424d;
+    border-radius: 4px;
+  }
+
+  .patreon-info p {
+    margin: 0.8em 0;
+    color: var(--foreground);
+  }
+
+  .patreon-info p:first-child {
+    font-size: 1.05em;
+    font-weight: 500;
+  }
+
+  .patreon-button {
+    display: inline-block;
+    text-decoration: none;
+    background: #ff424d;
+    color: white;
+    padding: 1em 1.5em;
+    border-radius: 6px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 66, 77, 0.3);
+  }
+
+  .patreon-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 66, 77, 0.5);
+    background: #d42531;
+  }
+
+  .patreon-support-note {
+    margin-top: 1.5em;
+    padding: 1em;
+    background: color-mix(in srgb, #ff424d 10%, var(--background));
+    border: 2px solid #ff424d;
+    border-radius: 6px;
+    color: #ff424d;
+    font-weight: 600;
+  }
+</style>
