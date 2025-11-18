@@ -1,0 +1,407 @@
+{{ $uf2 := .Get "uf2" }}
+{{ $buttonText := .Get "buttonText" }}
+{{ $firmwareName := .Get "name" }}
+
+<div class="web-flash-container" id="webflash-{{ $uf2 }}">
+  <div class="flash-options">
+    <button class="flash-button web-flash-button" onclick="webFlash{{ $uf2 }}()">
+      🚀 One-Click Flash {{ with $firmwareName }}{{ . }}{{ else }}Firmware{{ end }}
+      <span class="file-format">Web-based flashing (Chrome/Edge)</span>
+    </button>
+
+    <span class="or-divider">OR</span>
+
+    <a href="/releases/{{ $uf2 | safeURL }}.uf2" class="flash-button download-button">
+      💾 Download {{ with $buttonText }}{{ . }}{{ else }}Firmware{{ end }}
+      <span class="file-format">Manual flashing (.uf2 file)</span>
+    </a>
+  </div>
+
+  <div class="flash-status" id="status-{{ $uf2 }}" style="display: none;"></div>
+  <div class="flash-progress" id="progress-{{ $uf2 }}" style="display: none;">
+    <div class="progress-bar" id="progressbar-{{ $uf2 }}"></div>
+  </div>
+
+  <details class="flash-instructions">
+    <summary>📋 Flashing Instructions</summary>
+    <div class="instructions-content">
+      <h4>Web Flashing (Recommended):</h4>
+      <ol>
+        <li>Click "One-Click Flash" button above</li>
+        <li>Select your XIAO RP2350 from the serial port list</li>
+        <li>Wait ~5 seconds for the RPI-RP2 drive to appear</li>
+        <li>Click the orange button and select the RPI-RP2 drive</li>
+        <li>Firmware flashes automatically!</li>
+      </ol>
+
+      <h4>Manual Flashing:</h4>
+      <ol>
+        <li><strong>Disconnect Eurorack power</strong> before connecting USB</li>
+        <li>Hold <strong>BOOTSEL</strong> button while connecting USB</li>
+        <li>Device appears as <strong>RPI-RP2</strong> USB drive</li>
+        <li>Download firmware and copy to RPI-RP2 drive</li>
+        <li>Module will automatically reboot</li>
+      </ol>
+
+      <div class="safety-warning">
+        ⚠️ <strong>Safety:</strong> Always disconnect eurorack power before connecting USB!
+      </div>
+    </div>
+  </details>
+</div>
+
+<script>
+async function webFlash{{ $uf2 }}() {
+  const statusDiv = document.getElementById('status-{{ $uf2 }}');
+  const progressDiv = document.getElementById('progress-{{ $uf2 }}');
+  const progressBar = document.getElementById('progressbar-{{ $uf2 }}');
+  const flashBtn = event.target;
+
+  function showStatus(type, message) {
+    statusDiv.className = `flash-status show ${type}`;
+    statusDiv.style.display = 'block';
+    if (typeof message === 'string') {
+      statusDiv.textContent = message;
+    } else {
+      statusDiv.innerHTML = '';
+      statusDiv.appendChild(message);
+    }
+  }
+
+  function showProgress(percent) {
+    progressDiv.style.display = 'block';
+    progressBar.style.width = `${percent}%`;
+  }
+
+  function hideProgress() {
+    progressDiv.style.display = 'none';
+    progressBar.style.width = '0%';
+  }
+
+  // Check browser support
+  if (!('serial' in navigator)) {
+    showStatus('error', '❌ Web Serial API not supported. Please use Chrome or Edge browser.');
+    return;
+  }
+
+  try {
+    flashBtn.disabled = true;
+    flashBtn.innerHTML = '<span class="spinner"></span>Flashing...';
+
+    // Step 1: Request serial port
+    showStatus('info', '🔌 Select your XIAO RP2350 from the port list...');
+    let port;
+    try {
+      port = await navigator.serial.requestPort();
+    } catch (error) {
+      throw new Error('Port selection cancelled');
+    }
+
+    // Step 2: Reset into bootloader
+    showStatus('info', '🔄 Resetting board into bootloader mode...');
+    try {
+      await port.open({ baudRate: 1200 });
+      await new Promise(resolve => setTimeout(resolve, 100));
+      await port.close();
+    } catch (error) {
+      console.log('Serial reset:', error.message);
+    }
+
+    // Step 3: Wait for bootloader
+    showStatus('info', '⏳ Waiting for bootloader (5 seconds)...');
+    await new Promise(resolve => setTimeout(resolve, 5000));
+
+    // Step 4: Prompt for drive selection
+    const container = document.createElement('div');
+    const message = document.createElement('div');
+    message.textContent = '📂 The RPI-RP2 drive should now appear. Check your file explorer, then:';
+    message.style.marginBottom = '10px';
+
+    const selectBtn = document.createElement('button');
+    selectBtn.textContent = '📁 Click to Select RPI-RP2 Drive';
+    selectBtn.className = 'flash-button';
+    selectBtn.style.background = '#f59e0b';
+    selectBtn.style.marginTop = '10px';
+
+    container.appendChild(message);
+    container.appendChild(selectBtn);
+    showStatus('warning', container);
+
+    let directoryHandle;
+    await new Promise((resolve, reject) => {
+      selectBtn.addEventListener('click', async () => {
+        try {
+          selectBtn.disabled = true;
+          selectBtn.textContent = '📂 Opening...';
+          directoryHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+          resolve();
+        } catch (error) {
+          reject(new Error('Drive selection cancelled'));
+        }
+      });
+    });
+
+    // Verify drive name
+    if (directoryHandle.name !== 'RPI-RP2') {
+      const proceed = confirm(`Selected "${directoryHandle.name}" - expected "RPI-RP2". Continue anyway?`);
+      if (!proceed) throw new Error('Wrong drive selected');
+    }
+
+    // Step 5: Download and flash firmware
+    showStatus('info', '⬇️ Downloading firmware...');
+    const response = await fetch('/releases/{{ $uf2 | safeURL }}.uf2');
+    if (!response.ok) throw new Error('Failed to download firmware');
+
+    const buffer = await response.arrayBuffer();
+    showStatus('info', '💾 Writing firmware...');
+    showProgress(0);
+
+    const fileHandle = await directoryHandle.getFileHandle('firmware.uf2', { create: true });
+    const writable = await fileHandle.createWritable();
+
+    const chunkSize = 64 * 1024;
+    let written = 0;
+
+    while (written < buffer.byteLength) {
+      const chunk = buffer.slice(written, written + chunkSize);
+      await writable.write(chunk);
+      written += chunk.byteLength;
+      showProgress((written / buffer.byteLength) * 100);
+    }
+
+    await writable.close();
+    showProgress(100);
+
+    showStatus('success', '✅ Firmware flashed! Your MOD2 will reboot automatically.');
+
+    setTimeout(() => {
+      hideProgress();
+    }, 3000);
+
+  } catch (error) {
+    console.error('Flash error:', error);
+    showStatus('error', `❌ Error: ${error.message}`);
+  } finally {
+    flashBtn.disabled = false;
+    flashBtn.innerHTML = '🚀 One-Click Flash {{ with $firmwareName }}{{ . }}{{ else }}Firmware{{ end }} <span class="file-format">Web-based flashing (Chrome/Edge)</span>';
+  }
+}
+</script>
+
+<style>
+.web-flash-container {
+  background: var(--card-bg);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  padding: 1.5em;
+  margin: 2em 0;
+}
+
+.flash-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: stretch;
+}
+
+.or-divider {
+  text-align: center;
+  color: var(--foreground);
+  opacity: 0.6;
+  font-weight: 600;
+  font-size: 0.9em;
+  padding: 0.5em 0;
+}
+
+.flash-button {
+  display: inline-block;
+  text-decoration: none;
+  padding: 1.2em 1.5em;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  font-size: 1em;
+  font-family: inherit;
+}
+
+.web-flash-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.web-flash-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.web-flash-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.download-button {
+  background: var(--accent);
+  color: var(--background);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.download-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow);
+  background: color-mix(in srgb, var(--accent) 85%, var(--background));
+}
+
+.file-format {
+  display: block;
+  font-size: 0.75em;
+  font-weight: normal;
+  opacity: 0.9;
+  margin-top: 0.3em;
+}
+
+.flash-status {
+  margin-top: 1em;
+  padding: 1em;
+  border-radius: 8px;
+  font-size: 0.95em;
+}
+
+.flash-status.show {
+  display: block !important;
+}
+
+.flash-status.info {
+  background: #dbeafe;
+  color: #1e40af;
+  border-left: 4px solid #3b82f6;
+}
+
+.flash-status.success {
+  background: #d1fae5;
+  color: #065f46;
+  border-left: 4px solid #10b981;
+}
+
+.flash-status.error {
+  background: #fee2e2;
+  color: #991b1b;
+  border-left: 4px solid #ef4444;
+}
+
+.flash-status.warning {
+  background: #fef3c7;
+  color: #92400e;
+  border-left: 4px solid #f59e0b;
+}
+
+.flash-progress {
+  width: 100%;
+  height: 8px;
+  background: var(--background);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 1em;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+  width: 0%;
+  transition: width 0.3s;
+}
+
+.flash-instructions {
+  margin-top: 1.5em;
+  border-top: 1px solid var(--accent);
+  padding-top: 1em;
+}
+
+.flash-instructions summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 0.5em;
+  user-select: none;
+}
+
+.flash-instructions summary:hover {
+  background: var(--background);
+  border-radius: 4px;
+}
+
+.instructions-content {
+  padding: 1em;
+  margin-top: 0.5em;
+  background: var(--background);
+  border-radius: 8px;
+}
+
+.instructions-content h4 {
+  color: var(--accent);
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.instructions-content h4:first-child {
+  margin-top: 0;
+}
+
+.instructions-content ol {
+  margin: 0.5em 0 0 1.5em;
+  padding: 0;
+}
+
+.instructions-content li {
+  margin: 0.5em 0;
+  color: var(--foreground);
+  line-height: 1.6;
+}
+
+.safety-warning {
+  margin-top: 1em;
+  padding: 1em;
+  background: color-mix(in srgb, var(--accent) 10%, var(--background));
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #ffffff;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (min-width: 768px) {
+  .flash-options {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .or-divider {
+    padding: 0 1em;
+  }
+
+  .flash-button {
+    flex: 1;
+  }
+}
+</style>

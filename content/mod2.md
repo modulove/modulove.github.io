@@ -19,7 +19,7 @@ Choose from 7 different synthesis algorithms, plus 2 sample-based firmware from 
 
 Macro oscillator with 47 different synthesis engines - from classic waveforms to granular synthesis and physical modeling.
 
-{{< rp2350_button uf2="MOD2_braids" buttonText="Download Braids Firmware" >}}
+{{< rp2350_webflash uf2="MOD2_braids" buttonText="Braids Firmware" name="Braids" >}}
 
 ---
 
@@ -27,7 +27,7 @@ Macro oscillator with 47 different synthesis engines - from classic waveforms to
 
 Digital TR-808-style clap with adjustable tone, decay, and density parameters.
 
-{{< rp2350_button uf2="MOD2_clap" buttonText="Download Clap Firmware" >}}
+{{< rp2350_webflash uf2="MOD2_clap" buttonText="Clap Firmware" name="Clap" >}}
 
 ---
 
@@ -35,7 +35,7 @@ Digital TR-808-style clap with adjustable tone, decay, and density parameters.
 
 Sine/triangle wave-based claves with LED envelope visualization and tunable parameters.
 
-{{< rp2350_button uf2="MOD2_claves" buttonText="Download Claves Firmware" >}}
+{{< rp2350_webflash uf2="MOD2_claves" buttonText="Claves Firmware" name="Claves" >}}
 
 ---
 
@@ -43,7 +43,7 @@ Sine/triangle wave-based claves with LED envelope visualization and tunable para
 
 Two-operator FM percussion synthesis - create metallic, bell-like, and experimental drum sounds.
 
-{{< rp2350_button uf2="MOD2_fm_drum" buttonText="Download FM Drum Firmware" >}}
+{{< rp2350_webflash uf2="MOD2_fm_drum" buttonText="FM Drum Firmware" name="FM Drum" >}}
 
 ---
 
@@ -51,7 +51,7 @@ Two-operator FM percussion synthesis - create metallic, bell-like, and experimen
 
 White/blue noise-based hi-hat with tone shaping and envelope control.
 
-{{< rp2350_button uf2="MOD2_hihat" buttonText="Download Hi-Hat Firmware" >}}
+{{< rp2350_webflash uf2="MOD2_hihat" buttonText="Hi-Hat Firmware" name="Hi-Hat" >}}
 
 ---
 
@@ -59,7 +59,7 @@ White/blue noise-based hi-hat with tone shaping and envelope control.
 
 Sine wave-based kick drum with 6 controllable parameters - pitch, decay, punch, and more.
 
-{{< rp2350_button uf2="MOD2_kick" buttonText="Download Kick Drum Firmware" >}}
+{{< rp2350_webflash uf2="MOD2_kick" buttonText="Kick Drum Firmware" name="Kick" >}}
 
 ---
 
@@ -67,7 +67,7 @@ Sine wave-based kick drum with 6 controllable parameters - pitch, decay, punch, 
 
 Six-waveform voltage controlled oscillator with 1V/Oct tracking and PolyBLEP anti-aliasing.
 
-{{< rp2350_button uf2="MOD2_vco" buttonText="Download VCO Firmware" >}}
+{{< rp2350_webflash uf2="MOD2_vco" buttonText="VCO Firmware" name="VCO" >}}
 
 ---
 
