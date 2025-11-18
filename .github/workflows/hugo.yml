@@ -79,6 +79,12 @@ jobs:
         run: |
           mkdir -p public/releases
 
+          # Copy MOD2 firmware files from git-tracked releases directory
+          echo "Copying MOD2 firmware files from releases/ directory..."
+          if [ -d "releases" ]; then
+            cp -v releases/MOD2_*.uf2 public/releases/ 2>/dev/null || echo "No MOD2 .uf2 files found in releases/ directory"
+          fi
+
           # Get the latest release from modulove/A-RYTH-MATIK
           echo "Downloading A-RYTH-MATIK firmware..."
           LATEST_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
