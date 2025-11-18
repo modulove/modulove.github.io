@@ -1,10 +1,11 @@
 {{ $uf2 := .Get "uf2" }}
 {{ $buttonText := .Get "buttonText" }}
 {{ $firmwareName := .Get "name" }}
+{{ $safeName := replace (replace $uf2 "_" "") "-" "" }}
 
 <div class="web-flash-container" id="webflash-{{ $uf2 }}">
   <div class="flash-options">
-    <button class="flash-button web-flash-button" onclick="webFlash{{ $uf2 }}()">
+    <button class="flash-button web-flash-button" onclick="webFlash{{ $safeName }}()">
       🚀 One-Click Flash {{ with $firmwareName }}{{ . }}{{ else }}Firmware{{ end }}
       <span class="file-format">Web-based flashing (Chrome/Edge)</span>
     </button>
