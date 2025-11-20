@@ -13,7 +13,7 @@ paginate = 5
   contentTypeName = "posts"
 
   # ["orange", "blue", "red", "green", "pink"]
-  themeColor = "pink"
+  #themeColor = "pink"
 
   # Enable theme toggle button
   showThemeToggle = false
