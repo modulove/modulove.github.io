@@ -16,3 +16,14 @@
   --foreground: #000000 !important;
   --accent: #000000 !important;
 }
+
+/* Remove borders from images */
+img {
+  border: none !important;
+  padding: 0 !important;
+}
+
+iframe[src*="youtube.com"] {
+  border: none !important;
+  padding: 0 !important;
+}
