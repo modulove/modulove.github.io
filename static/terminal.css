@@ -1,5 +1,18 @@
+/* Modulove Custom Black & White Color Scheme */
 :root {
   --background: #000000;
   --foreground: #ffffff;
-  --accent: #cccccc;
+  --accent: #ffffff;
+}
+
+[data-theme="dark"] {
+  --background: #000000;
+  --foreground: #ffffff;
+  --accent: #ffffff;
+}
+
+[data-theme="light"] {
+  --background: #ffffff;
+  --foreground: #000000;
+  --accent: #000000;
 }
