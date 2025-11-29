@@ -5,11 +5,11 @@ layout: "single"
 
 <img src="https://dl.modulove.de/module/scope/img/SCOPE_Logo_Gradient.png" alt="SCOPE Logo" class="module-header-logo">
 
-# SCOPE - Oscilloscope & Spectrum Analyzer
+# SCOPE - Eurorack Oscilloscope & OLED Display
 
 SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and audio signals as waveforms or analyze their frequency spectrum in real-time on a OLED display.
 
-**Hardware:** Arduino Nano · OLED Display (128x64) · Rotary Encoder · CV/Audio Input - Trigger Input
+**Hardware:** 20Vpp · Arduino Nano · OLED Display (128x64) · Rotary Encoder · CV/Audio Input - Trigger Input · buffered output
 
 ---
 
@@ -25,17 +25,17 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
       <li>Oscilloscope mode - visualize waveforms in real-time</li>
       <li>Spectrum Analyzer mode - see frequency content</li>
       <li>Adjustable timebase and sensitivity</li>
-      <li>Auto-trigger for stable waveform display</li>
+      <li>Use trigger input for stable waveform display</li>
     </ul>
   </div>
 </div>
 
-**Perfect for:** Signal analysis, visualizing modulation, frequency analysis
+**Perfect for:** Signal analysis, visualizing modulation
 
 **Modes:**
 - **Oscilloscope**: Real-time waveform display with adjustable timebase
 - **Spectrum Analyzer**: FFT-based frequency analysis showing harmonic content
-- **Settings**: Configure encoder direction, menu timeout, and display preferences
+- **Settings**: Configure encoder direction, menu timeout, and display orientation
 
 **Controls:**
 - **Encoder Short Press**: Toggle between menu options
@@ -62,8 +62,8 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 ## Installation Instructions
 
 ### 1. Connect Your Module
-- Connect your Arduino Nano to your computer via USB
-- Ensure the module is powered
+- Disconnect eurorack power connector
+- Connect your Module or the Arduino Nano to your computer via USB
 
 ### 2. Flash Firmware
 - Click the appropriate button above (Nano or Old Bootloader)
@@ -76,7 +76,7 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 - Or configure directly on the module using the encoder
 
 ### 4. Verify
-- Connect an audio source to the input
+- Connect an signal source to the input
 - The display should show the waveform or spectrum
 - Use the encoder to adjust settings
 
@@ -92,9 +92,6 @@ The oscilloscope displays incoming CV or audio as a waveform over time.
 - **Timebase**: Adjusts how fast the waveform scrolls (zoom in/out on time axis)
 - **Sensitivity**: Adjusts vertical scale (amplitude)
 
-**Tips:**
-- Use slower timebase for LFOs and slow modulation
-- Use faster timebase for audio-rate signals
 
 ### Spectrum Analyzer Mode
 
@@ -110,7 +107,7 @@ Access global settings with a long press (>3s):
 
 - **Encoder Direction**: Normal or Reversed
 - **Menu Timeout**: 1-60 seconds (auto-hide menu when inactive)
-- **Panel Orientation**: Normal or Upside Down (for flipped panels)
+- **Panel Orientation**: Normal or Upside Down
 
 All settings are saved to EEPROM and persist after power cycling.
 
@@ -151,10 +148,7 @@ The configuration tool allows you to:
 ## Resources
 
 - [GitHub Repository](https://github.com/modulove/SCOPE) - Source code
-- [Build Guide](https://github.com/modulove/SCOPE/blob/main/README.md) - Assembly instructions
-- [Report Issues](https://github.com/modulove/SCOPE/issues) - Bug reports and feature requests
-- [Configuration Tool](/config/scope.html) - Web-based settings editor
+- [Build Guide](https://youtu.be/FG4vjKHGR1Q?si=OfBWd8RZJ5zngrxA) - Assembly Video (Youtube)
+- [Configuration Tool](/config/scope.html) - Web-based settings editor (soon)
 
 ---
-
-*Based on Hagiwo's design · Enhanced by the Modulove community*
