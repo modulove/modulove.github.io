@@ -91,6 +91,14 @@ The legendary "Amen Break" and "Think Break" samples - two of the most iconic dr
 
 ---
 
+### Square Wave VCO
+
+Square wave oscillator (with V/oct support), LFO for vibrato, octave toggling and chiptune.
+
+{{< rp2350_webflash uf2="MOD2_square_vco" buttonText="Square VCO Firmware" name="VCO" >}}
+
+---
+
 ## Features
 
 - **RP2350 Processor**: 150 MHz dual-core ARM Cortex-M33
