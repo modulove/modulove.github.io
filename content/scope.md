@@ -47,6 +47,8 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 
 {{< firmware_button hex="SCOPE" buttonText="Flash SCOPE Firmware" oledImage="https://dl.modulove.de/module/scope/img/SCOPE_Firmware_UI_Main_887x512.png" >}}
 
+{{< firmware_button hex="SCOPEv2" buttonText="Flash SCOPEv2 Firmware" oledImage="https://dl.modulove.de/module/scope/img/SCOPE_Firmware_UI_Main_887x512.png" >}}
+
 </div>
 
 ---
