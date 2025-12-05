@@ -31,7 +31,7 @@ Here you find the Open-source firmware for our Eurorack modules. Choose your mod
     </div>
     <h2>MVMNT (SyncLFO)</h2>
     <p>Smooth random CV and LFO generator. Bezier curve modulation for organic, evolving patches.</p>
-    <p><strong>2 firmware options available</strong></p>
+    <p><strong>4 firmware options available</strong></p>
   </a>
 
   <a href="/scope" class="module-card">
@@ -41,7 +41,7 @@ Here you find the Open-source firmware for our Eurorack modules. Choose your mod
     </div>
     <h2>SCOPE</h2>
     <p>Oscilloscope and spectrum analyzer. Visualize waveforms and analyze frequency content in real-time.</p>
-    <p><strong>1 firmware available</strong></p>
+    <p><strong>2 firmware available</strong></p>
   </a>
 
   <a href="/mod1" class="module-card">
@@ -64,7 +64,7 @@ Here you find the Open-source firmware for our Eurorack modules. Choose your mod
     <div class="module-image">⚡</div>
     <h2>MOD2</h2>
     <p>RP2350-based digital percussion. 5 synthesis algorithms for kicks, claps, hats, and experimental sounds.</p>
-    <p><strong>7 firmware options (RP2350)</strong></p>
+    <p><strong>8 firmware options (RP2350)</strong></p>
   </a>
 </div>
 
