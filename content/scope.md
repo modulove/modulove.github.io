@@ -34,8 +34,13 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 
 **Modes:**
 - **Oscilloscope**: Real-time waveform display with adjustable timebase
+- **LFO Mode**: Best for slow modulation
+- **WAVE Mode**: For Audio rate
+- **SHOT Mode**: For Envelopes
 - **Spectrum Analyzer**: FFT-based frequency analysis showing harmonic content
+- **Tuner Mode**: For tuning oscillators (Only SCOPEv2 Hardware for now)
 - **Settings**: Configure encoder direction, menu timeout, and display orientation
+
 
 **Controls:**
 - **Encoder Short Press**: Toggle between menu options
@@ -46,6 +51,9 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 [🛠️ Configure SCOPE Settings](/config/scope.html){: .button}
 
 {{< firmware_button hex="SCOPE" buttonText="Flash SCOPE Firmware" oledImage="https://dl.modulove.de/module/scope/img/SCOPE_Firmware_UI_Main_887x512.png" >}}
+
+
+## SCOPEv2 (new Hardware "Late 2025" needed!)
 
 {{< firmware_button hex="SCOPEv2" buttonText="Flash SCOPEv2 Firmware" oledImage="https://dl.modulove.de/module/scope/img/SCOPE_Firmware_UI_Main_887x512.png" >}}
 
