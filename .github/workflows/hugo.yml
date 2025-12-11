@@ -16,7 +16,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -73,116 +73,70 @@ jobs:
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
 
-      - name: Download latest firmware releases from all repositories
+      - name: Download and store firmware releases permanently
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mkdir -p public/releases
+          # Create releases directory if it doesn't exist (git-tracked for permanent storage)
+          mkdir -p releases
 
-          # Copy MOD2 firmware files from git-tracked releases directory
-          echo "Copying MOD2 firmware files from releases/ directory..."
-          if [ -d "releases" ]; then
-            cp -v releases/MOD2_*.uf2 public/releases/ 2>/dev/null || echo "No MOD2 .uf2 files found in releases/ directory"
+          # Function to download firmware from a repository
+          download_firmware() {
+            local repo=$1
+            local extension=$2
+            local prefix=$3
+
+            echo "Downloading $prefix firmware from $repo..."
+            RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+              "https://api.github.com/repos/modulove/$repo/releases/latest")
+
+            # Extract download URLs for specified extension
+            echo "$RELEASE" | jq -r ".assets[] | select(.name | endswith(\"$extension\")) | .browser_download_url" | while read url; do
+              if [ ! -z "$url" ]; then
+                filename=$(basename "$url")
+                # Only download if file doesn't already exist in releases/
+                if [ ! -f "releases/$filename" ]; then
+                  echo "Downloading new firmware: $filename"
+                  wget -q -O "releases/$filename" "$url" || echo "Failed to download $url"
+                else
+                  echo "Firmware already exists: $filename"
+                fi
+              fi
+            done
+          }
+
+          # Download firmware from all repositories to git-tracked releases/ directory
+          download_firmware "A-RYTH-MATIK" ".hex" "A-RYTH-MATIK"
+          download_firmware "MVMNT" ".hex" "MVMNT"
+          download_firmware "SCOPE" ".hex" "SCOPE"
+          download_firmware "MOD1" ".hex" "MOD1"
+          download_firmware "utf-9-samplified" ".hex" "UTF-9-SAMPLIFIED"
+          download_firmware "MOD2" ".uf2" "MOD2"
+
+          # List all stored firmware files
+          echo "All firmware files in releases/ directory:"
+          ls -lh releases/
+
+      - name: Commit new firmware to repository
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add releases/
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No new firmware files to commit"
+          else
+            git commit -m "Add new firmware releases [automated]"
+            git push
           fi
 
-          # Get the latest release from modulove/A-RYTH-MATIK
-          echo "Downloading A-RYTH-MATIK firmware..."
-          LATEST_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/modulove/A-RYTH-MATIK/releases/latest)
-
-          # Extract download URLs for .hex files
-          echo "$LATEST_RELEASE" | jq -r '.assets[] | select(.name | endswith(".hex")) | .browser_download_url' > /tmp/arythmatik_urls.txt
-
-          # Download each .hex file
-          while read url; do
-            if [ ! -z "$url" ]; then
-              echo "Downloading: $url"
-              wget -q -P public/releases "$url" || echo "Failed to download $url"
-            fi
-          done < /tmp/arythmatik_urls.txt
-
-          # Get the latest release from modulove/MVMNT
-          echo "Downloading MVMNT firmware..."
-          MVMNT_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/modulove/MVMNT/releases/latest)
-
-          # Extract download URLs for .hex files
-          echo "$MVMNT_RELEASE" | jq -r '.assets[] | select(.name | endswith(".hex")) | .browser_download_url' > /tmp/mvmnt_urls.txt
-
-          # Download each .hex file
-          while read url; do
-            if [ ! -z "$url" ]; then
-              echo "Downloading: $url"
-              wget -q -P public/releases "$url" || echo "Failed to download $url"
-            fi
-          done < /tmp/mvmnt_urls.txt
-
-          # Get the latest release from modulove/SCOPE
-          echo "Downloading SCOPE firmware..."
-          SCOPE_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/modulove/SCOPE/releases/latest)
-
-          # Extract download URLs for .hex files
-          echo "$SCOPE_RELEASE" | jq -r '.assets[] | select(.name | endswith(".hex")) | .browser_download_url' > /tmp/scope_urls.txt
-
-          # Download each .hex file
-          while read url; do
-            if [ ! -z "$url" ]; then
-              echo "Downloading: $url"
-              wget -q -P public/releases "$url" || echo "Failed to download $url"
-            fi
-          done < /tmp/scope_urls.txt
-
-          # Get the latest release from modulove/MOD1
-          echo "Downloading MOD1 firmware..."
-          MOD1_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/modulove/MOD1/releases/latest)
-
-          # Extract download URLs for .hex files
-          echo "$MOD1_RELEASE" | jq -r '.assets[] | select(.name | endswith(".hex")) | .browser_download_url' > /tmp/mod1_urls.txt
-
-          # Download each .hex file
-          while read url; do
-            if [ ! -z "$url" ]; then
-              echo "Downloading: $url"
-              wget -q -P public/releases "$url" || echo "Failed to download $url"
-            fi
-          done < /tmp/mod1_urls.txt
-
-          # Get the latest release from modulove/utf-9-samplified
-          echo "Downloading UTF-9-SAMPLIFIED firmware..."
-          UTF9_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/modulove/utf-9-samplified/releases/latest)
-
-          # Extract download URLs for .hex files
-          echo "$UTF9_RELEASE" | jq -r '.assets[] | select(.name | endswith(".hex")) | .browser_download_url' > /tmp/utf9_urls.txt
-
-          # Download each .hex file
-          while read url; do
-            if [ ! -z "$url" ]; then
-              echo "Downloading: $url"
-              wget -q -P public/releases "$url" || echo "Failed to download $url"
-            fi
-          done < /tmp/utf9_urls.txt
-
-          # Get the latest release from modulove/MOD2
-          echo "Downloading MOD2 firmware..."
-          MOD2_RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
-            https://api.github.com/repos/modulove/MOD2/releases/latest)
-
-          # Extract download URLs for .uf2 files (RP2350 format)
-          echo "$MOD2_RELEASE" | jq -r '.assets[] | select(.name | endswith(".uf2")) | .browser_download_url' > /tmp/mod2_urls.txt
-
-          # Download each .uf2 file
-          while read url; do
-            if [ ! -z "$url" ]; then
-              echo "Downloading: $url"
-              wget -q -P public/releases "$url" || echo "Failed to download $url"
-            fi
-          done < /tmp/mod2_urls.txt
-
-          # List downloaded files
-          echo "Downloaded firmware files:"
+      - name: Copy all firmware to public directory
+        run: |
+          mkdir -p public/releases
+          # Copy all firmware files from git-tracked releases/ to public/
+          cp -v releases/*.hex public/releases/ 2>/dev/null || echo "No .hex files found"
+          cp -v releases/*.uf2 public/releases/ 2>/dev/null || echo "No .uf2 files found"
+          echo "Firmware files ready for deployment:"
           ls -lh public/releases/
 
       - name: Display structure of Hugo build files
