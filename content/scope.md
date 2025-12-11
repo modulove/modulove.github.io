@@ -15,7 +15,9 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 
 <div class="firmware-section">
 
-## SCOPE (Oscilloscope & Spectrum Analyzer)
+## SCOPE v1 (Oscilloscope & Spectrum Analyzer)
+
+> **Hardware Identification:** SCOPEv1 modules have a **black PCB**.
 
 <div class="firmware-header">
   <div class="firmware-image">📊</div>
@@ -38,7 +40,6 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 - **WAVE Mode**: For Audio rate
 - **SHOT Mode**: For Envelopes
 - **Spectrum Analyzer**: FFT-based frequency analysis showing harmonic content
-- **Tuner Mode**: For tuning oscillators (Only SCOPEv2 Hardware for now)
 - **Settings**: Configure encoder direction, menu timeout, and display orientation
 
 
@@ -50,12 +51,49 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 
 [🛠️ Configure SCOPE Settings](/config/scope.html){: .button}
 
-{{< firmware_button hex="SCOPE" buttonText="Flash SCOPE Firmware" oledImage="https://dl.modulove.de/module/scope/img/SCOPE_Firmware_UI_Main_887x512.png" >}}
+{{< firmware_button hex="SCOPE" buttonText="Flash SCOPE v1 Firmware" oledImage="https://dl.modulove.de/module/scope/img/SCOPE_Firmware_UI_Main_887x512.png" >}}
+
+---
+
+## SCOPE v2 (Oscilloscope & Spectrum Analyzer)
+
+> **Hardware Identification:** SCOPEv2 and newer revisions have **colorful PCBs** (green for v2). Do not flash this firmware on SCOPEv1 (black PCB) hardware!
+
+<div class="firmware-header">
+  <div class="firmware-image">📊</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>Oscilloscope mode - visualize waveforms in real-time</li>
+      <li>Spectrum Analyzer mode - see frequency content</li>
+      <li>Adjustable timebase and sensitivity</li>
+      <li>Use trigger input for stable waveform display</li>
+      <li>Tuner mode for tuning oscillators</li>
+    </ul>
+  </div>
+</div>
+
+**Perfect for:** Signal analysis, visualizing modulation, tuning oscillators
+
+**Modes:**
+- **Oscilloscope**: Real-time waveform display with adjustable timebase
+- **LFO Mode**: Best for slow modulation
+- **WAVE Mode**: For Audio rate
+- **SHOT Mode**: For Envelopes
+- **Spectrum Analyzer**: FFT-based frequency analysis showing harmonic content
+- **Tuner Mode**: For tuning oscillators (SCOPEv2+ only)
+- **Settings**: Configure encoder direction, menu timeout, and display orientation
 
 
-## SCOPEv2 (new Hardware "Late 2025" needed!)
+**Controls:**
+- **Encoder Short Press**: Toggle between menu options
+- **Encoder Medium Press** (1-2s): Save current settings to EEPROM
+- **Encoder Long Press** (>3s): Enter/Exit Global Settings Menu
+- **Encoder Rotation**: Adjust parameters
 
-{{< firmware_button hex="SCOPEv2" buttonText="Flash SCOPEv2 Firmware" oledImage="https://dl.modulove.de/module/scope/img/SCOPE_Firmware_UI_Main_887x512.png" >}}
+[🛠️ Configure SCOPE Settings](/config/scope.html){: .button}
+
+{{< firmware_button hex="SCOPEv2" buttonText="Flash SCOPE v2 Firmware" oledImage="https://dl.modulove.de/module/scope/img/SCOPE_Firmware_UI_Main_887x512.png" >}}
 
 </div>
 
