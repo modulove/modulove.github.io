@@ -71,6 +71,22 @@ Six-waveform voltage controlled oscillator with 1V/Oct tracking and PolyBLEP ant
 
 ---
 
+### FLUX - Physical Modeling & Noise (7 modes)
+
+Six-modes from ordered resonance to pure chaos + addition Drone mode
+
+{{< rp2350_webflash uf2="MOD2_flux" buttonText="FLUX Firmware" name="FLUX" >}}
+
+---
+
+### SPIRAL FOREVER -  Auditory Illusions
+
+Different Shepard tones, Euler Spiral, Tritone Paradox, etc.
+
+{{< rp2350_webflash uf2="MOD2_spiral" buttonText="SPIRAL Firmware" name="SPIRAL" >}}
+
+---
+
 ## Sample-Based Firmware (Patreon Exclusive)
 
 The following firmware require pre-compiled sample data and are available from Hagiwo's Patreon:
