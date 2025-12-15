@@ -87,6 +87,14 @@ Different Shepard tones, Euler Spiral, Tritone Paradox, etc.
 
 ---
 
+### Tides (WIP)
+
+Mutable Instruments Tides port - function generator and wavetable oscillator. Multiple output modes (amplitudes, phases, frequencies, gates) and ramp modes (looping LFO, AD envelope, AR envelope).
+
+{{< rp2350_webflash uf2="MOD2_tides" buttonText="Tides Firmware" name="Tides" >}}
+
+---
+
 ## Sample-Based Firmware (Patreon Exclusive)
 
 The following firmware require pre-compiled sample data and are available from Hagiwo's Patreon:

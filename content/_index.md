@@ -64,7 +64,7 @@ Here you find the Open-source firmware for our Eurorack modules. Choose your mod
     <div class="module-image">⚡</div>
     <h2>MOD2</h2>
     <p>RP2350-based digital percussion. 5 synthesis algorithms for kicks, claps, hats, and experimental sounds.</p>
-    <p><strong>10 firmware options (RP2350)</strong></p>
+    <p><strong>11 firmware options (RP2350)</strong></p>
   </a>
 </div>
 
