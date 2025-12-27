@@ -70,6 +70,36 @@ MOD1 is Hagiwo's **versatile utility module collection** offering 12 different f
 {{< /mod1_firmware >}}
 
 ---
+{{< mod1_firmware title="Jinglz" hex="MOD1_Jinglz" buttonText="Flash Jinglz" image="vco" >}}
+- XMAS theme sequuencer
+- Clock input
+- CV / Gate output + accent (Bell) trigger out
+
+**Perfect for:** Xmas
+
+**Controls:**
+- **POT1**: Steps
+- **POT2**: Range (CV)
+- **POT3**: 
+- **F1 Input**: Clock input
+- **Button**: Toggle song, reset mutation
+{{< /mod1_firmware >}}
+
+---
+
+{{< mod1_firmware title="Lazer" hex="MOD1_Lazer" buttonText="Flash Lazer" image="vco" >}}
+- 2 independent pwm outputs
+- To be used with ILDA Laser interface
+
+**Controls:**
+- **POT1**: 
+- **POT2**: 
+- **POT3**: 
+- **F1 Input**:
+- **Button**: Toggle preset / save preset
+{{< /mod1_firmware >}}
+
+---
 
 {{< mod1_firmware title="Clock Divider/Multiplier" hex="MOD1_clock_div_multi" buttonText="Flash Clock Div/Multi" image="clock" >}}
 - 3 independent clock outputs
