@@ -50,7 +50,7 @@ Here you find the Open-source firmware for our Eurorack modules. Choose your mod
     </div>
     <h2>MOD1</h2>
     <p>Versatile utility module collection. LFOs, envelopes, logic, clocks, sequencers, and more in one compact module.</p>
-    <p><strong>15 firmware options available</strong></p>
+    <p><strong>17 firmware options available</strong></p>
   </a>
 
   <a href="/utf9" class="module-card">
