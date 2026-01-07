@@ -28,11 +28,12 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
       <li>Spectrum Analyzer mode - see frequency content</li>
       <li>Adjustable timebase and sensitivity</li>
       <li>Use trigger input for stable waveform display</li>
+      <li>NEW: Tuner mode</li>
     </ul>
   </div>
 </div>
 
-**Perfect for:** Signal analysis, visualizing modulation
+**Good for:** Signal analysis, visualizing modulation, tuning oscillators
 
 **Modes:**
 - **Oscilloscope**: Real-time waveform display with adjustable timebase
@@ -40,6 +41,7 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 - **WAVE Mode**: For Audio rate
 - **SHOT Mode**: For Envelopes
 - **Spectrum Analyzer**: FFT-based frequency analysis showing harmonic content
+- **Tuner**: Tune your oscillators
 - **Settings**: Configure encoder direction, menu timeout, and display orientation
 
 
