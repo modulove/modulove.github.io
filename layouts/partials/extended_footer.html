@@ -287,63 +287,235 @@
     color: var(--accent);
   }
 
-  /* Flash Buttons */
+  /* Flash Firmware Container */
   .flash-firmware {
     margin: 2em 0;
-    padding: 0;
+    padding: 1.5em;
+    background: var(--card-bg);
+    border: 2px solid var(--subtle);
+    border-radius: 12px;
   }
 
-  .flash-firmware > div {
-    margin-top: 1.5em;
-    padding-top: 1.5em;
-    border-top: 2px solid var(--subtle);
-    font-style: italic;
-    opacity: 0.8;
-    color: var(--muted);
+  /* Firmware Steps */
+  .firmware-step {
+    margin-bottom: 1.5em;
+    padding-bottom: 1.5em;
+    border-bottom: 1px solid var(--subtle);
   }
 
-  .flash-firmware button {
-    display: block;
+  .firmware-step:last-of-type {
+    margin-bottom: 1em;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75em;
+    margin-bottom: 1em;
+  }
+
+  .step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    color: var(--background);
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.9em;
+  }
+
+  .step-title {
+    font-weight: 600;
+    font-size: 1.1em;
+    color: var(--foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  /* Flash Buttons */
+  .flash-firmware button.flash-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
     width: 100%;
-    max-width: 450px;
-    margin: 0.8em 0;
-    padding: 0.9em 1.2em;
+    max-width: 400px;
+    margin: 0.5em 0;
+    padding: 1em 1.5em;
     font-size: 0.95em;
     font-weight: 600;
     cursor: pointer;
     background: var(--accent);
     color: var(--background);
     border: 2px solid var(--accent);
-    border-radius: 6px;
+    border-radius: 8px;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px var(--shadow);
     text-transform: uppercase;
     letter-spacing: 0.04em;
   }
 
-  .flash-firmware button:hover {
+  .flash-firmware button.flash-button:hover:not(:disabled) {
     background: color-mix(in srgb, var(--accent) 85%, var(--background));
     transform: translateY(-2px);
     box-shadow: 0 4px 12px var(--shadow);
   }
 
-  .flash-firmware button:active {
+  .flash-firmware button.flash-button:active:not(:disabled) {
     transform: translateY(0);
   }
 
-  .flash-firmware button:disabled {
+  .flash-firmware button.flash-button:disabled {
     background: var(--subtle);
     border-color: var(--subtle);
     color: var(--muted);
     cursor: not-allowed;
     box-shadow: none;
+    opacity: 0.6;
   }
 
-  .upload-progress {
-    font-style: italic;
-    font-size: 0.9em;
-    opacity: 0.8;
+  .flash-firmware button.flash-button:disabled:hover {
+    transform: none;
+  }
+
+  .button-icon {
+    font-size: 1.2em;
+  }
+
+  /* Connect Button - distinct style */
+  .connect-button {
+    background: var(--accent-secondary) !important;
+    border-color: var(--accent-secondary) !important;
+  }
+
+  .connect-button:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--accent-secondary) 85%, var(--background)) !important;
+  }
+
+  .connect-button.connected {
+    background: #22c55e !important;
+    border-color: #22c55e !important;
+  }
+
+  /* Connection Status */
+  .connection-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 0.75em;
+    padding: 0.5em 0.75em;
+    background: var(--background);
+    border-radius: 6px;
+    font-size: 0.85em;
+  }
+
+  .status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--muted);
+    transition: background 0.3s ease;
+  }
+
+  .status-indicator.connected {
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+  }
+
+  .status-indicator.connecting {
+    background: #f59e0b;
+    animation: pulse 1s ease-in-out infinite;
+  }
+
+  .status-indicator.error {
+    background: #ef4444;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .status-text {
     color: var(--muted);
+  }
+
+  .status-text.connected {
+    color: #22c55e;
+  }
+
+  .status-text.error {
+    color: #ef4444;
+  }
+
+  /* Progress Bar */
+  .upload-progress-container {
+    margin-top: 1em;
+    padding: 1em;
+    background: var(--background);
+    border-radius: 8px;
+    border: 1px solid var(--subtle);
+  }
+
+  .progress-bar-track {
+    width: 100%;
+    height: 12px;
+    background: var(--subtle);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+    border-radius: 6px;
+    transition: width 0.3s ease;
+  }
+
+  .progress-bar-fill.complete {
+    background: #22c55e;
+  }
+
+  .progress-bar-fill.error {
+    background: #ef4444;
+  }
+
+  .progress-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5em;
+    font-size: 0.85em;
+  }
+
+  .progress-percent {
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .progress-status {
+    color: var(--muted);
+  }
+
+  .progress-status.complete {
+    color: #22c55e;
+  }
+
+  .progress-status.error {
+    color: #ef4444;
+  }
+
+  /* Upload button when uploading */
+  .upload-button.uploading {
+    background: var(--muted) !important;
+    border-color: var(--muted) !important;
+    pointer-events: none;
   }
 
   /* Feature Lists */
@@ -713,10 +885,229 @@
     }
   })();
 
-  // Checkbox toggle functionality for firmware buttons
+  // Two-step firmware upload functionality
   document.addEventListener('DOMContentLoaded', function() {
-    // Handle bootloader toggle checkboxes - show only ONE button at a time
-    // Default is old bootloader, checkbox switches to new bootloader
+    // Store connected ports per firmware section
+    const connectedPorts = new WeakMap();
+
+    // Initialize all firmware upload sections
+    document.querySelectorAll('.flash-firmware').forEach(function(section) {
+      const connectBtn = section.querySelector('.connect-button');
+      const uploadButtons = section.querySelectorAll('.upload-button');
+      const statusIndicator = section.querySelector('.status-indicator');
+      const statusText = section.querySelector('.status-text');
+      const progressContainer = section.querySelector('.upload-progress-container');
+      const progressFill = section.querySelector('.progress-bar-fill');
+      const progressPercent = section.querySelector('.progress-percent');
+      const progressStatus = section.querySelector('.progress-status');
+
+      if (!connectBtn) return;
+
+      // Connect button handler
+      connectBtn.addEventListener('click', async function() {
+        // Check for Web Serial API support
+        if (!('serial' in navigator)) {
+          statusIndicator.className = 'status-indicator error';
+          statusText.className = 'status-text error';
+          statusText.textContent = 'Web Serial not supported. Use Chrome, Edge, or Opera.';
+          return;
+        }
+
+        try {
+          // Update status to connecting
+          statusIndicator.className = 'status-indicator connecting';
+          statusText.className = 'status-text';
+          statusText.textContent = 'Selecting device...';
+
+          // Request port from user
+          const port = await navigator.serial.requestPort();
+
+          // Store the port for this section
+          connectedPorts.set(section, port);
+
+          // Update UI to show connected
+          statusIndicator.className = 'status-indicator connected';
+          statusText.className = 'status-text connected';
+          statusText.textContent = 'Device connected! Ready to upload.';
+          connectBtn.classList.add('connected');
+          connectBtn.innerHTML = '<span class="button-icon">✓</span> Connected';
+
+          // Enable upload buttons
+          uploadButtons.forEach(btn => {
+            btn.disabled = false;
+          });
+
+        } catch (error) {
+          if (error.name === 'NotFoundError') {
+            // User cancelled the dialog
+            statusIndicator.className = 'status-indicator';
+            statusText.className = 'status-text';
+            statusText.textContent = 'No device selected';
+          } else {
+            statusIndicator.className = 'status-indicator error';
+            statusText.className = 'status-text error';
+            statusText.textContent = 'Connection failed: ' + error.message;
+          }
+        }
+      });
+
+      // Upload button handlers - use arduino-uploader library
+      uploadButtons.forEach(function(uploadBtn) {
+        uploadBtn.addEventListener('click', async function() {
+          const hexHref = this.dataset.hexHref;
+          const board = this.dataset.board;
+
+          if (!hexHref || !board) return;
+
+          // Show progress container
+          progressContainer.style.display = 'block';
+          progressFill.style.width = '0%';
+          progressFill.className = 'progress-bar-fill';
+          progressPercent.textContent = '0%';
+          progressStatus.className = 'progress-status';
+          progressStatus.textContent = 'Downloading firmware...';
+
+          // Disable buttons during upload
+          uploadBtn.classList.add('uploading');
+          uploadButtons.forEach(btn => btn.disabled = true);
+
+          try {
+            // Fetch the hex file first to cache it
+            progressStatus.textContent = 'Downloading firmware...';
+            const response = await fetch(hexHref);
+            if (!response.ok) {
+              throw new Error('Failed to download firmware file');
+            }
+
+            // Get file size for progress indication
+            const hexBlob = await response.blob();
+            progressFill.style.width = '10%';
+            progressPercent.textContent = '10%';
+            progressStatus.textContent = 'Firmware downloaded. Starting upload...';
+
+            // Create a temporary button with arduino-uploader attributes
+            const tempBtn = document.createElement('button');
+            tempBtn.setAttribute('arduino-uploader', '');
+            tempBtn.setAttribute('hex-href', hexHref);
+            tempBtn.setAttribute('board', board);
+            tempBtn.style.display = 'none';
+
+            // Add progress span
+            const progressSpan = document.createElement('span');
+            progressSpan.className = 'upload-progress';
+            tempBtn.appendChild(progressSpan);
+
+            document.body.appendChild(tempBtn);
+
+            // Monitor progress by watching the span
+            const progressObserver = new MutationObserver(function(mutations) {
+              mutations.forEach(function(mutation) {
+                if (mutation.type === 'characterData' || mutation.type === 'childList') {
+                  const text = progressSpan.textContent || '';
+                  const match = text.match(/(\d+)%/);
+                  if (match) {
+                    const percent = parseInt(match[1]);
+                    // Scale from 10-100%
+                    const scaledPercent = 10 + (percent * 0.9);
+                    progressFill.style.width = scaledPercent + '%';
+                    progressPercent.textContent = Math.round(scaledPercent) + '%';
+                    progressStatus.textContent = 'Uploading... ' + percent + '% complete';
+                  }
+                }
+              });
+            });
+
+            progressObserver.observe(progressSpan, {
+              characterData: true,
+              childList: true,
+              subtree: true
+            });
+
+            // Trigger click on temp button to start upload
+            tempBtn.click();
+
+            // Wait for upload to complete (monitor the progress span)
+            await new Promise((resolve, reject) => {
+              let lastProgress = 0;
+              let stuckCount = 0;
+              let completed = false;
+
+              const checkInterval = setInterval(() => {
+                const text = progressSpan.textContent || '';
+
+                if (text.includes('100%') || text.toLowerCase().includes('done') || text.toLowerCase().includes('complete')) {
+                  clearInterval(checkInterval);
+                  completed = true;
+                  resolve();
+                } else if (text.toLowerCase().includes('error') || text.toLowerCase().includes('fail')) {
+                  clearInterval(checkInterval);
+                  reject(new Error(text));
+                } else {
+                  const match = text.match(/(\d+)%/);
+                  if (match) {
+                    const currentProgress = parseInt(match[1]);
+                    if (currentProgress === lastProgress) {
+                      stuckCount++;
+                      // If stuck for 60 seconds, assume done or error
+                      if (stuckCount > 60) {
+                        clearInterval(checkInterval);
+                        if (currentProgress > 90) {
+                          resolve(); // Probably done
+                        } else {
+                          reject(new Error('Upload timed out'));
+                        }
+                      }
+                    } else {
+                      stuckCount = 0;
+                      lastProgress = currentProgress;
+                    }
+                  }
+                }
+              }, 1000);
+
+              // Also listen for button removal (library removes it on complete)
+              const removeObserver = new MutationObserver(() => {
+                if (!document.body.contains(tempBtn)) {
+                  clearInterval(checkInterval);
+                  if (!completed) {
+                    resolve(); // Assume success if button was removed
+                  }
+                }
+              });
+              removeObserver.observe(document.body, { childList: true });
+            });
+
+            // Clean up
+            progressObserver.disconnect();
+            if (document.body.contains(tempBtn)) {
+              document.body.removeChild(tempBtn);
+            }
+
+            // Success!
+            progressFill.style.width = '100%';
+            progressFill.className = 'progress-bar-fill complete';
+            progressPercent.textContent = '100%';
+            progressStatus.className = 'progress-status complete';
+            progressStatus.textContent = 'Upload complete! You can disconnect the device.';
+
+          } catch (error) {
+            progressFill.className = 'progress-bar-fill error';
+            progressStatus.className = 'progress-status error';
+            progressStatus.textContent = 'Upload failed: ' + error.message;
+          } finally {
+            // Re-enable buttons
+            uploadBtn.classList.remove('uploading');
+            uploadButtons.forEach(btn => {
+              if (connectedPorts.has(section)) {
+                btn.disabled = false;
+              }
+            });
+          }
+        });
+      });
+    });
+
+    // Handle bootloader toggle checkboxes
     document.querySelectorAll('.bootloader-toggle').forEach(function(checkbox) {
       checkbox.addEventListener('change', function() {
         const flashFirmwareDiv = this.closest('.flash-firmware');
@@ -730,56 +1121,44 @@
 
         if (nanoButton && oldBootloaderButton) {
           if (this.checked) {
-            // Show new bootloader, hide old bootloader
-            nanoButton.style.display = 'block';
+            nanoButton.style.display = 'flex';
             oldBootloaderButton.style.display = 'none';
             if (reversedNanoButton && reversedOldButton) {
-              reversedNanoButton.style.display = 'block';
+              reversedNanoButton.style.display = 'flex';
               reversedOldButton.style.display = 'none';
             }
           } else {
-            // Show old bootloader, hide new bootloader
             nanoButton.style.display = 'none';
-            oldBootloaderButton.style.display = 'block';
+            oldBootloaderButton.style.display = 'flex';
             if (reversedNanoButton && reversedOldButton) {
               reversedNanoButton.style.display = 'none';
-              reversedOldButton.style.display = 'block';
+              reversedOldButton.style.display = 'flex';
             }
           }
         }
       });
     });
 
-    // Handle encoder direction toggle checkboxes - show only ONE set of buttons at a time
+    // Handle encoder direction toggle checkboxes
     document.querySelectorAll('.encoder-toggle').forEach(function(checkbox) {
       checkbox.addEventListener('change', function() {
         const flashFirmwareDiv = this.closest('.flash-firmware');
-        const normalButtons = flashFirmwareDiv.querySelectorAll('.flash-button-nano, .flash-button-old-bootloader');
+        const normalButtons = flashFirmwareDiv.querySelectorAll('.upload-button.flash-button-nano, .upload-button.flash-button-old-bootloader');
         const reversedSection = flashFirmwareDiv.querySelector('.reversed-encoder-section');
         const bootloaderToggle = flashFirmwareDiv.querySelector('.bootloader-toggle');
 
         if (reversedSection) {
           if (this.checked) {
-            // Show reversed encoder section, hide normal buttons
             reversedSection.style.display = 'block';
             normalButtons.forEach(btn => btn.style.display = 'none');
-            if (bootloaderToggle && bootloaderToggle.parentElement) {
-              bootloaderToggle.parentElement.style.display = 'none';
-            }
           } else {
-            // Show normal buttons based on bootloader toggle, hide reversed section
             reversedSection.style.display = 'none';
-            if (bootloaderToggle && bootloaderToggle.parentElement) {
-              bootloaderToggle.parentElement.style.display = 'block';
-            }
-            // Restore button visibility based on bootloader checkbox state
-            // Default is old bootloader (unchecked), new bootloader when checked
             const showNewBootloader = bootloaderToggle && bootloaderToggle.checked;
             normalButtons.forEach(btn => {
               if (btn.classList.contains('flash-button-nano')) {
-                btn.style.display = showNewBootloader ? 'block' : 'none';
+                btn.style.display = showNewBootloader ? 'flex' : 'none';
               } else if (btn.classList.contains('flash-button-old-bootloader')) {
-                btn.style.display = showNewBootloader ? 'none' : 'block';
+                btn.style.display = showNewBootloader ? 'none' : 'flex';
               }
             });
           }

@@ -33,39 +33,68 @@
       </div>
 
       {{ if $hex }}
-      <div class="flash-firmware">
-        <button
-          class="flash-button flash-button-old-bootloader"
-          arduino-uploader
-          hex-href='/releases/{{ $hex | safeURL }}.nanoOldBootloader.hex'
-          board="nanoOldBootloader"
-          [optional]verify
-          [optional]port-filters='[{"usbProductId":46388,"usbVendorId":1241}]'
-        >
-          {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }} to Arduino Nano (old bootloader)
-          &nbsp;
-          <span class="upload-progress"></span>
-        </button>
+      <div class="flash-firmware" data-hex-base="{{ $hex | safeURL }}">
+        <!-- Step 1: Connect Device -->
+        <div class="firmware-step">
+          <div class="step-header">
+            <span class="step-number">1</span>
+            <span class="step-title">Connect Device</span>
+          </div>
+          <button class="flash-button connect-button">
+            <span class="button-icon">🔌</span>
+            Connect Arduino Nano
+          </button>
+          <div class="connection-status">
+            <span class="status-indicator"></span>
+            <span class="status-text">Not connected</span>
+          </div>
+        </div>
+
+        <!-- Step 2: Upload Firmware -->
+        <div class="firmware-step">
+          <div class="step-header">
+            <span class="step-number">2</span>
+            <span class="step-title">Upload Firmware</span>
+          </div>
+          <button
+            class="flash-button upload-button flash-button-old-bootloader"
+            disabled
+            data-hex-href='/releases/{{ $hex | safeURL }}.nanoOldBootloader.hex'
+            data-board="nanoOldBootloader"
+          >
+            <span class="button-icon">⬆️</span>
+            {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }}
+          </button>
+
+          <!-- Progress Bar -->
+          <div class="upload-progress-container" style="display: none;">
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill"></div>
+            </div>
+            <div class="progress-stats">
+              <span class="progress-percent">0%</span>
+              <span class="progress-status">Preparing...</span>
+            </div>
+          </div>
+        </div>
 
         <div class="advanced-options">
           <label class="checkbox-label">
             <input type="checkbox" class="bootloader-toggle">
-            <span>Show new bootloader option</span>
+            <span>Use new bootloader (most Nanos after 2018)</span>
           </label>
         </div>
 
+        <!-- Hidden button for new bootloader -->
         <button
-          class="flash-button flash-button-nano"
+          class="flash-button upload-button flash-button-nano"
           style="display: none;"
-          arduino-uploader
-          hex-href='/releases/{{ $hex | safeURL }}.nano.hex'
-          board="nano"
-          [optional]verify
-          [optional]port-filters='[{"usbProductId":46388,"usbVendorId":1241}]'
+          disabled
+          data-hex-href='/releases/{{ $hex | safeURL }}.nano.hex'
+          data-board="nano"
         >
-          {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }} to Arduino Nano
-          &nbsp;
-          <span class="upload-progress"></span>
+          <span class="button-icon">⬆️</span>
+          {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }}
         </button>
       </div>
       {{ end }}
