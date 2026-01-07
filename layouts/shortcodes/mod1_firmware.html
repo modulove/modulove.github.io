@@ -40,7 +40,7 @@
             <span class="step-number">1</span>
             <span class="step-title">Connect Device</span>
           </div>
-          <button class="flash-button connect-button">
+          <button class="flash-button connect-button" type="button">
             <span class="button-icon">🔌</span>
             Connect Arduino Nano
           </button>
@@ -58,22 +58,23 @@
           </div>
           <button
             class="flash-button upload-button flash-button-old-bootloader"
-            disabled
-            data-hex-href='/releases/{{ $hex | safeURL }}.nanoOldBootloader.hex'
-            data-board="nanoOldBootloader"
+            arduino-uploader
+            hex-href='/releases/{{ $hex | safeURL }}.nanoOldBootloader.hex'
+            board="nanoOldBootloader"
           >
             <span class="button-icon">⬆️</span>
             {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }}
+            <span class="upload-progress"></span>
           </button>
 
           <!-- Progress Bar -->
-          <div class="upload-progress-container" style="display: none;">
+          <div class="upload-progress-container">
             <div class="progress-bar-track">
               <div class="progress-bar-fill"></div>
             </div>
             <div class="progress-stats">
               <span class="progress-percent">0%</span>
-              <span class="progress-status">Preparing...</span>
+              <span class="progress-status">Waiting for upload...</span>
             </div>
           </div>
         </div>
@@ -89,12 +90,13 @@
         <button
           class="flash-button upload-button flash-button-nano"
           style="display: none;"
-          disabled
-          data-hex-href='/releases/{{ $hex | safeURL }}.nano.hex'
-          data-board="nano"
+          arduino-uploader
+          hex-href='/releases/{{ $hex | safeURL }}.nano.hex'
+          board="nano"
         >
           <span class="button-icon">⬆️</span>
           {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }}
+          <span class="upload-progress"></span>
         </button>
       </div>
       {{ end }}

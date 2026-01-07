@@ -887,9 +887,6 @@
 
   // Two-step firmware upload functionality
   document.addEventListener('DOMContentLoaded', function() {
-    // Store connected ports per firmware section
-    const connectedPorts = new WeakMap();
-
     // Initialize all firmware upload sections
     document.querySelectorAll('.flash-firmware').forEach(function(section) {
       const connectBtn = section.querySelector('.connect-button');
@@ -903,7 +900,10 @@
 
       if (!connectBtn) return;
 
-      // Connect button handler
+      // Track connection state
+      let isConnected = false;
+
+      // Connect button handler - just validates Web Serial and prompts user
       connectBtn.addEventListener('click', async function() {
         // Check for Web Serial API support
         if (!('serial' in navigator)) {
@@ -919,23 +919,16 @@
           statusText.className = 'status-text';
           statusText.textContent = 'Selecting device...';
 
-          // Request port from user
+          // Request port from user - this grants permission for the arduino-uploader library
           const port = await navigator.serial.requestPort();
 
-          // Store the port for this section
-          connectedPorts.set(section, port);
-
           // Update UI to show connected
+          isConnected = true;
           statusIndicator.className = 'status-indicator connected';
           statusText.className = 'status-text connected';
-          statusText.textContent = 'Device connected! Ready to upload.';
+          statusText.textContent = 'Device selected! Click Upload to flash firmware.';
           connectBtn.classList.add('connected');
-          connectBtn.innerHTML = '<span class="button-icon">✓</span> Connected';
-
-          // Enable upload buttons
-          uploadButtons.forEach(btn => {
-            btn.disabled = false;
-          });
+          connectBtn.innerHTML = '<span class="button-icon">✓</span> Device Selected';
 
         } catch (error) {
           if (error.name === 'NotFoundError') {
@@ -946,163 +939,52 @@
           } else {
             statusIndicator.className = 'status-indicator error';
             statusText.className = 'status-text error';
-            statusText.textContent = 'Connection failed: ' + error.message;
+            statusText.textContent = 'Selection failed: ' + error.message;
           }
         }
       });
 
-      // Upload button handlers - use arduino-uploader library
+      // Monitor upload progress from all upload buttons in this section
       uploadButtons.forEach(function(uploadBtn) {
-        uploadBtn.addEventListener('click', async function() {
-          const hexHref = this.dataset.hexHref;
-          const board = this.dataset.board;
+        const progressSpan = uploadBtn.querySelector('.upload-progress');
+        if (!progressSpan) return;
 
-          if (!hexHref || !board) return;
+        // Create a MutationObserver to watch the library's progress span
+        const observer = new MutationObserver(function(mutations) {
+          const text = progressSpan.textContent || '';
 
-          // Show progress container
-          progressContainer.style.display = 'block';
-          progressFill.style.width = '0%';
-          progressFill.className = 'progress-bar-fill';
-          progressPercent.textContent = '0%';
-          progressStatus.className = 'progress-status';
-          progressStatus.textContent = 'Downloading firmware...';
+          if (text) {
+            // Show progress container when upload starts
+            progressContainer.style.display = 'block';
 
-          // Disable buttons during upload
-          uploadBtn.classList.add('uploading');
-          uploadButtons.forEach(btn => btn.disabled = true);
+            const match = text.match(/(\d+)%/);
+            if (match) {
+              const percent = parseInt(match[1]);
+              progressFill.style.width = percent + '%';
+              progressPercent.textContent = percent + '%';
+              progressStatus.textContent = 'Uploading firmware... ' + percent + '%';
+              progressStatus.className = 'progress-status';
+              progressFill.className = 'progress-bar-fill';
 
-          try {
-            // Fetch the hex file first to cache it
-            progressStatus.textContent = 'Downloading firmware...';
-            const response = await fetch(hexHref);
-            if (!response.ok) {
-              throw new Error('Failed to download firmware file');
-            }
-
-            // Get file size for progress indication
-            const hexBlob = await response.blob();
-            progressFill.style.width = '10%';
-            progressPercent.textContent = '10%';
-            progressStatus.textContent = 'Firmware downloaded. Starting upload...';
-
-            // Create a temporary button with arduino-uploader attributes
-            const tempBtn = document.createElement('button');
-            tempBtn.setAttribute('arduino-uploader', '');
-            tempBtn.setAttribute('hex-href', hexHref);
-            tempBtn.setAttribute('board', board);
-            tempBtn.style.display = 'none';
-
-            // Add progress span
-            const progressSpan = document.createElement('span');
-            progressSpan.className = 'upload-progress';
-            tempBtn.appendChild(progressSpan);
-
-            document.body.appendChild(tempBtn);
-
-            // Monitor progress by watching the span
-            const progressObserver = new MutationObserver(function(mutations) {
-              mutations.forEach(function(mutation) {
-                if (mutation.type === 'characterData' || mutation.type === 'childList') {
-                  const text = progressSpan.textContent || '';
-                  const match = text.match(/(\d+)%/);
-                  if (match) {
-                    const percent = parseInt(match[1]);
-                    // Scale from 10-100%
-                    const scaledPercent = 10 + (percent * 0.9);
-                    progressFill.style.width = scaledPercent + '%';
-                    progressPercent.textContent = Math.round(scaledPercent) + '%';
-                    progressStatus.textContent = 'Uploading... ' + percent + '% complete';
-                  }
-                }
-              });
-            });
-
-            progressObserver.observe(progressSpan, {
-              characterData: true,
-              childList: true,
-              subtree: true
-            });
-
-            // Trigger click on temp button to start upload
-            tempBtn.click();
-
-            // Wait for upload to complete (monitor the progress span)
-            await new Promise((resolve, reject) => {
-              let lastProgress = 0;
-              let stuckCount = 0;
-              let completed = false;
-
-              const checkInterval = setInterval(() => {
-                const text = progressSpan.textContent || '';
-
-                if (text.includes('100%') || text.toLowerCase().includes('done') || text.toLowerCase().includes('complete')) {
-                  clearInterval(checkInterval);
-                  completed = true;
-                  resolve();
-                } else if (text.toLowerCase().includes('error') || text.toLowerCase().includes('fail')) {
-                  clearInterval(checkInterval);
-                  reject(new Error(text));
-                } else {
-                  const match = text.match(/(\d+)%/);
-                  if (match) {
-                    const currentProgress = parseInt(match[1]);
-                    if (currentProgress === lastProgress) {
-                      stuckCount++;
-                      // If stuck for 60 seconds, assume done or error
-                      if (stuckCount > 60) {
-                        clearInterval(checkInterval);
-                        if (currentProgress > 90) {
-                          resolve(); // Probably done
-                        } else {
-                          reject(new Error('Upload timed out'));
-                        }
-                      }
-                    } else {
-                      stuckCount = 0;
-                      lastProgress = currentProgress;
-                    }
-                  }
-                }
-              }, 1000);
-
-              // Also listen for button removal (library removes it on complete)
-              const removeObserver = new MutationObserver(() => {
-                if (!document.body.contains(tempBtn)) {
-                  clearInterval(checkInterval);
-                  if (!completed) {
-                    resolve(); // Assume success if button was removed
-                  }
-                }
-              });
-              removeObserver.observe(document.body, { childList: true });
-            });
-
-            // Clean up
-            progressObserver.disconnect();
-            if (document.body.contains(tempBtn)) {
-              document.body.removeChild(tempBtn);
-            }
-
-            // Success!
-            progressFill.style.width = '100%';
-            progressFill.className = 'progress-bar-fill complete';
-            progressPercent.textContent = '100%';
-            progressStatus.className = 'progress-status complete';
-            progressStatus.textContent = 'Upload complete! You can disconnect the device.';
-
-          } catch (error) {
-            progressFill.className = 'progress-bar-fill error';
-            progressStatus.className = 'progress-status error';
-            progressStatus.textContent = 'Upload failed: ' + error.message;
-          } finally {
-            // Re-enable buttons
-            uploadBtn.classList.remove('uploading');
-            uploadButtons.forEach(btn => {
-              if (connectedPorts.has(section)) {
-                btn.disabled = false;
+              if (percent >= 100) {
+                progressFill.className = 'progress-bar-fill complete';
+                progressStatus.className = 'progress-status complete';
+                progressStatus.textContent = 'Upload complete!';
               }
-            });
+            } else if (text.toLowerCase().includes('error') || text.toLowerCase().includes('fail')) {
+              progressFill.className = 'progress-bar-fill error';
+              progressStatus.className = 'progress-status error';
+              progressStatus.textContent = text;
+            } else if (text.toLowerCase().includes('connect') || text.toLowerCase().includes('waiting')) {
+              progressStatus.textContent = text;
+            }
           }
+        });
+
+        observer.observe(progressSpan, {
+          characterData: true,
+          childList: true,
+          subtree: true
         });
       });
     });
