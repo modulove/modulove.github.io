@@ -81,25 +81,48 @@ jobs:
           mkdir -p releases
 
           # Function to download firmware from a repository
+          # Downloads new files and updates existing files if size differs (new release)
           download_firmware() {
             local repo=$1
             local extension=$2
             local prefix=$3
 
-            echo "Downloading $prefix firmware from $repo..."
+            echo "============================================="
+            echo "Checking $prefix firmware from $repo..."
             RELEASE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
               "https://api.github.com/repos/modulove/$repo/releases/latest")
 
-            # Extract download URLs for specified extension
-            echo "$RELEASE" | jq -r ".assets[] | select(.name | endswith(\"$extension\")) | .browser_download_url" | while read url; do
-              if [ ! -z "$url" ]; then
-                filename=$(basename "$url")
-                # Only download if file doesn't already exist in releases/
-                if [ ! -f "releases/$filename" ]; then
-                  echo "Downloading new firmware: $filename"
-                  wget -q -O "releases/$filename" "$url" || echo "Failed to download $url"
+            # Check if release exists and has assets
+            asset_count=$(echo "$RELEASE" | jq -r '.assets | length')
+            if [ "$asset_count" == "0" ] || [ "$asset_count" == "null" ]; then
+              echo "WARNING: No assets found in latest release for $repo"
+              echo "Release info: $(echo "$RELEASE" | jq -r '.tag_name // "no release found"')"
+              return
+            fi
+
+            echo "Found $asset_count assets in release $(echo "$RELEASE" | jq -r '.tag_name')"
+
+            # Extract asset info (name, size, url) for specified extension
+            echo "$RELEASE" | jq -r ".assets[] | select(.name | endswith(\"$extension\")) | \"\(.name)|\(.size)|\(.browser_download_url)\"" | while IFS='|' read -r filename remote_size url; do
+              if [ ! -z "$url" ] && [ "$url" != "null" ]; then
+                local_file="releases/$filename"
+
+                # Get local file size (0 if doesn't exist)
+                if [ -f "$local_file" ]; then
+                  local_size=$(stat -c%s "$local_file" 2>/dev/null || stat -f%z "$local_file" 2>/dev/null || echo "0")
                 else
-                  echo "Firmware already exists: $filename"
+                  local_size=0
+                fi
+
+                # Download if file doesn't exist OR if size differs (indicates new version)
+                if [ ! -f "$local_file" ]; then
+                  echo "NEW: Downloading $filename (${remote_size} bytes)"
+                  wget -q -O "$local_file" "$url" || echo "ERROR: Failed to download $url"
+                elif [ "$local_size" != "$remote_size" ]; then
+                  echo "UPDATE: $filename changed (local: ${local_size} bytes -> remote: ${remote_size} bytes)"
+                  wget -q -O "$local_file" "$url" || echo "ERROR: Failed to download $url"
+                else
+                  echo "OK: $filename is up to date (${local_size} bytes)"
                 fi
               fi
             done
@@ -113,7 +136,7 @@ jobs:
           download_firmware "utf-9-samplified" ".hex" "UTF-9-SAMPLIFIED"
           download_firmware "MOD2" ".uf2" "MOD2"
 
-          # List all stored firmware files
+          echo "============================================="
           echo "All firmware files in releases/ directory:"
           ls -lh releases/
 
@@ -124,9 +147,9 @@ jobs:
           git add releases/
           # Only commit if there are changes
           if git diff --staged --quiet; then
-            echo "No new firmware files to commit"
+            echo "No new or updated firmware files to commit"
           else
-            git commit -m "Add new firmware releases [automated]"
+            git commit -m "Update firmware releases [automated]"
             git push
           fi
 
