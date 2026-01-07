@@ -34,48 +34,25 @@
 
       {{ if $hex }}
       <div class="flash-firmware" data-hex-base="{{ $hex | safeURL }}">
-        <!-- Step 1: Connect Device -->
-        <div class="firmware-step">
-          <div class="step-header">
-            <span class="step-number">1</span>
-            <span class="step-title">Connect Device</span>
-          </div>
-          <button class="flash-button connect-button" type="button">
-            <span class="button-icon">🔌</span>
-            Connect Arduino Nano
-          </button>
-          <div class="connection-status">
-            <span class="status-indicator"></span>
-            <span class="status-text">Not connected</span>
-          </div>
-        </div>
+        <button
+          class="flash-button upload-button flash-button-old-bootloader"
+          arduino-uploader
+          hex-href='/releases/{{ $hex | safeURL }}.nanoOldBootloader.hex'
+          board="nanoOldBootloader"
+        >
+          <span class="button-icon">⬆️</span>
+          {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }}
+          <span class="upload-progress"></span>
+        </button>
 
-        <!-- Step 2: Upload Firmware -->
-        <div class="firmware-step">
-          <div class="step-header">
-            <span class="step-number">2</span>
-            <span class="step-title">Upload Firmware</span>
+        <!-- Progress Bar -->
+        <div class="upload-progress-container">
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill"></div>
           </div>
-          <button
-            class="flash-button upload-button flash-button-old-bootloader"
-            arduino-uploader
-            hex-href='/releases/{{ $hex | safeURL }}.nanoOldBootloader.hex'
-            board="nanoOldBootloader"
-          >
-            <span class="button-icon">⬆️</span>
-            {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }}
-            <span class="upload-progress"></span>
-          </button>
-
-          <!-- Progress Bar -->
-          <div class="upload-progress-container">
-            <div class="progress-bar-track">
-              <div class="progress-bar-fill"></div>
-            </div>
-            <div class="progress-stats">
-              <span class="progress-percent">0%</span>
-              <span class="progress-status">Waiting for upload...</span>
-            </div>
+          <div class="progress-stats">
+            <span class="progress-percent">0%</span>
+            <span class="progress-status">Ready to upload</span>
           </div>
         </div>
 

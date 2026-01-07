@@ -296,47 +296,6 @@
     border-radius: 12px;
   }
 
-  /* Firmware Steps */
-  .firmware-step {
-    margin-bottom: 1.5em;
-    padding-bottom: 1.5em;
-    border-bottom: 1px solid var(--subtle);
-  }
-
-  .firmware-step:last-of-type {
-    margin-bottom: 1em;
-    padding-bottom: 0;
-    border-bottom: none;
-  }
-
-  .step-header {
-    display: flex;
-    align-items: center;
-    gap: 0.75em;
-    margin-bottom: 1em;
-  }
-
-  .step-number {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    background: var(--accent);
-    color: var(--background);
-    border-radius: 50%;
-    font-weight: 700;
-    font-size: 0.9em;
-  }
-
-  .step-title {
-    font-weight: 600;
-    font-size: 1.1em;
-    color: var(--foreground);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
   /* Flash Buttons */
   .flash-firmware button.flash-button {
     display: flex;
@@ -344,7 +303,7 @@
     justify-content: center;
     gap: 0.5em;
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
     margin: 0.5em 0;
     padding: 1em 1.5em;
     font-size: 0.95em;
@@ -385,72 +344,6 @@
 
   .button-icon {
     font-size: 1.2em;
-  }
-
-  /* Connect Button - distinct style */
-  .connect-button {
-    background: var(--accent-secondary) !important;
-    border-color: var(--accent-secondary) !important;
-  }
-
-  .connect-button:hover:not(:disabled) {
-    background: color-mix(in srgb, var(--accent-secondary) 85%, var(--background)) !important;
-  }
-
-  .connect-button.connected {
-    background: #22c55e !important;
-    border-color: #22c55e !important;
-  }
-
-  /* Connection Status */
-  .connection-status {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    margin-top: 0.75em;
-    padding: 0.5em 0.75em;
-    background: var(--background);
-    border-radius: 6px;
-    font-size: 0.85em;
-  }
-
-  .status-indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--muted);
-    transition: background 0.3s ease;
-  }
-
-  .status-indicator.connected {
-    background: #22c55e;
-    box-shadow: 0 0 8px #22c55e;
-  }
-
-  .status-indicator.connecting {
-    background: #f59e0b;
-    animation: pulse 1s ease-in-out infinite;
-  }
-
-  .status-indicator.error {
-    background: #ef4444;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
-
-  .status-text {
-    color: var(--muted);
-  }
-
-  .status-text.connected {
-    color: #22c55e;
-  }
-
-  .status-text.error {
-    color: #ef4444;
   }
 
   /* Progress Bar */
@@ -885,64 +778,17 @@
     }
   })();
 
-  // Two-step firmware upload functionality
+  // Firmware upload progress bar functionality
   document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all firmware upload sections
+    // Initialize all firmware upload sections with progress bar monitoring
     document.querySelectorAll('.flash-firmware').forEach(function(section) {
-      const connectBtn = section.querySelector('.connect-button');
       const uploadButtons = section.querySelectorAll('.upload-button');
-      const statusIndicator = section.querySelector('.status-indicator');
-      const statusText = section.querySelector('.status-text');
       const progressContainer = section.querySelector('.upload-progress-container');
       const progressFill = section.querySelector('.progress-bar-fill');
       const progressPercent = section.querySelector('.progress-percent');
       const progressStatus = section.querySelector('.progress-status');
 
-      if (!connectBtn) return;
-
-      // Track connection state
-      let isConnected = false;
-
-      // Connect button handler - just validates Web Serial and prompts user
-      connectBtn.addEventListener('click', async function() {
-        // Check for Web Serial API support
-        if (!('serial' in navigator)) {
-          statusIndicator.className = 'status-indicator error';
-          statusText.className = 'status-text error';
-          statusText.textContent = 'Web Serial not supported. Use Chrome, Edge, or Opera.';
-          return;
-        }
-
-        try {
-          // Update status to connecting
-          statusIndicator.className = 'status-indicator connecting';
-          statusText.className = 'status-text';
-          statusText.textContent = 'Selecting device...';
-
-          // Request port from user - this grants permission for the arduino-uploader library
-          const port = await navigator.serial.requestPort();
-
-          // Update UI to show connected
-          isConnected = true;
-          statusIndicator.className = 'status-indicator connected';
-          statusText.className = 'status-text connected';
-          statusText.textContent = 'Device selected! Click Upload to flash firmware.';
-          connectBtn.classList.add('connected');
-          connectBtn.innerHTML = '<span class="button-icon">✓</span> Device Selected';
-
-        } catch (error) {
-          if (error.name === 'NotFoundError') {
-            // User cancelled the dialog
-            statusIndicator.className = 'status-indicator';
-            statusText.className = 'status-text';
-            statusText.textContent = 'No device selected';
-          } else {
-            statusIndicator.className = 'status-indicator error';
-            statusText.className = 'status-text error';
-            statusText.textContent = 'Selection failed: ' + error.message;
-          }
-        }
-      });
+      if (!progressContainer) return;
 
       // Monitor upload progress from all upload buttons in this section
       uploadButtons.forEach(function(uploadBtn) {
@@ -954,9 +800,6 @@
           const text = progressSpan.textContent || '';
 
           if (text) {
-            // Show progress container when upload starts
-            progressContainer.style.display = 'block';
-
             const match = text.match(/(\d+)%/);
             if (match) {
               const percent = parseInt(match[1]);
