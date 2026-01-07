@@ -800,6 +800,9 @@
           const text = progressSpan.textContent || '';
 
           if (text) {
+            // Show progress bar when upload activity is detected
+            progressContainer.style.display = 'block';
+
             const match = text.match(/(\d+)%/);
             if (match) {
               const percent = parseInt(match[1]);

@@ -19,7 +19,7 @@ Select your preferred drumkit and flash it to your UTF-9-SAMPLIFIED module:
 
 Classic drum machine sounds - the default drumkit with versatile samples for general use.
 
-{{< firmware_button hex="UTF9_standard" buttonText="Flash Standard Drumkit" >}}
+{{< firmware_button hex="UTF9_standard" buttonText="Flash Standard Drumkit" oledImage="/images/utf9/Standard_Drumkit.png" >}}
 
 ---
 
@@ -27,7 +27,7 @@ Classic drum machine sounds - the default drumkit with versatile samples for gen
 
 Legendary Roland TR-808 drum machine sounds - iconic analog-style kicks, snares, and hi-hats.
 
-{{< firmware_button hex="UTF9_808" buttonText="Flash TR-808 Drumkit" >}}
+{{< firmware_button hex="UTF9_808" buttonText="Flash TR-808 Drumkit" oledImage="/images/utf9/TR-808_Drumkit.png" >}}
 
 ---
 
@@ -35,7 +35,7 @@ Legendary Roland TR-808 drum machine sounds - iconic analog-style kicks, snares,
 
 Classic Roland TR-909 drum sounds - punchy electronic drums perfect for techno and house.
 
-{{< firmware_button hex="UTF9_909" buttonText="Flash TR-909 Drumkit" >}}
+{{< firmware_button hex="UTF9_909" buttonText="Flash TR-909 Drumkit" oledImage="/images/utf9/TR-909_Drumkit.png" >}}
 
 ---
 
@@ -43,7 +43,7 @@ Classic Roland TR-909 drum sounds - punchy electronic drums perfect for techno a
 
 Hip-hop oriented drum samples - boom-bap kicks, crispy snares, and hard-hitting percussion.
 
-{{< firmware_button hex="UTF9_hiphop" buttonText="Flash Hip-Hop Drumkit" >}}
+{{< firmware_button hex="UTF9_hiphop" buttonText="Flash Hip-Hop Drumkit" oledImage="/images/utf9/Hip-Hop_Drumkit.png" >}}
 
 ---
 
@@ -59,7 +59,7 @@ Industrial and electronic sounds - harsh, metallic, and aggressive drum samples.
 
 Experimental and unconventional sounds - unique and creative percussion samples.
 
-{{< firmware_button hex="UTF9_experimental" buttonText="Flash Experimental Drumkit" >}}
+{{< firmware_button hex="UTF9_experimental" buttonText="Flash Experimental Drumkit" oledImage="/images/utf9/Experimental_Drumkit.png" >}}
 
 ---
 
