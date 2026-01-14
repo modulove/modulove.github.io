@@ -80,6 +80,35 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
 
 <div class="firmware-section">
 
+## Stitch Sequencer
+
+<div class="firmware-header">
+  <div class="firmware-image">▶️</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>Classic step sequencer with 6 channels</li>
+      <li>Per-step gate on/off control</li>
+      <li>Visual step display</li>
+    </ul>
+  </div>
+</div>
+
+**Perfect for:** Traditional EDM patterns, hands-on control, performance oriented
+
+**Controls:**
+- **Encoder**: Navigate and edit sequence steps
+- **CLK Input**: Advance sequencer
+- **RST Input**: Return to first step
+
+{{< encoder_firmware_button hex="ARYTHMATIK_Stitch" buttonText="Flash Gate Sequencer Firmware" oledImage="https://dl.modulove.de/module/arythmatik/img/A-Ryth-Matik_Firmware_UI_Gate_887x512.png" >}}
+
+</div>
+
+---
+
+<div class="firmware-section">
+
 ## Gate Sequencer
 
 <div class="firmware-header">
