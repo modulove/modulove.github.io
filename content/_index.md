@@ -21,7 +21,7 @@ Here you find the Open-source firmware for our Eurorack modules. Choose your mod
     </div>
     <h2>A-RYTH-MATIK</h2>
     <p>6-channel gate/trigger generator with multiple rhythm algorithms. Euclidean, generative, sequencer, and experimental modes.</p>
-    <p><strong>5 firmware options available</strong></p>
+    <p><strong>6 firmware options available</strong></p>
   </a>
 
   <a href="/mvmnt" class="module-card">
