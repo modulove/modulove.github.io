@@ -80,6 +80,14 @@ Single long-form audio playback module optimized for creating vocal snippets fro
 
 ---
 
+### MOD303
+
+303-ish bass voice + generative sequencer. Happy 303 Day everyone!
+
+{{< rp2350_webflash uf2="MOD2_mod303" buttonText="MOD303 Firmware" name="Mod303" >}}
+
+---
+
 ### FLUX - Physical Modeling & Noise (7 modes)
 
 Six-modes from ordered resonance to pure chaos + addition Drone mode
