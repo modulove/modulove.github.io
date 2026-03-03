@@ -3,9 +3,9 @@ title: "MOD1 Firmware Collection"
 layout: "single"
 ---
 
-# MOD1 - Modular Utility Collection
+# MOD1 - Eurorack Modular Synth Firmware Collection
 
-MOD1 is Hagiwo's **versatile utility module collection** offering 12 different firmware options for a wide range of modular synthesis tasks. From LFOs and envelopes to logic processing and VCOs, MOD1 is your Swiss Army knife for Eurorack.
+MOD1 is Hagiwo's **versatile utility module collection** offering dozens of different firmware options for a wide range of modular synthesis tasks. From LFOs and envelopes to logic processing and VCOs, MOD1 is your Swiss Army knife for Eurorack.
 
 **Hardware:** Arduino Nano · Compact Design · Triple Potentiometer Control · Multiple I/O
 
