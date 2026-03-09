@@ -51,7 +51,7 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 - **Encoder Long Press** (>3s): Enter/Exit Global Settings Menu
 - **Encoder Rotation**: Adjust parameters
 
-[🛠️ Configure SCOPE Settings](/config/scope.html){: .button}
+<!-- [🛠️ Configure SCOPE Settings](/config/scope.html) -->
 
 {{< firmware_button hex="SCOPE" buttonText="Flash SCOPE v1 Firmware" oledImage="https://dl.modulove.de/module/scope/img/SCOPE_Firmware_UI_Main_887x512.png" >}}
 
