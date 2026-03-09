@@ -73,8 +73,8 @@ Six-waveform voltage controlled oscillator with 1V/Oct tracking and PolyBLEP ant
 
 ### Radio
 
-VOCAL SNIPPET - Vocal/Speech Sample Player
-Single long-form audio playback module optimized for creating vocal snippets from podcasts, speeches, and interviews for techno production.
+Radio Music Eurorack Sampler Module clone - Radio/Vocal/Speech Sample Player
+Audio playback like the Radio Music from Music Thing Modular
 
 [Prepare MOD2 radio Samples](/config/radio.html)
 
