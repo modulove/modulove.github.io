@@ -1,0 +1,821 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOD2 radio (Grain) Sample Prep — Modulove</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  ::selection { background: #ff6b2b; color: #0a0a0b; }
+
+  :root {
+    --bg: #0a0a0b;
+    --srf: rgba(255,255,255,0.025);
+    --brd: rgba(255,255,255,0.06);
+    --txt: #e8e4de;
+    --dim: rgba(255,255,255,0.4);
+    --fnt: rgba(255,255,255,0.2);
+    --acc: #ff6b2b;
+    --acc-dim: rgba(255,107,43,0.15);
+    --err: #ff4444;
+    --ok: #3ddc84;
+    --mono: 'JetBrains Mono', 'SF Mono', monospace;
+    --disp: 'Space Grotesk', sans-serif;
+  }
+
+  body {
+    min-height: 100vh; display: flex; flex-direction: column;
+    background: var(--bg); color: var(--txt); font-family: var(--mono);
+  }
+
+  header {
+    padding: 20px 28px; display: flex; align-items: center;
+    justify-content: space-between; border-bottom: 1px solid var(--brd);
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .logo {
+    width: 34px; height: 34px; border-radius: 8px; display: flex;
+    align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--acc), #e85d20);
+    font: 700 17px var(--disp); color: var(--bg);
+  }
+  .header-title { font: 600 17px var(--disp); color: #fff; letter-spacing: -0.02em; }
+  .header-sub { font-size: 10px; color: var(--fnt); letter-spacing: 0.08em; text-transform: uppercase; }
+  .header-link {
+    font-size: 11px; color: var(--fnt); text-decoration: none;
+    padding: 5px 10px; border: 1px solid var(--brd); border-radius: 6px;
+  }
+
+  main { flex: 1; max-width: 940px; width: 100%; margin: 0 auto; padding: 28px 20px; }
+  footer {
+    padding: 14px 28px; border-top: 1px solid rgba(255,255,255,0.03);
+    text-align: center; font-size: 11px; color: var(--fnt); letter-spacing: 0.04em;
+  }
+
+  .badge { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fnt); }
+  .stat-label { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fnt); }
+  .stat-value { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8); margin-top: 3px; }
+  .stat-value.warn { color: var(--err); }
+
+  .card { background: var(--srf); border-radius: 12px; border: 1px solid var(--brd); padding: 18px; }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-bottom: 16px; }
+  .flex-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* Drop zone */
+  .drop-zone {
+    border: 2px dashed var(--brd); border-radius: 16px; padding: 72px 40px;
+    text-align: center; cursor: pointer; transition: all 0.25s;
+  }
+  .drop-zone:hover, .drop-zone.dragover {
+    border-color: var(--acc); background: var(--acc-dim);
+  }
+  .drop-zone .icon { font-size: 44px; margin-bottom: 14px; opacity: 0.5; }
+  .drop-zone p { font: 500 15px var(--disp); color: rgba(255,255,255,0.65); margin-bottom: 8px; }
+  .drop-zone small { font-size: 12px; color: var(--fnt); }
+
+  /* File bar */
+  .file-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 14px; background: var(--srf); border-radius: 10px;
+    border: 1px solid var(--brd);
+  }
+  .file-info { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .file-name { font-size: 13px; color: rgba(255,255,255,0.65); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .file-meta { font-size: 11px; color: var(--fnt); flex-shrink: 0; }
+
+  /* Buttons */
+  .btn {
+    padding: 13px 24px; border-radius: 10px; font: 600 13px var(--disp);
+    cursor: pointer; letter-spacing: 0.02em; transition: all 0.15s;
+    background: rgba(255,255,255,0.06); color: var(--txt); border: 1px solid var(--brd);
+  }
+  .btn:disabled { background: rgba(255,255,255,0.03); color: rgba(255,255,255,0.15); cursor: not-allowed; }
+  .btn.primary { background: linear-gradient(135deg, var(--acc), #e85d20); color: var(--bg); border: none; }
+  .btn.primary:disabled { background: rgba(255,255,255,0.03); color: rgba(255,255,255,0.15); border: 1px solid var(--brd); }
+  .btn.small { padding: 8px 16px; font-size: 11px; }
+  .btn.full { width: 100%; }
+
+  /* Tab switcher */
+  .tab-bar { display: flex; gap: 4px; background: rgba(255,255,255,0.04); border-radius: 8px; padding: 3px; }
+  .tab {
+    padding: 5px 12px; font: 500 11px var(--mono); border: none; border-radius: 6px;
+    cursor: pointer; letter-spacing: 0.04em; text-transform: uppercase;
+    background: transparent; color: var(--dim);
+  }
+  .tab.active { background: rgba(255,255,255,0.08); color: #fff; }
+
+  /* Waveform */
+  .waveform-wrap {
+    width: 100%; height: 180px; border-radius: 8px; overflow: hidden;
+    cursor: col-resize; touch-action: none;
+  }
+  .waveform-wrap canvas { display: block; width: 100%; height: 100%; }
+
+  /* Trim info */
+  .trim-info { display: flex; justify-content: space-between; font-size: 12px; color: var(--dim); margin-top: 10px; }
+  .trim-warn { color: var(--err); margin-left: 8px; }
+
+  /* Upload status */
+  .status { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 12px; }
+  .status.info { background: rgba(255,107,43,0.06); border: 1px solid rgba(255,107,43,0.15); color: var(--acc); }
+  .status.ok { background: rgba(61,220,132,0.08); border: 1px solid rgba(61,220,132,0.2); color: var(--ok); }
+  .status.err { background: rgba(255,60,60,0.08); border: 1px solid rgba(255,60,60,0.2); color: #ff6b6b; }
+
+  /* How-to box */
+  .howto {
+    padding: 18px; background: var(--acc-dim); border-radius: 12px;
+    border: 1px solid rgba(255,107,43,0.1); font-size: 13px; line-height: 1.7; color: var(--dim);
+  }
+  .howto strong { color: var(--acc); font-weight: 600; }
+  .howto code { color: var(--acc); background: rgba(255,107,43,0.1); padding: 1px 6px; border-radius: 4px; }
+
+  /* Flash layout */
+  .flash-bar { display: flex; height: 30px; border-radius: 6px; overflow: hidden; border: 1px solid var(--brd); margin-top: 12px; }
+  .flash-seg { display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; }
+  .flash-labels { display: flex; justify-content: space-between; margin-top: 5px; font-size: 10px; color: var(--fnt); }
+
+  /* Error */
+  .error-msg {
+    margin-top: 14px; padding: 11px 16px; border-radius: 8px; font-size: 13px;
+    background: rgba(255,60,60,0.08); border: 1px solid rgba(255,60,60,0.2); color: #ff6b6b;
+  }
+
+  .editor-stack { display: flex; flex-direction: column; gap: 20px; }
+
+  @keyframes slideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  .animate-in { animation: slideUp 0.4s ease-out; }
+
+  #editor { display: none; }
+  #editor.visible { display: flex; }
+  #drop-zone-wrap { display: block; }
+  #drop-zone-wrap.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo">G</div>
+    <div>
+      <div class="header-title">GrainStorm Sample Prep</div>
+      <div class="header-sub">Trim · Convert · Upload to MOD2</div>
+    </div>
+  </div>
+  <a class="header-link" href="https://github.com/modulove" target="_blank" rel="noopener noreferrer">modulove ↗</a>
+</header>
+
+<main class="animate-in">
+
+  <!-- Drop Zone -->
+  <div id="drop-zone-wrap">
+    <div class="drop-zone" id="dropZone">
+      <div class="icon">⏏</div>
+      <p>Drop your audio file here</p>
+      <small>WAV · MP3 · OGG · FLAC · AIFF — up to ~16s after trimming</small>
+      <input type="file" id="fileInput" accept="audio/*" style="display:none">
+    </div>
+  </div>
+
+  <div id="errorMsg" class="error-msg" style="display:none"></div>
+
+  <!-- Editor -->
+  <div id="editor" class="editor-stack">
+
+    <!-- File bar -->
+    <div class="file-bar">
+      <div class="file-info">
+        <span style="font-size:13px;font-weight:500;color:var(--acc);flex-shrink:0">▶</span>
+        <span class="file-name" id="fileName"></span>
+        <span class="file-meta" id="fileMeta"></span>
+      </div>
+      <button class="btn small" id="btnReplace">REPLACE</button>
+    </div>
+
+    <!-- Waveform -->
+    <div class="card" style="padding:14px">
+      <div class="badge">Trim selection — drag handles or region</div>
+      <div class="waveform-wrap" id="waveformWrap" style="margin-top:10px">
+        <canvas id="waveformCanvas"></canvas>
+      </div>
+      <div class="trim-info">
+        <span id="trimInfo"></span>
+        <span id="trimRange"></span>
+      </div>
+    </div>
+
+    <!-- Play -->
+    <button class="btn primary full" id="btnPlay">▶  PREVIEW TRIMMED</button>
+
+    <!-- Export -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div class="badge">Export</div>
+        <div class="tab-bar">
+          <button class="tab active" data-mode="uf2">UF2 Binary</button>
+          <button class="tab" data-mode="hdr">sample.h</button>
+        </div>
+      </div>
+
+      <!-- UF2 panel -->
+      <div id="panelUF2">
+        <div class="stats-grid" id="statsUF2"></div>
+        <div class="flex-row">
+          <button class="btn" id="btnDownloadUF2" style="flex:1;min-width:150px">↓  DOWNLOAD UF2</button>
+          <button class="btn primary" id="btnUpload" style="flex:1;min-width:150px">⚡  UPLOAD TO MOD2</button>
+        </div>
+        <div id="uploadStatus" style="display:none"></div>
+      </div>
+
+      <!-- Header panel -->
+      <div id="panelHdr" style="display:none">
+        <div class="stats-grid" id="statsHdr"></div>
+        <button class="btn full" id="btnDownloadH">↓  DOWNLOAD SAMPLE.H</button>
+      </div>
+    </div>
+
+    <!-- How-to -->
+    <div class="howto" id="howtoBox"></div>
+
+    <!-- Flash layout -->
+    <div class="card">
+      <div class="badge">Flash memory layout — XIAO RP2350 (4MB)</div>
+      <div class="flash-bar">
+        <div class="flash-seg" style="width:75%;background:rgba(255,255,255,0.06);color:var(--dim);border-right:1px solid var(--brd)">Firmware (3 MB)</div>
+        <div class="flash-seg" style="width:25%;background:var(--acc-dim);color:var(--acc)">Sample (1 MB)</div>
+      </div>
+      <div class="flash-labels">
+        <span>0x10000000</span><span>0x10300000</span><span>0x10400000</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>GrainStorm Sample Prep · Modulove · CC0 Public Domain</footer>
+
+<script>
+// ═══════════════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════════════
+const TARGET_RATE = 32000;
+const FLASH_BASE = 0x10300000;
+const HEADER_SIZE = 32;
+const SAMPLE_MAGIC = 0x4D535247;
+const SAMPLE_VERSION = 1;
+const MAX_FLASH_BYTES = 1024 * 1024;
+const MAX_SAMPLES = Math.floor((MAX_FLASH_BYTES - HEADER_SIZE) / 2);
+const MAX_SECONDS = MAX_SAMPLES / TARGET_RATE;
+const WAVEFORM_BARS = 600;
+const UF2_MAGIC_START0 = 0x0A324655;
+const UF2_MAGIC_START1 = 0x9E5D5157;
+const UF2_MAGIC_END = 0x0AB16F30;
+const UF2_FLAG_FAMILY = 0x00002000;
+const UF2_FAMILY_RP2350 = 0xE48BFF59;
+const UF2_PAYLOAD = 256;
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+let audioBuffer = null;
+let int16Full = null;
+let waveformData = [];
+let trimStart = 0, trimEnd = 1;
+let isPlaying = false;
+let playheadPos = -1;
+let exportMode = 'uf2';
+let audioCtx = null;
+let currentSource = null;
+let animFrame = null;
+
+// ═══════════════════════════════════════════════
+// DOM REFS
+// ═══════════════════════════════════════════════
+const $ = id => document.getElementById(id);
+const dropZone = $('dropZone');
+const dropWrap = $('drop-zone-wrap');
+const fileInput = $('fileInput');
+const errorMsg = $('errorMsg');
+const editor = $('editor');
+const canvas = $('waveformCanvas');
+const waveWrap = $('waveformWrap');
+const ctx2d = canvas.getContext('2d');
+
+// ═══════════════════════════════════════════════
+// AUDIO UTILS
+// ═══════════════════════════════════════════════
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function mixToMono(buf) {
+  const len = buf.length, mono = new Float32Array(len), nCh = buf.numberOfChannels;
+  for (let c = 0; c < nCh; c++) {
+    const ch = buf.getChannelData(c);
+    for (let i = 0; i < len; i++) mono[i] += ch[i] / nCh;
+  }
+  return mono;
+}
+
+function resampleToInt16(ab, rate) {
+  const src = ab.numberOfChannels === 1 ? ab.getChannelData(0) : mixToMono(ab);
+  const ratio = ab.sampleRate / rate;
+  const outLen = Math.floor(src.length / ratio);
+  const out = new Int16Array(outLen);
+  for (let i = 0; i < outLen; i++) {
+    const si = i * ratio, idx = Math.floor(si), f = si - idx;
+    const s0 = src[idx] || 0, s1 = src[idx + 1] || 0;
+    out[i] = Math.max(-32768, Math.min(32767, Math.round((s0 + (s1 - s0) * f) * 32767)));
+  }
+  return out;
+}
+
+function computeWaveform(samples, numBars) {
+  const d = [], spb = Math.max(1, Math.floor(samples.length / numBars));
+  for (let i = 0; i < numBars; i++) {
+    let mn = 0, mx = 0;
+    const s = i * spb, e = Math.min(s + spb, samples.length);
+    for (let j = s; j < e; j++) {
+      const v = samples[j] / 32768;
+      if (v < mn) mn = v;
+      if (v > mx) mx = v;
+    }
+    d.push({ min: mn, max: mx });
+  }
+  return d;
+}
+
+// ═══════════════════════════════════════════════
+// UF2 GENERATION
+// ═══════════════════════════════════════════════
+function buildSampleBin(data, rate) {
+  const total = HEADER_SIZE + data.length * 2;
+  const buf = new ArrayBuffer(total);
+  const v = new DataView(buf);
+  v.setUint32(0, SAMPLE_MAGIC, true);
+  v.setUint32(4, SAMPLE_VERSION, true);
+  v.setUint32(8, rate, true);
+  v.setUint32(12, data.length, true);
+  v.setUint32(16, 0, true);
+  for (let i = 0; i < data.length; i++) v.setInt16(HEADER_SIZE + i * 2, data[i], true);
+  return new Uint8Array(buf);
+}
+
+function binToUF2(bin, addr, family) {
+  const n = Math.ceil(bin.length / UF2_PAYLOAD);
+  const uf2 = new Uint8Array(n * 512);
+  const dv = new DataView(uf2.buffer);
+  for (let i = 0; i < n; i++) {
+    const o = i * 512, dOff = i * UF2_PAYLOAD;
+    const dLen = Math.min(UF2_PAYLOAD, bin.length - dOff);
+    dv.setUint32(o + 0, UF2_MAGIC_START0, true);
+    dv.setUint32(o + 4, UF2_MAGIC_START1, true);
+    dv.setUint32(o + 8, UF2_FLAG_FAMILY, true);
+    dv.setUint32(o + 12, addr + dOff, true);
+    dv.setUint32(o + 16, UF2_PAYLOAD, true);
+    dv.setUint32(o + 20, i, true);
+    dv.setUint32(o + 24, n, true);
+    dv.setUint32(o + 28, family, true);
+    uf2.set(bin.subarray(dOff, dOff + dLen), o + 32);
+    dv.setUint32(o + 508, UF2_MAGIC_END, true);
+  }
+  return uf2;
+}
+
+function genSampleUF2(data, rate) {
+  return binToUF2(buildSampleBin(data, rate), FLASH_BASE, UF2_FAMILY_RP2350);
+}
+
+function genSampleH(data, rate) {
+  const l = [
+    '// Generated by GrainStorm Sample Prep Tool',
+    '// https://modulove.io',
+    `// ${rate}Hz | ${data.length} samples (${(data.length / rate).toFixed(2)}s) | ${new Date().toISOString()}`,
+    '', '#pragma once', '#include <Arduino.h>', '',
+    `#define SAMPLE_LENGTH ${data.length}`,
+    `#define SAMPLE_RATE ${rate}`, '',
+    'const int16_t vocalSample[SAMPLE_LENGTH] PROGMEM = {'
+  ];
+  for (let i = 0; i < data.length; i += 16) {
+    const c = [];
+    for (let j = i; j < Math.min(i + 16, data.length); j++) c.push(data[j].toString());
+    l.push('  ' + c.join(',') + (i + 16 < data.length ? ',' : ''));
+  }
+  l.push('};');
+  return l.join('\n');
+}
+
+// ═══════════════════════════════════════════════
+// DEVICE UPLOAD
+// ═══════════════════════════════════════════════
+async function triggerBootloader() {
+  try {
+    const p = await navigator.serial.requestPort();
+    await p.open({ baudRate: 1200 });
+    await new Promise(r => setTimeout(r, 100));
+    await p.close();
+    return { ok: true };
+  } catch (e) { return { ok: false, error: e.message }; }
+}
+
+async function writeUF2ToDrive(uf2) {
+  try {
+    const dh = await window.showDirectoryPicker({ mode: 'readwrite' });
+    let found = false;
+    try { await dh.getFileHandle('INFO_UF2.TXT'); found = true; } catch {}
+    if (!found) try { await dh.getFileHandle('info_uf2.txt'); found = true; } catch {}
+    if (!found) return { ok: false, error: "Doesn't look like a UF2 bootloader drive. Select the drive named 'RP2350' or 'RPI-RP2'." };
+    const fh = await dh.getFileHandle('grainstorm_sample.uf2', { create: true });
+    const w = await fh.createWritable();
+    await w.write(uf2);
+    await w.close();
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: e.name === 'AbortError' ? 'Cancelled.' : e.message };
+  }
+}
+
+// ═══════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════
+function fmt(s) {
+  const m = Math.floor(s / 60), sec = (s % 60).toFixed(2);
+  return m > 0 ? `${m}:${sec.padStart(5, '0')}` : `${sec}s`;
+}
+
+function getTrimmedCount() {
+  if (!int16Full) return 0;
+  return Math.min(MAX_SAMPLES, Math.round((trimEnd - trimStart) * int16Full.length));
+}
+
+function getTrimmedData() {
+  const s = Math.round(trimStart * int16Full.length);
+  return int16Full.slice(s, s + getTrimmedCount());
+}
+
+function showError(msg) {
+  errorMsg.textContent = msg;
+  errorMsg.style.display = msg ? 'block' : 'none';
+}
+
+function downloadBlob(blob, name) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ═══════════════════════════════════════════════
+// WAVEFORM DRAWING
+// ═══════════════════════════════════════════════
+function resizeCanvas() {
+  canvas.width = waveWrap.clientWidth;
+  canvas.height = waveWrap.clientHeight;
+  drawWaveform();
+}
+
+function drawWaveform() {
+  if (!waveformData.length) return;
+  const W = canvas.width, H = canvas.height;
+  const barW = W / waveformData.length, midY = H / 2;
+
+  ctx2d.clearRect(0, 0, W, H);
+  ctx2d.fillStyle = '#0c0c0d';
+  ctx2d.fillRect(0, 0, W, H);
+
+  // Grid
+  ctx2d.strokeStyle = 'rgba(255,255,255,0.03)';
+  ctx2d.lineWidth = 1;
+  if (int16Full) {
+    const secW = (TARGET_RATE / int16Full.length) * W;
+    for (let x = 0; x < W; x += secW) {
+      ctx2d.beginPath(); ctx2d.moveTo(x, 0); ctx2d.lineTo(x, H); ctx2d.stroke();
+    }
+  }
+  ctx2d.beginPath(); ctx2d.moveTo(0, midY); ctx2d.lineTo(W, midY); ctx2d.stroke();
+
+  // Dim outside trim
+  const sX = trimStart * W, eX = trimEnd * W;
+  ctx2d.fillStyle = 'rgba(0,0,0,0.55)';
+  ctx2d.fillRect(0, 0, sX, H);
+  ctx2d.fillRect(eX, 0, W - eX, H);
+
+  // Bars
+  for (let i = 0; i < waveformData.length; i++) {
+    const x = i * barW, norm = i / waveformData.length;
+    const inTrim = norm >= trimStart && norm <= trimEnd;
+    const { min, max } = waveformData[i];
+    const top = midY - max * midY, bot = midY - min * midY;
+    if (inTrim) {
+      const a = Math.max(Math.abs(min), Math.abs(max));
+      ctx2d.fillStyle = `rgb(255,${140 + Math.round(a * 80)},${30 + Math.round(a * 40)})`;
+    } else {
+      ctx2d.fillStyle = 'rgba(255,255,255,0.1)';
+    }
+    ctx2d.fillRect(x, top, Math.max(1, barW - 0.5), Math.max(1, bot - top));
+  }
+
+  // Handles
+  [sX, eX].forEach((hx, idx) => {
+    ctx2d.fillStyle = '#ff6b2b';
+    ctx2d.fillRect(hx - 1.5, 0, 3, H);
+    const d = idx === 0 ? 1 : -1;
+    ctx2d.beginPath(); ctx2d.moveTo(hx, 0); ctx2d.lineTo(hx + d * 10, 0); ctx2d.lineTo(hx, 10); ctx2d.closePath(); ctx2d.fill();
+    ctx2d.beginPath(); ctx2d.moveTo(hx, H); ctx2d.lineTo(hx + d * 10, H); ctx2d.lineTo(hx, H - 10); ctx2d.closePath(); ctx2d.fill();
+  });
+
+  // Playhead
+  if (isPlaying && playheadPos >= 0) {
+    ctx2d.strokeStyle = '#fff';
+    ctx2d.lineWidth = 2;
+    ctx2d.setLineDash([4, 4]);
+    const phX = playheadPos * W;
+    ctx2d.beginPath(); ctx2d.moveTo(phX, 0); ctx2d.lineTo(phX, H); ctx2d.stroke();
+    ctx2d.setLineDash([]);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// WAVEFORM INTERACTION (trim handles)
+// ═══════════════════════════════════════════════
+let dragging = null;
+let dragOffset = 0;
+
+function getNormX(e) {
+  const r = canvas.getBoundingClientRect();
+  const cx = e.touches ? e.touches[0].clientX : e.clientX;
+  return Math.max(0, Math.min(1, (cx - r.left) / r.width));
+}
+
+waveWrap.addEventListener('mousedown', e => { startDrag(e); });
+waveWrap.addEventListener('touchstart', e => { startDrag(e); }, { passive: true });
+window.addEventListener('mousemove', e => { moveDrag(e); });
+window.addEventListener('touchmove', e => { moveDrag(e); }, { passive: false });
+window.addEventListener('mouseup', endDrag);
+window.addEventListener('touchend', endDrag);
+
+function startDrag(e) {
+  const nx = getNormX(e), th = 0.015;
+  if (Math.abs(nx - trimStart) < th) dragging = 's';
+  else if (Math.abs(nx - trimEnd) < th) dragging = 'e';
+  else if (nx > trimStart && nx < trimEnd) { dragging = 'r'; dragOffset = nx - trimStart; }
+}
+
+function moveDrag(e) {
+  if (!dragging) return;
+  if (e.cancelable) e.preventDefault();
+  const nx = getNormX(e), ml = 0.005;
+  if (dragging === 's') { trimStart = Math.max(0, Math.min(trimEnd - ml, nx)); }
+  else if (dragging === 'e') { trimEnd = Math.min(1, Math.max(trimStart + ml, nx)); }
+  else {
+    const w = trimEnd - trimStart;
+    let ns = Math.max(0, Math.min(1 - w, nx - dragOffset));
+    trimStart = ns; trimEnd = ns + w;
+  }
+  updateUI();
+}
+
+function endDrag() { dragging = null; }
+
+// ═══════════════════════════════════════════════
+// UI UPDATE
+// ═══════════════════════════════════════════════
+function updateUI() {
+  if (!int16Full) return;
+  const cnt = getTrimmedCount();
+  const dur = cnt / TARGET_RATE;
+  const over = cnt > MAX_SAMPLES;
+  const uf2Sz = Math.ceil((HEADER_SIZE + cnt * 2) / UF2_PAYLOAD) * 512;
+  const flashKB = ((HEADER_SIZE + cnt * 2) / 1024).toFixed(0);
+
+  // Trim info
+  $('trimInfo').innerHTML = `${fmt(dur)} · ${cnt.toLocaleString()} samples` +
+    (over ? '<span class="trim-warn">⚠ too long — trim shorter</span>' : '');
+  $('trimRange').textContent = `${fmt(trimStart * int16Full.length / TARGET_RATE)} → ${fmt(trimEnd * int16Full.length / TARGET_RATE)}`;
+
+  // UF2 stats
+  $('statsUF2').innerHTML = [
+    ['Format', 'UF2 Binary'], ['Flash Addr', `0x${FLASH_BASE.toString(16).toUpperCase()}`],
+    ['Rate', `${TARGET_RATE} Hz`], ['Samples', cnt.toLocaleString()],
+    ['UF2 Size', `${(uf2Sz / 1024).toFixed(0)} KB`],
+    ['Flash', `${flashKB} / 1024 KB`]
+  ].map(([l, v]) =>
+    `<div><div class="stat-label">${l}</div><div class="stat-value">${v}</div></div>`
+  ).join('');
+
+  // Header stats
+  $('statsHdr').innerHTML = [
+    ['Format', 'C Header'], ['Output', 'sample.h'],
+    ['Rate', `${TARGET_RATE} Hz`], ['Samples', cnt.toLocaleString()],
+    ['File Size', `~${(cnt * 5 / 1024).toFixed(0)} KB`],
+    ['Flash', `${(cnt * 2 / 1024).toFixed(0)} KB`]
+  ].map(([l, v]) =>
+    `<div><div class="stat-label">${l}</div><div class="stat-value">${v}</div></div>`
+  ).join('');
+
+  // Buttons
+  $('btnDownloadUF2').disabled = over;
+  $('btnUpload').disabled = over;
+  $('btnDownloadH').disabled = over;
+
+  // How-to
+  if (exportMode === 'uf2') {
+    $('howtoBox').innerHTML = `<strong>How it works:</strong> The sample UF2 writes audio data to a dedicated flash region at <code>0x10300000</code>. It's independent from the firmware — update samples without re-flashing code and vice versa. Click <strong>Upload to MOD2</strong> to flash directly, or download the UF2 and drag it to the bootloader drive.`;
+  } else {
+    $('howtoBox').innerHTML = `<strong>Legacy mode:</strong> Replace <code>sample.h</code> in the firmware source, then compile and flash. The UF2 binary method is recommended — it doesn't require recompilation.`;
+  }
+
+  drawWaveform();
+}
+
+function setExportMode(mode) {
+  exportMode = mode;
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.mode === mode));
+  $('panelUF2').style.display = mode === 'uf2' ? 'block' : 'none';
+  $('panelHdr').style.display = mode === 'hdr' ? 'block' : 'none';
+  updateUI();
+}
+
+function setUploadStatus(type, msg) {
+  const el = $('uploadStatus');
+  if (!msg) { el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  el.className = 'status ' + type;
+  el.textContent = msg;
+}
+
+// ═══════════════════════════════════════════════
+// FILE LOADING
+// ═══════════════════════════════════════════════
+async function loadFile(file) {
+  showError('');
+  stopPlayback();
+  if (!file) return;
+
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!['wav', 'mp3', 'ogg', 'flac', 'aiff', 'aif'].includes(ext) && !file.type.startsWith('audio/')) {
+    showError('Unsupported format. Use WAV, MP3, OGG, FLAC, or AIFF.');
+    return;
+  }
+
+  try {
+    const ac = getAudioCtx();
+    const decoded = await ac.decodeAudioData(await file.arrayBuffer());
+    audioBuffer = decoded;
+
+    $('fileName').textContent = file.name;
+    $('fileMeta').textContent = `${decoded.numberOfChannels}ch · ${decoded.sampleRate}Hz · ${fmt(decoded.duration)}`;
+
+    int16Full = resampleToInt16(decoded, TARGET_RATE);
+    waveformData = computeWaveform(int16Full, WAVEFORM_BARS);
+
+    trimStart = 0;
+    trimEnd = int16Full.length > MAX_SAMPLES ? MAX_SAMPLES / int16Full.length : 1;
+
+    dropWrap.classList.add('hidden');
+    editor.classList.add('visible');
+    setUploadStatus('', '');
+    resizeCanvas();
+    updateUI();
+  } catch (e) {
+    showError('Failed to decode audio: ' + e.message);
+  }
+}
+
+function resetEditor() {
+  stopPlayback();
+  audioBuffer = null; int16Full = null; waveformData = [];
+  trimStart = 0; trimEnd = 1;
+  dropWrap.classList.remove('hidden');
+  editor.classList.remove('visible');
+  showError('');
+  setUploadStatus('', '');
+  fileInput.value = '';
+}
+
+// ═══════════════════════════════════════════════
+// PLAYBACK
+// ═══════════════════════════════════════════════
+function stopPlayback() {
+  if (currentSource) { try { currentSource.stop(); } catch {} currentSource = null; }
+  if (animFrame) cancelAnimationFrame(animFrame);
+  isPlaying = false; playheadPos = -1;
+  $('btnPlay').textContent = '▶  PREVIEW TRIMMED';
+  $('btnPlay').classList.add('primary');
+  drawWaveform();
+}
+
+function playTrimmed() {
+  if (!int16Full) return;
+  stopPlayback();
+
+  const ac = getAudioCtx();
+  const s = Math.round(trimStart * int16Full.length);
+  const len = getTrimmedCount();
+  if (len <= 0) return;
+
+  const buf = ac.createBuffer(1, len, TARGET_RATE);
+  const ch = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) ch[i] = int16Full[s + i] / 32768;
+
+  const src = ac.createBufferSource();
+  src.buffer = buf;
+  src.connect(ac.destination);
+  src.onended = () => { stopPlayback(); };
+  currentSource = src;
+  src.start();
+  isPlaying = true;
+  $('btnPlay').textContent = '■  STOP';
+  $('btnPlay').classList.remove('primary');
+
+  const startTime = ac.currentTime;
+  const dur = len / TARGET_RATE;
+  function tick() {
+    const el = ac.currentTime - startTime;
+    if (el >= dur) { playheadPos = -1; drawWaveform(); return; }
+    playheadPos = trimStart + (el / dur) * (trimEnd - trimStart);
+    drawWaveform();
+    animFrame = requestAnimationFrame(tick);
+  }
+  animFrame = requestAnimationFrame(tick);
+}
+
+// ═══════════════════════════════════════════════
+// EVENT HANDLERS
+// ═══════════════════════════════════════════════
+
+// Drop zone
+dropZone.addEventListener('click', () => fileInput.click());
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('dragover'); if (e.dataTransfer?.files?.[0]) loadFile(e.dataTransfer.files[0]); });
+fileInput.addEventListener('change', e => { if (e.target.files[0]) loadFile(e.target.files[0]); });
+
+// Buttons
+$('btnReplace').addEventListener('click', resetEditor);
+$('btnPlay').addEventListener('click', () => { isPlaying ? stopPlayback() : playTrimmed(); });
+
+$('btnDownloadUF2').addEventListener('click', () => {
+  if (!int16Full || getTrimmedCount() > MAX_SAMPLES) return;
+  const uf2 = genSampleUF2(getTrimmedData(), TARGET_RATE);
+  downloadBlob(new Blob([uf2], { type: 'application/octet-stream' }), 'grainstorm_sample.uf2');
+});
+
+$('btnDownloadH').addEventListener('click', () => {
+  if (!int16Full || getTrimmedCount() > MAX_SAMPLES) return;
+  downloadBlob(new Blob([genSampleH(getTrimmedData(), TARGET_RATE)], { type: 'text/plain' }), 'sample.h');
+});
+
+$('btnUpload').addEventListener('click', async () => {
+  if (!int16Full || getTrimmedCount() > MAX_SAMPLES) return;
+  const btn = $('btnUpload');
+
+  if (!window.showDirectoryPicker) {
+    setUploadStatus('err', 'Use Chrome or Edge on desktop for direct upload.');
+    return;
+  }
+
+  const uf2 = genSampleUF2(getTrimmedData(), TARGET_RATE);
+
+  // Try 1200-baud bootloader reset
+  if (navigator.serial) {
+    btn.textContent = '⟳  RESETTING...'; btn.disabled = true;
+    setUploadStatus('info', 'Resetting board into bootloader mode...');
+    const res = await triggerBootloader();
+    if (res.ok) {
+      setUploadStatus('info', 'Board reset! Waiting for bootloader drive to appear...');
+      await new Promise(r => setTimeout(r, 3000));
+    }
+  }
+
+  btn.textContent = '⟳  SELECT DRIVE...';
+  setUploadStatus('info', 'Select the RP2350 / RPI-RP2 bootloader drive');
+  const wr = await writeUF2ToDrive(uf2);
+
+  if (wr.ok) {
+    btn.textContent = '✓  UPLOADED'; btn.disabled = false;
+    setUploadStatus('ok', 'Sample uploaded! The board will reboot automatically.');
+  } else {
+    btn.textContent = '⚡  UPLOAD TO MOD2'; btn.disabled = false;
+    setUploadStatus('err', wr.error);
+  }
+});
+
+// Tab switcher
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => setExportMode(t.dataset.mode));
+});
+
+// Resize
+const resizeObs = new ResizeObserver(() => { if (editor.classList.contains('visible')) resizeCanvas(); });
+resizeObs.observe(waveWrap);
+window.addEventListener('resize', () => { if (editor.classList.contains('visible')) resizeCanvas(); });
+
+// Init
+setExportMode('uf2');
+</script>
+</body>
+</html>
