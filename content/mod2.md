@@ -76,6 +76,8 @@ Six-waveform voltage controlled oscillator with 1V/Oct tracking and PolyBLEP ant
 VOCAL SNIPPET - Vocal/Speech Sample Player
 Single long-form audio playback module optimized for creating vocal snippets from podcasts, speeches, and interviews for techno production.
 
+[Prepare MOD2 radio Samples](/config/radio.html){: .button}
+
 {{< rp2350_webflash uf2="MOD2_radio" buttonText="Radio Firmware" name="Radio" >}}
 
 ---
