@@ -200,6 +200,30 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
 </div>
 
 ---
+<div class="firmware-section">
+
+## DEBUG
+
+<div class="firmware-header">
+  <div class="firmware-image">🧪</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>Debug your HW</li>
+      </ul>
+  </div>
+</div>
+
+**Controls:**
+- **Encoder**: Navigate
+- **CLK Input**: Clock 
+- **RST Input**: Reset
+- 
+{{< encoder_firmware_button hex="ARYTHMATIK_DEBUG" buttonText="Flash DEBUG Firmware" >}}
+
+</div>
+
+---
 
 ## Hardware Requirements
 
