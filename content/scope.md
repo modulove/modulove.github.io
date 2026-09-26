@@ -95,7 +95,9 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 
 [🛠️ Configure SCOPE Settings](/config/scope.html){: .button}
 
-{{< firmware_button hex="SCOPEv2" buttonText="Flash SCOPE v2 Firmware" oledImage="https://dl.modulove.de/module/scope/img/SCOPE_Firmware_UI_Main_887x512.png" >}}
+> **LGT8F328P boards:** the SCOPE v2 firmware also runs on LGT8F328P Nano-compatible boards (SCOPE v2.5). Tick **Board is an LGT8F328P** below the button before flashing one - it uses a different build.
+
+{{< firmware_button hex="SCOPEv2" buttonText="Flash SCOPE v2 Firmware" lgt="true" oledImage="https://dl.modulove.de/module/scope/img/SCOPE_Firmware_UI_Main_887x512.png" >}}
 
 </div>
 
@@ -103,7 +105,7 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 
 ## Hardware
 
-- **Arduino Nano**
+- **Arduino Nano** (ATmega328P) or **LGT8F328P** Nano-compatible board (SCOPE v2 firmware, v2.5 hardware)
 - **OLED Display**: SSD1306, 128x64 pixels
 - **Rotary Encoder** with push button
 
@@ -116,7 +118,7 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 - Connect your Module or the Arduino Nano to your computer via USB
 
 ### 2. Flash Firmware
-- Click the appropriate button above (Nano or Old Bootloader)
+- Click the appropriate button above (Nano, Old Bootloader, or LGT8F328P - pick the matching option under the button first)
 - Your browser will prompt you to select the serial port
 - Select the port corresponding to your Arduino
 - Wait for the upload to complete (typically 10-30 seconds)
@@ -186,7 +188,7 @@ The configuration tool allows you to:
 
 **Module doesn't respond:**
 - Check power connections
-- Verify correct board selection (Nano vs Old Bootloader)
+- Verify correct board selection (Nano, Old Bootloader or LGT8F328P)
 - Try the opposite bootloader version
 
 **Wrong encoder direction:**

@@ -33,6 +33,12 @@
       <input type="checkbox" class="bootloader-toggle">
       <span>Use new bootloader (most Nanos after 2018)</span>
     </label>
+{{ if eq (.Get "lgt") "true" }}
+    <label class="checkbox-label">
+      <input type="checkbox" class="lgt-toggle">
+      <span>Board is an LGT8F328P (LGT Nano clone, e.g. SCOPE v2.5)</span>
+    </label>
+{{ end }}
   </div>
 
   <!-- Hidden button for new bootloader -->
@@ -47,5 +53,22 @@
     {{ with .Get "buttonText" }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }}
     <span class="upload-progress"></span>
   </button>
+
+{{ if eq (.Get "lgt") "true" }}
+  <!-- Hidden button for LGT8F328P boards. Only rendered with lgt="true" - the
+       release must contain <hex>.lgt8f328p.hex. Same STK500 protocol as the
+       old bootloader (57600 baud); arduino-web-uploader knows the board. -->
+  <button
+    class="flash-button upload-button flash-button-lgt"
+    style="display: none;"
+    arduino-uploader
+    hex-href='/releases/{{ .Get "hex" | safeURL }}.lgt8f328p.hex'
+    board="lgt8f328p"
+  >
+    <span class="button-icon">⬆️</span>
+    {{ with .Get "buttonText" }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }} (LGT8F328P)
+    <span class="upload-progress"></span>
+  </button>
+{{ end }}
 </div>
 {{ end }}
