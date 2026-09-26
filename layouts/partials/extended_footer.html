@@ -839,6 +839,9 @@
     document.querySelectorAll('.bootloader-toggle').forEach(function(checkbox) {
       checkbox.addEventListener('change', function() {
         const flashFirmwareDiv = this.closest('.flash-firmware');
+        // LGT8F328P selected: the Nano buttons stay hidden whatever the bootloader choice
+        const lgtToggle = flashFirmwareDiv.querySelector('.lgt-toggle');
+        if (lgtToggle && lgtToggle.checked) return;
         const nanoButton = flashFirmwareDiv.querySelector('.flash-button-nano');
         const oldBootloaderButton = flashFirmwareDiv.querySelector('.flash-button-old-bootloader');
 
@@ -863,6 +866,31 @@
               reversedOldButton.style.display = 'flex';
             }
           }
+        }
+      });
+    });
+
+    // Handle LGT8F328P board toggle checkboxes (rendered only by firmware_button with lgt="true")
+    document.querySelectorAll('.lgt-toggle').forEach(function(checkbox) {
+      checkbox.addEventListener('change', function() {
+        const flashFirmwareDiv = this.closest('.flash-firmware');
+        const lgtButton = flashFirmwareDiv.querySelector('.flash-button-lgt');
+        const nanoButton = flashFirmwareDiv.querySelector('.flash-button-nano');
+        const oldBootloaderButton = flashFirmwareDiv.querySelector('.flash-button-old-bootloader');
+        const bootloaderToggle = flashFirmwareDiv.querySelector('.bootloader-toggle');
+        if (!lgtButton) return;
+
+        if (this.checked) {
+          lgtButton.style.display = 'flex';
+          if (nanoButton) nanoButton.style.display = 'none';
+          if (oldBootloaderButton) oldBootloaderButton.style.display = 'none';
+          if (bootloaderToggle) bootloaderToggle.disabled = true;   // bootloader choice is Nano-only
+        } else {
+          lgtButton.style.display = 'none';
+          if (bootloaderToggle) bootloaderToggle.disabled = false;
+          const showNewBootloader = bootloaderToggle && bootloaderToggle.checked;
+          if (nanoButton) nanoButton.style.display = showNewBootloader ? 'flex' : 'none';
+          if (oldBootloaderButton) oldBootloaderButton.style.display = showNewBootloader ? 'none' : 'flex';
         }
       });
     });
