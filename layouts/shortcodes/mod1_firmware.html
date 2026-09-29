@@ -1,6 +1,7 @@
 {{ $hex := .Get "hex" }}
 {{ $buttonText := .Get "buttonText" }}
 {{ $imageSlug := .Get "image" }}
+{{ $lgt := eq (.Get "lgt") "true" }}
 
 {{ $imageMap := dict "3lfo" "3LFO" "adsr" "ADSR" "eg" "ENV" "euclid" "EUCLID" "lfo" "LFO" "random_cv_seq" "RND_SEQ" "sync_lfo" "SyncLFO" "clock" "CLOCK" "vco" "VCO" "burst" "BURST" }}
 {{ $imageFile := index $imageMap $imageSlug }}
@@ -61,6 +62,12 @@
             <input type="checkbox" class="bootloader-toggle">
             <span>Use new bootloader (most Nanos after 2018)</span>
           </label>
+          {{ if $lgt }}
+          <label class="checkbox-label">
+            <input type="checkbox" class="lgt-toggle">
+            <span>Board is an LGT8F328P (LGT Nano clone)</span>
+          </label>
+          {{ end }}
         </div>
 
         <!-- Hidden button for new bootloader -->
@@ -75,6 +82,23 @@
           {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }}
           <span class="upload-progress"></span>
         </button>
+
+        {{ if $lgt }}
+        <!-- Hidden button for LGT8F328P boards. Only rendered with lgt="true" - the
+             release must contain <hex>.lgt8f328p.hex. Same STK500 protocol as the
+             old bootloader (57600 baud); arduino-web-uploader knows the board. -->
+        <button
+          class="flash-button upload-button flash-button-lgt"
+          style="display: none;"
+          arduino-uploader
+          hex-href='/releases/{{ $hex | safeURL }}.lgt8f328p.hex'
+          board="lgt8f328p"
+        >
+          <span class="button-icon">⬆️</span>
+          {{ with $buttonText }}{{ . | plainify }}{{ else -}} Upload Firmware {{ end }} (LGT8F328P)
+          <span class="upload-progress"></span>
+        </button>
+        {{ end }}
       </div>
       {{ end }}
     </div>

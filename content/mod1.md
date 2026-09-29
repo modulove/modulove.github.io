@@ -9,9 +9,11 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 
 **Hardware:** Arduino Nano · Compact Design · Triple Potentiometer Control · Multiple I/O
 
+> **LGT8F328P boards:** every firmware on this page also runs on LGT8F328P Nano-compatible boards (16 MHz). Tick **Board is an LGT8F328P** below the button before flashing one - it uses a different build. These boards clear the saved settings (e.g. the LFO range) with every upload.
+
 ---
 
-{{< mod1_firmware title="3-Channel LFO" hex="MOD1_3LFO" buttonText="Flash 3-Channel LFO" image="3lfo" >}}
+{{< mod1_firmware title="3-Channel LFO" hex="MOD1_3LFO" buttonText="Flash 3-Channel LFO" image="3lfo" lgt="true" >}}
 - 3 independent LFO outputs
 - Selectable waveforms: Triangle, Square, Sine, Random Slope
 - Individual frequency control per channel
@@ -31,7 +33,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 
 ---
 
-{{< mod1_firmware title="ADSR Envelope Generator" hex="MOD1_ADSR" buttonText="Flash ADSR Envelope" image="adsr" >}}
+{{< mod1_firmware title="ADSR Envelope Generator" hex="MOD1_ADSR" buttonText="Flash ADSR Envelope" image="adsr" lgt="true" >}}
 - Classic ADSR envelope with CV output
 - Attack phase gate output (gate-to-trigger conversion)
 - Decay-to-release phase gate output (trigger-to-gate conversion)
@@ -54,7 +56,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 
 ---
 
-{{< mod1_firmware title="Chipz" hex="MOD1_Chipz" buttonText="Flash Chipz" image="vco" >}}
+{{< mod1_firmware title="Chipz" hex="MOD1_Chipz" buttonText="Flash Chipz" image="vco" lgt="true" >}}
 - 2 independent pwm outputs
 - Clock input and internal Clock fallback
 - Can be used with headphones
@@ -70,7 +72,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 {{< /mod1_firmware >}}
 
 ---
-{{< mod1_firmware title="Jinglz" hex="MOD1_Jinglz" buttonText="Flash Jinglz" image="vco" >}}
+{{< mod1_firmware title="Jinglz" hex="MOD1_Jinglz" buttonText="Flash Jinglz" image="vco" lgt="true" >}}
 - XMAS theme sequuencer
 - Clock input
 - CV / Gate output + accent (Bell) trigger out
@@ -87,7 +89,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 
 ---
 
-{{< mod1_firmware title="Lazer" hex="MOD1_Lazer" buttonText="Flash Lazer" image="vco" >}}
+{{< mod1_firmware title="Lazer" hex="MOD1_Lazer" buttonText="Flash Lazer" image="vco" lgt="true" >}}
 - 2 independent pwm outputs
 - To be used with ILDA Laser interface
 
@@ -101,7 +103,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 
 ---
 
-{{< mod1_firmware title="Clock Divider/Multiplier" hex="MOD1_clock_div_multi" buttonText="Flash Clock Div/Multi" image="clock" >}}
+{{< mod1_firmware title="Clock Divider/Multiplier" hex="MOD1_clock_div_multi" buttonText="Flash Clock Div/Multi" image="clock" lgt="true" >}}
 - 3 independent clock outputs
 - Division/multiplication rates: 1, 2, 3, 4, 8, 16
 - Mode switching: Divider ↔ Multiplier
@@ -121,7 +123,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 
 ---
 
-{{< mod1_firmware title="Envelope Generator (AR)" hex="MOD1_EG" buttonText="Flash AR Envelope" image="eg" >}}
+{{< mod1_firmware title="Envelope Generator (AR)" hex="MOD1_EG" buttonText="Flash AR Envelope" image="eg" lgt="true" >}}
 - Attack-Release envelope generator
 - 3 outputs: EG, Inverted EG, End-of-cycle pulse
 - Self-patchable for LFO or clock functionality
@@ -143,7 +145,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 
 ---
 
-{{< mod1_firmware title="Euclidean Rhythm Sequencer" hex="MOD1_Euclid" buttonText="Flash Euclidean Sequencer" image="euclid" >}}
+{{< mod1_firmware title="Euclidean Rhythm Sequencer" hex="MOD1_Euclid" buttonText="Flash Euclidean Sequencer" image="euclid" lgt="true" >}}
 - 8 or 16-step Euclidean rhythm generator
 - Adjustable number of hits (0-8)
 - Output probability control (randomize triggers)
@@ -166,7 +168,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 
 ---
 
-{{< mod1_firmware title="LFO (Single Channel)" hex="MOD1_LFO" buttonText="Flash Single LFO" image="lfo" >}}
+{{< mod1_firmware title="LFO (Single Channel)" hex="MOD1_LFO" buttonText="Flash Single LFO" image="lfo" lgt="true" >}}
 - 5 waveforms: Sine, Triangle, Sawtooth, Square, Random Slope
 - Continuous waveform selection via pot
 - Frequency CV input
@@ -217,13 +219,13 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 - **F3 Output**: PWM Output A
 - **F4 Output**: PWM Output B
 
-{{< firmware_button hex="MOD1_Logic" buttonText="Flash Logic Processor" >}}
+{{< firmware_button hex="MOD1_Logic" buttonText="Flash Logic Processor" lgt="true" >}}
 
 </div>
 
 ---
 
-{{< mod1_firmware title="Random CV Sequencer" hex="MOD1_randomCVsequencer" buttonText="Flash Random CV Seq" image="random_cv_seq" >}}
+{{< mod1_firmware title="Random CV Sequencer" hex="MOD1_randomCVsequencer" buttonText="Flash Random CV Seq" image="random_cv_seq" lgt="true" >}}
 - Quantized random CV output (C2-C5 range)
 - Step lengths: 3, 4, 5, 8, 16, 32
 - Output level sets top note (0-36 semitones)
@@ -247,7 +249,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 
 ---
 
-{{< mod1_firmware title="Rose Oscillator" hex="MOD1_roseosc" buttonText="Flash Rose Oscillator" image="vco" >}}
+{{< mod1_firmware title="Rose Oscillator" hex="MOD1_roseosc" buttonText="Flash Rose Oscillator" image="vco" lgt="true" >}}
 
  * Rose curves are generated by plotting r = sin(k*theta) in polar coordinates
  * where k is the harmonic ratio (multiplier/divisor)
@@ -271,7 +273,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 ---
 
 
-{{< mod1_firmware title="3D Knot Oscillator" hex="MOD1_knotscillator" buttonText="Flash 3D Knot Oscillator" image="vco" >}}
+{{< mod1_firmware title="3D Knot Oscillator" hex="MOD1_knotscillator" buttonText="Flash 3D Knot Oscillator" image="vco" lgt="true" >}}
 
  * Three beautiful knot patterns:
  * 0. Trefoil Knot
@@ -294,7 +296,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 
 ---
 
-{{< mod1_firmware title="Square Wave VCO" hex="MOD1_square_vco" buttonText="Flash Square VCO" image="vco" >}}
+{{< mod1_firmware title="Square Wave VCO" hex="MOD1_square_vco" buttonText="Flash Square VCO" image="vco" lgt="true" >}}
 - V/Oct tracking square wave oscillator
 - Octave control with CV input
 - Vibrato LFO with depth control
@@ -318,7 +320,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 
 ---
 
-{{< mod1_firmware title="Sync LFO" hex="MOD1_SyncLFO" buttonText="Flash Sync LFO" image="sync_lfo" >}}
+{{< mod1_firmware title="Sync LFO" hex="MOD1_SyncLFO" buttonText="Flash Sync LFO" image="sync_lfo" lgt="true" >}}
 - Clock-synchronized LFO
 - 5 waveforms: Sine, Triangle, Sawtooth, Square, Random
 - Division rate control
@@ -372,13 +374,13 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 - **F4 Output**: Variable division output
 - **Button**: Tap tempo (tap 4 times)
 
-{{< firmware_button hex="MOD1_TapTempoClock" buttonText="Flash Tap Tempo Clock" >}}
+{{< firmware_button hex="MOD1_TapTempoClock" buttonText="Flash Tap Tempo Clock" lgt="true" >}}
 
 </div>
 
 ---
 
-{{< mod1_firmware title="Trigger Burst" hex="MOD1_TiggerBurst" buttonText="Flash Trigger Burst" image="burst" >}}
+{{< mod1_firmware title="Trigger Burst" hex="MOD1_TiggerBurst" buttonText="Flash Trigger Burst" image="burst" lgt="true" >}}
 - Clock-syncable trigger burst generator
 - Burst counts: 1, 3, 4, 6, 8, 16
 - Burst frequency divisions: /2, /3, /4, /6, /8, /16
@@ -403,7 +405,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 
 ## Hardware Requirements
 
-- **Arduino Nano** or **Arduino Nano (Old Bootloader)**
+- **Arduino Nano** or **Arduino Nano (Old Bootloader)**; all firmwares also run on **LGT8F328P** Nano-compatible boards
 - **MOD1 Hardware** (available from various Eurorack DIY sources)
 - **3 Potentiometers** for parameter control
 - **Push Button** for mode selection/triggering
@@ -420,7 +422,7 @@ MOD1 is Hagiwo's **versatile utility module collection** offering dozens of diff
 
 ### 2. Select Firmware
 - Choose the firmware that matches your needs from the options above
-- Click the appropriate button (Nano or Old Bootloader)
+- Click the appropriate button (Nano or Old Bootloader; for an LGT8F328P board tick the option under the button first)
 
 ### 3. Flash Firmware
 - Your browser will prompt you to select the serial port
@@ -457,7 +459,7 @@ The compact design and triple-pot interface provide hands-on control while keepi
 
 **Module doesn't respond:**
 - Check power connections
-- Verify correct board selection (Nano vs Old Bootloader)
+- Verify correct board selection (Nano, Old Bootloader or LGT8F328P)
 - Try the opposite bootloader version
 
 **Outputs not working:**
