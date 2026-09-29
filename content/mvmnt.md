@@ -73,7 +73,9 @@ MVMNT (also known as SyncLFO) is a **smooth random CV and LFO generator** based 
 - **SYNC Input**: External clock for tempo sync
 - **Multiple Outputs**: Different waveforms and polarities
 
-{{< firmware_button hex="SyncLFO" buttonText="Flash SyncLFO Firmware" oledImage="https://dl.modulove.de/module/mvmnt/img/SyncLFO_Firmware_UI_SyncLFO_887x512.png" >}}
+> **LGT8F328P boards:** the SyncLFO firmware also runs on LGT8F328P Nano-compatible boards (32 MHz). Tick **Board is an LGT8F328P** below the button before flashing one - it uses a different build.
+
+{{< firmware_button hex="SyncLFO" buttonText="Flash SyncLFO Firmware" lgt="true" oledImage="https://dl.modulove.de/module/mvmnt/img/SyncLFO_Firmware_UI_SyncLFO_887x512.png" >}}
 
 </div>
 
@@ -81,7 +83,7 @@ MVMNT (also known as SyncLFO) is a **smooth random CV and LFO generator** based 
 
 ## Hardware Requirements
 
-- **Arduino Nano** or **Arduino Nano (Old Bootloader)**
+- **Arduino Nano** or **Arduino Nano (Old Bootloader)**; the SyncLFO firmware also runs on **LGT8F328P** Nano-compatible boards
 - **Dual-Panel Design** by bkrsmdesign
   - Front: MVMNT Bezier Curve Random CV
   - Back: SYNC MOD LFO
@@ -98,7 +100,7 @@ MVMNT (also known as SyncLFO) is a **smooth random CV and LFO generator** based 
 
 ### 2. Select Firmware
 - Choose the firmware that matches your needs above
-- Click the appropriate button (Nano or Old Bootloader)
+- Click the appropriate button (Nano or Old Bootloader; for an LGT8F328P board tick the option under the SyncLFO button first)
 
 ### 3. Flash Firmware
 - Your browser will prompt you to select the serial port
@@ -133,7 +135,7 @@ The name "MVMNT" (Movement) reflects the organic, breathing quality of the Bezie
 
 **Module doesn't respond:**
 - Check power connections
-- Verify correct board selection (Nano vs Old Bootloader)
+- Verify correct board selection (Nano, Old Bootloader or LGT8F328P)
 - Try the opposite bootloader version
 
 **No CV output:**
