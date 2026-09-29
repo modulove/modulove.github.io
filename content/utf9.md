@@ -21,13 +21,15 @@ Classic drum machine sounds - the default drumkit with versatile samples for gen
 
 {{< firmware_button hex="UTF9_standard" buttonText="Flash Standard Drumkit" oledImage="/images/utf9/Standard_Drumkit.png" >}}
 
+*Nano only — this kit's sample set is the largest and does not fit alongside the LGT8F328P bootloader.*
+
 ---
 
 ### TR-808 Drumkit
 
 Legendary Roland TR-808 drum machine sounds - iconic analog-style kicks, snares, and hi-hats.
 
-{{< firmware_button hex="UTF9_808" buttonText="Flash TR-808 Drumkit" oledImage="/images/utf9/TR-808_Drumkit.png" >}}
+{{< firmware_button hex="UTF9_808" buttonText="Flash TR-808 Drumkit" oledImage="/images/utf9/TR-808_Drumkit.png" lgt="true" >}}
 
 ---
 
@@ -35,7 +37,7 @@ Legendary Roland TR-808 drum machine sounds - iconic analog-style kicks, snares,
 
 Classic Roland TR-909 drum sounds - punchy electronic drums perfect for techno and house.
 
-{{< firmware_button hex="UTF9_909" buttonText="Flash TR-909 Drumkit" oledImage="/images/utf9/TR-909_Drumkit.png" >}}
+{{< firmware_button hex="UTF9_909" buttonText="Flash TR-909 Drumkit" oledImage="/images/utf9/TR-909_Drumkit.png" lgt="true" >}}
 
 ---
 
@@ -43,7 +45,7 @@ Classic Roland TR-909 drum sounds - punchy electronic drums perfect for techno a
 
 Hip-hop oriented drum samples - boom-bap kicks, crispy snares, and hard-hitting percussion.
 
-{{< firmware_button hex="UTF9_hiphop" buttonText="Flash Hip-Hop Drumkit" oledImage="/images/utf9/Hip-Hop_Drumkit.png" >}}
+{{< firmware_button hex="UTF9_hiphop" buttonText="Flash Hip-Hop Drumkit" oledImage="/images/utf9/Hip-Hop_Drumkit.png" lgt="true" >}}
 
 ---
 
@@ -51,7 +53,7 @@ Hip-hop oriented drum samples - boom-bap kicks, crispy snares, and hard-hitting 
 
 Industrial and electronic sounds - harsh, metallic, and aggressive drum samples.
 
-{{< firmware_button hex="UTF9_industrial" buttonText="Flash Industrial Drumkit" >}}
+{{< firmware_button hex="UTF9_industrial" buttonText="Flash Industrial Drumkit" lgt="true" >}}
 
 ---
 
@@ -59,7 +61,7 @@ Industrial and electronic sounds - harsh, metallic, and aggressive drum samples.
 
 Experimental and unconventional sounds - unique and creative percussion samples.
 
-{{< firmware_button hex="UTF9_experimental" buttonText="Flash Experimental Drumkit" oledImage="/images/utf9/Experimental_Drumkit.png" >}}
+{{< firmware_button hex="UTF9_experimental" buttonText="Flash Experimental Drumkit" oledImage="/images/utf9/Experimental_Drumkit.png" lgt="true" >}}
 
 ---
 
@@ -84,7 +86,10 @@ Experimental and unconventional sounds - unique and creative percussion samples.
 
 ## Hardware Requirements
 
-- **Arduino Nano** or **Arduino Nano (Old Bootloader)**
+- **Arduino Nano**, **Arduino Nano (Old Bootloader)**, or **LGT8F328P** (LGT Nano clone)
+  - LGT8F328P builds run the chip at 16 MHz so timing matches the Nano exactly
+  - The Standard drumkit is Nano-only: its sample set does not fit in the
+    29696 bytes the LGT8F bootloader leaves free
 - UTF-9-SAMPLIFIED hardware module
 - MCP4901 DAC for audio output
 - Flash before soldering for best results
