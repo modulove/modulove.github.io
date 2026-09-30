@@ -51,6 +51,48 @@ MVMNT (also known as SyncLFO) is a **smooth random CV and LFO generator** based 
 
 <div class="firmware-section">
 
+## DRIFT — by Mike
+
+<div class="firmware-header">
+  <div class="firmware-image">➿</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>Bounded random walk — each value steps from the last, it does not teleport</li>
+      <li>CHAOS sets how far it may wander; it reflects at the rails instead of clipping</li>
+      <li>SHAPE morphs linear ramps → sample &amp; hold → smoothstep on one bipolar knob</li>
+      <li>RATE from a 20-second drift up to 1 kHz, with a freeze position at hard CCW</li>
+      <li>TRIG becomes a clock / S&amp;H input — or interleaves for instant polyrhythm</li>
+      <li>9-bit output (512 levels) instead of the stock 8-bit</li>
+    </ul>
+  </div>
+</div>
+
+**Perfect for:** Sound design, organic motion curves, clocked sample &amp; hold, slow evolving drift
+
+Written for MVMNT by **Mike**, a sound designer working in film, television and games — modelled on the random modulator he uses in Kilohearts Snap Heap. He sent it to us with four words: *"Share it with the community!"*
+
+**Controls:**
+- **DEPTH** (pos 1): Output amount — CCW flat, CW full swing
+- **CHAOS** (pos 2): How far each new value steps from the current one
+- **SHAPE** (pos 3): Bipolar — centre is sample &amp; hold, CCW linear ramps, CW smoothstep
+- **RATE** (pos 4): 0.05 Hz → 1 kHz exponential; hard CCW freezes the output
+- **TRIG Input**: Emits a new value immediately — clock it, or let it interleave
+
+> **The printed panel legend does not apply.** DRIFT reassigns all four knobs, so the silkscreened ELEVATE / STRETCH / SMOOTH / FLUCTUATE labels are not what the knobs do. The [DRIFT panel legend](https://github.com/modulove/MVMNT/blob/main/Firmware/DRIFT/PANEL.md) has the mapping.
+
+> **LGT8F328P boards:** DRIFT also runs on LGT8F328P Nano-compatible boards (32 MHz). Tick **Board is an LGT8F328P** below the button before flashing one - it uses a different build.
+
+{{< firmware_button hex="DRIFT" buttonText="Flash DRIFT Firmware" lgt="true" >}}
+
+[Read the full story and the firmware documentation](https://github.com/modulove/MVMNT/tree/main/Firmware/DRIFT)
+
+</div>
+
+---
+
+<div class="firmware-section">
+
 ## SyncLFO
 
 <div class="firmware-header">
@@ -85,7 +127,7 @@ MVMNT (also known as SyncLFO) is a **smooth random CV and LFO generator** based 
 
 ## Hardware Requirements
 
-- **Arduino Nano** or **Arduino Nano (Old Bootloader)**; both firmwares also run on **LGT8F328P** Nano-compatible boards
+- **Arduino Nano** or **Arduino Nano (Old Bootloader)**; all three firmwares also run on **LGT8F328P** Nano-compatible boards
 - **Dual-Panel Design** by bkrsmdesign
   - Front: MVMNT Bezier Curve Random CV
   - Back: SYNC MOD LFO
