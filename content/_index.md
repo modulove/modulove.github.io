@@ -41,7 +41,7 @@ Here you find the Open-source firmware for our Eurorack modules. Choose your mod
     </div>
     <h2>SCOPE</h2>
     <p>Oscilloscope and spectrum analyzer. Visualize waveforms and analyze frequency content in real-time.</p>
-    <p><strong>2 firmware available</strong></p>
+    <p><strong>3 firmware available</strong></p>
   </a>
 
   <a href="/mod1" class="module-card">
