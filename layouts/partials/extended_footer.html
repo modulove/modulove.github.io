@@ -547,6 +547,29 @@
     color: var(--muted);
   }
 
+  /* Link to a web tool page (e.g. the A-RYTH-MATIK hardware test), outlined next to the flash buttons */
+  a.tool-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: 0.5em 0;
+    padding: 0.9em 1.4em;
+    font-size: 0.95em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+
+  a.tool-button:hover {
+    background: var(--accent);
+    color: var(--background);
+  }
+
   /* Module Header Logo */
   .module-header-logo {
     max-width: 600px;

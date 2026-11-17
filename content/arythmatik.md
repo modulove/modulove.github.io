@@ -11,6 +11,8 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
 
 **Hardware:** Arduino Nano · OLED Display (SSD1306) · Rotary Encoder · 6 Output Channels
 
+> **Module not working as expected?** Flash the [DEBUG firmware](#hardware-test-debug) and check display, inputs and outputs in your browser on the [hardware test page](/arythmatik/test/).
+
 ---
 
 <div class="firmware-section">
@@ -202,24 +204,35 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
 ---
 <div class="firmware-section">
 
-## DEBUG
+## Hardware Test (DEBUG)
 
 <div class="firmware-header">
-  <div class="firmware-image">🧪</div>
+  <div class="firmware-image">🩺</div>
   <div class="firmware-description">
     <h4>Features</h4>
     <ul>
-      <li>Debug your HW</li>
-      </ul>
+      <li>Checks chip, supply voltage, free RAM and EEPROM</li>
+      <li>Measures the display supply and bus, display speed test</li>
+      <li>CLK/RST pulses and BPM, encoder and button test</li>
+      <li>Output and LED test modes, loopback test for every output</li>
+      <li>Live results in the browser on the <a href="/arythmatik/test/">hardware test page</a></li>
+      <li>Runs on Arduino Nano and LGT8F328P boards from the same file</li>
+    </ul>
   </div>
 </div>
 
+**Perfect for:** checking a freshly built module, finding display, input or output faults, support requests
+
 **Controls:**
-- **Encoder**: Navigate
-- **CLK Input**: Clock 
-- **RST Input**: Reset
-- 
+- **Encoder Turn**: Next/previous test screen (on INPUTS: encoder test, hold the button 1 s for the next screen)
+- **Encoder Click**: Screen action (EEPROM test, display speed test, clear counters, next output mode)
+- **CLK / RST Input**: Measured on the INPUTS and LOOP screens
+
 {{< encoder_firmware_button hex="ARYTHMATIK_DEBUG" buttonText="Flash DEBUG Firmware" >}}
+
+<a class="tool-button" href="/arythmatik/test/">🩺 Open the hardware test page</a>
+
+Flash the DEBUG firmware with the button above, then open the test page and press **Connect**. The [hardware test guide](/arythmatik/debug/) explains every value, the loopback test and what to do when something looks wrong.
 
 </div>
 
@@ -277,6 +290,9 @@ Some modules have reversed encoder direction. If rotating the encoder moves para
 **Wrong encoder direction:**
 - Use the reversed encoder firmware variant
 
+**Display, inputs or outputs misbehave:**
+- Flash the [DEBUG firmware](#hardware-test-debug) and run the [hardware test](/arythmatik/test/) – the [guide](/arythmatik/debug/) explains the results
+
 ---
 
 ## Resources
@@ -284,6 +300,7 @@ Some modules have reversed encoder direction. If rotating the encoder moves para
 - [GitHub Repository](https://github.com/modulove/A-RYTH-MATIK) - Source code
 - [Build Guide & Schematic](https://github.com/modulove/A-RYTH-MATIK/blob/main/README.md) - Assembly instructions
 - [Quick Start PDF](https://github.com/modulove/A-RYTH-MATIK/blob/main/A-Ryth-Matik_QuickStart.pdf) - Hardware guide
+- [Hardware Test](/arythmatik/test/) - Check your module in the browser (with the DEBUG firmware) · [Guide](/arythmatik/debug/)
 - [Report Issues](https://github.com/modulove/A-RYTH-MATIK/issues) - Bug reports and feature requests
 
 ---
