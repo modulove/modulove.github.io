@@ -99,6 +99,39 @@ SCOPE is a **visual analysis tool** for your Eurorack system. View your CV and a
 
 {{< firmware_button hex="SCOPEv2" buttonText="Flash SCOPE v2 Firmware" lgt="true" oledImage="https://dl.modulove.de/module/scope/img/SCOPE_Firmware_UI_Main_887x512.png" >}}
 
+---
+
+## SCOPE DOOM (Game for SCOPE v2 / v2.5)
+
+> **Hardware:** SCOPE v2 and newer (colorful PCBs), not SCOPEv1 (black PCB). Sound needs a SCOPE v2.5 with an LGT8F328P board and the DAC solder jumper on the LGT8F side.
+
+<div class="firmware-header">
+  <div class="firmware-image">🎮</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>Raycasting shooter on the OLED: two levels, a boss arena, story screens</li>
+      <li>Sound effects and music on CV OUT (LGT8F328P boards, off until you switch it on in SETUP)</li>
+      <li>A clock or gate on TRIG fires the shotgun</li>
+      <li>Plays itself after a minute without input</li>
+    </ul>
+  </div>
+</div>
+
+**Made by:** SCOPE user pearin sent in this adaptation of *Doom Nano Brutality* (based on *Doom Nano* by Dave Ruiz). Modulove ported it to the v2.5 board and added sound, the attract mode and fixes.
+
+**Controls:**
+- **Encoder Rotation**: Look left / right
+- **Hold + Turn**: Walking speed (back, stop, walk, run, sprint)
+- **Encoder Click** or **TRIG input**: Fire
+- **Hold 0.7 s**: Pause with the controls; hold again to quit
+
+**Back to the oscilloscope:** flash the SCOPE v2 firmware above. Your SCOPE settings are kept.
+
+> **LGT8F328P boards:** tick **Board is an LGT8F328P** below the button before flashing.
+
+{{< firmware_button hex="SCOPE_DOOM" buttonText="Flash SCOPE DOOM" lgt="true" oledImage="/images/scope/SCOPE_DOOM_Firmware_UI_Fight_887x512.png" >}}
+
 </div>
 
 ---
