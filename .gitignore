@@ -15,6 +15,9 @@ hugo_stats.json
 # Hugo themes (downloaded during build)
 /themes/
 
+# Local firmware preview (scripts/local-firmware.sh) - never commit or deploy these
+/static/releases/
+
 # OS
 .DS_Store
 Thumbs.db

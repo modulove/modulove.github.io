@@ -1,0 +1,317 @@
+{{/* A-RYTH-MATIK hardware test (DEBUG firmware 2.x) over Web Serial.
+     Logic: static/js/arythmatik-hwtest.js. Add ?mock=1 (or ?mock=bad) to the page URL
+     to run it against a simulated module, without hardware. */}}
+<div class="hwt" id="hwt" data-guide="{{ "arythmatik/debug/" | relURL }}">
+  <noscript><p class="hwt-msg hwt-bad">This test page needs JavaScript.</p></noscript>
+
+  <div class="hwt-msg hwt-bad" data-f="unsupported" hidden>
+    <strong>Your browser can't talk to the module.</strong>
+    The test page needs Web Serial: please open it in <strong>Chrome</strong> or <strong>Edge</strong>
+    on a computer (Windows, macOS, Linux, ChromeOS). Firefox, Safari and phones/tablets don't support it.
+    <br><a href="?mock=1">See a demo with simulated values</a>
+  </div>
+  <div class="hwt-msg" data-f="mockinfo" hidden>
+    <strong>Demo mode:</strong> the values come from a simulated module, not from real hardware.
+    <a href="?mock=1">healthy module</a> · <a href="?mock=bad">module with a weak display supply</a> ·
+    <a href="?">real module</a>
+  </div>
+
+  <div class="hwt-bar">
+    <button type="button" class="hwt-primary" data-act="connect">Connect</button>
+    <span class="hwt-state" data-f="state" role="status" aria-live="polite">Not connected.</span>
+    <button type="button" data-act="copy" disabled>Copy report for support</button>
+  </div>
+  <div class="hwt-copied hwt-note" data-f="copied" hidden></div>
+
+  <div class="hwt-pages" aria-label="Page shown on the module">
+    <span class="hwt-note">Module screen:</span>
+    <button type="button" data-cmd="0">System</button>
+    <button type="button" data-cmd="1">I2C</button>
+    <button type="button" data-cmd="2">Inputs</button>
+    <button type="button" data-cmd="3">Outputs</button>
+    <button type="button" data-cmd="4">Loop</button>
+  </div>
+
+  <section class="hwt-card hwt-wide">
+    <h3>Checks</h3>
+    <ul class="hwt-hints" data-f="hints">
+      <li class="info">Connect the module to see the results here.</li>
+    </ul>
+  </section>
+
+  <div class="hwt-grid">
+    <section class="hwt-card">
+      <h3>System</h3>
+      <dl class="hwt-kv">
+        <dt>Chip</dt><dd data-f="chip">–</dd>
+        <dt>Firmware</dt><dd data-f="fw">–</dd>
+        <dt>Supply (VCC)</dt><dd data-f="vcc">–</dd>
+        <dt>Free RAM</dt><dd data-f="ram">–</dd>
+        <dt>Reset cause</dt><dd data-f="reset">–</dd>
+        <dt>EEPROM</dt><dd data-f="ee">–</dd>
+        <dt>Running for</dt><dd data-f="uptime">–</dd>
+      </dl>
+      <p class="hwt-note" data-f="vccnote"></p>
+      <div class="hwt-actions">
+        <button type="button" data-cmd="e">EEPROM test</button>
+      </div>
+    </section>
+
+    <section class="hwt-card">
+      <h3>Display / I2C</h3>
+      <dl class="hwt-kv">
+        <dt>Display</dt><dd data-f="oled">–</dd>
+        <dt>SDA / SCL</dt><dd data-f="bus">–</dd>
+        <dt>Pull-ups</dt><dd data-f="pullups">–</dd>
+        <dt>Devices</dt><dd data-f="devs">–</dd>
+        <dt>Frame time</dt><dd data-f="frame">–</dd>
+        <dt>Timeouts</dt><dd data-f="timeouts">–</dd>
+        <dt>Re-inits</dt><dd data-f="reinits">–</dd>
+      </dl>
+      <p class="hwt-note">SDA/SCL show the display board's own supply (about 3.3 V on most modules).</p>
+      <div class="hwt-actions">
+        <button type="button" data-cmd="b">Bus check</button>
+        <button type="button" data-cmd="t">Speed test</button>
+      </div>
+      <p class="hwt-note" data-f="speed">Speed test: the module sends a test picture at 400 kHz, 800 kHz and 1 MHz (about 4 s). Watch the module screen.</p>
+    </section>
+
+    <section class="hwt-card">
+      <h3>Inputs</h3>
+      <table class="hwt-table">
+        <thead><tr><th></th><th>CLK</th><th>RST</th></tr></thead>
+        <tbody>
+          <tr><th>Level</th><td data-f="clk-level">–</td><td data-f="rst-level">–</td></tr>
+          <tr><th>Pulses</th><td data-f="clk-count">–</td><td data-f="rst-count">–</td></tr>
+          <tr><th>Width</th><td data-f="clk-width">–</td><td data-f="rst-width">–</td></tr>
+          <tr><th>Last</th><td data-f="clk-age">–</td><td data-f="rst-age">–</td></tr>
+        </tbody>
+      </table>
+      <dl class="hwt-kv">
+        <dt>Clock BPM</dt><dd data-f="bpm">–</dd>
+        <dt>Encoder</dt><dd data-f="enc">–</dd>
+        <dt>Button</dt><dd data-f="button">–</dd>
+      </dl>
+      <p class="hwt-note">BPM counts 4 pulses per beat (16th notes). Turn the encoder on the INPUTS screen to test it; on other screens turning changes the screen.</p>
+      <div class="hwt-actions">
+        <button type="button" data-cmd="2">Show INPUTS on module</button>
+        <button type="button" data-cmd="c">Clear counters</button>
+      </div>
+    </section>
+
+    <section class="hwt-card">
+      <h3>Outputs</h3>
+      <p class="hwt-note" data-f="outstate">Outputs run only while the module shows the OUTPUTS screen.</p>
+      <div class="hwt-modes">
+        <button type="button" data-cmd="m0">Chase</button>
+        <button type="button" data-cmd="m1">All on/off 1 Hz</button>
+        <button type="button" data-cmd="m2">Follow CLK input</button>
+        <button type="button" data-cmd="m3">LED 4+5 test</button>
+        <button type="button" data-cmd="m4">Off</button>
+      </div>
+      <p class="hwt-note"><strong>Chase:</strong> one output after the other, LEDs 1, 2, 3 and 6 follow (LEDs 4 and 5 share the USB pins and stay dark).
+        <strong>Follow CLK:</strong> all outputs copy the CLK input.</p>
+      <p class="hwt-note hwt-warn-text"><strong>LED 4+5 test:</strong> LEDs 4 and 5 share their pins with the USB connection,
+        so the module switches USB off for 10 seconds. The page waits and carries on by itself.</p>
+    </section>
+
+    <section class="hwt-card hwt-wide">
+      <h3>Loopback</h3>
+      <p class="hwt-note">Patch a cable from any output into <strong>CLK</strong> or <strong>RST</strong>.
+        The module pulses OUT1 to OUT6 in turn and shows which output arrives.
+        Move the cable through all six outputs, then try RST. A healthy output counts up in its cell.</p>
+      <div class="hwt-actions">
+        <button type="button" data-cmd="4">Start loopback test</button>
+        <button type="button" data-cmd="c">Clear</button>
+        <span class="hwt-note" data-f="loopstate">Not running.</span>
+      </div>
+      <div class="hwt-scroll">
+        <table class="hwt-table hwt-matrix">
+          <thead><tr><th></th><th>OUT1</th><th>OUT2</th><th>OUT3</th><th>OUT4</th><th>OUT5</th><th>OUT6</th></tr></thead>
+          <tbody>
+            <tr><th>CLK</th><td data-f="l0-0">–</td><td data-f="l0-1">–</td><td data-f="l0-2">–</td><td data-f="l0-3">–</td><td data-f="l0-4">–</td><td data-f="l0-5">–</td></tr>
+            <tr><th>RST</th><td data-f="l1-0">–</td><td data-f="l1-1">–</td><td data-f="l1-2">–</td><td data-f="l1-3">–</td><td data-f="l1-4">–</td><td data-f="l1-5">–</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <dl class="hwt-kv">
+        <dt>Delay</dt><dd data-f="ldelay">–</dd>
+        <dt>Pulse width</dt><dd data-f="lwidth">–</dd>
+      </dl>
+      <p class="hwt-note">Healthy: hits for the patched output only, delay about 10–50 µs, width about 5 ms.</p>
+    </section>
+  </div>
+
+  <details class="hwt-card hwt-console">
+    <summary>Console (raw messages from the module)</summary>
+    <label class="hwt-note"><input type="checkbox" data-f="showjson"> show status lines</label>
+    <pre class="hwt-log" data-f="log"></pre>
+    <form class="hwt-send" data-f="sendform">
+      <input type="text" data-f="sendtext" maxlength="16" placeholder="command, e.g. r" aria-label="Command to send" autocomplete="off" disabled>
+      <button type="submit" data-f="sendbtn" disabled>Send</button>
+    </form>
+    <p class="hwt-note">Commands: r report · j status · b bus check · t speed test · e EEPROM test · c clear · 0–4 screen · m0–m4 output mode</p>
+  </details>
+</div>
+
+<style>
+  .hwt {
+    --hwt-ok: #22c55e;
+    --hwt-warn: #f59e0b;
+    --hwt-bad: #ef4444;
+    margin: 1.5em 0;
+    font-size: 0.95em;
+  }
+  .hwt p, .hwt ul, .hwt dl, .hwt table, .hwt h3, .hwt pre, .hwt form { margin: 0; }
+  .hwt h3 {
+    font-size: 1em;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.7em;
+  }
+  .hwt button {
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.4em 0.8em;
+    font-size: 0.8em;
+    background: transparent;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .hwt button:hover:not(:disabled) { background: color-mix(in srgb, var(--accent) 15%, transparent); }
+  .hwt button.hwt-primary, .hwt button.hwt-on { background: var(--accent); color: var(--background); }
+  .hwt button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .hwt-msg {
+    padding: 1em;
+    margin-bottom: 1em;
+    border: 2px solid var(--subtle);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    background: var(--card-bg);
+  }
+  .hwt-msg.hwt-bad { border-left-color: var(--hwt-bad); }
+  .hwt-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7em 1em;
+    padding: 1em;
+    background: var(--card-bg);
+    border: 2px solid var(--subtle);
+    border-radius: 12px;
+  }
+  .hwt-bar .hwt-primary { font-size: 0.95em; padding: 0.6em 1.4em; }
+  .hwt-state { flex: 1 1 14em; color: var(--muted); }
+  .hwt-state.hwt-live { color: var(--foreground); }
+  .hwt-copied { margin-top: 0.5em; }
+  .hwt-pages {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4em;
+    margin: 1em 0;
+  }
+  .hwt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1em;
+    margin-top: 1em;
+  }
+  .hwt-card {
+    min-width: 0;
+    padding: 1em 1.2em;
+    background: var(--card-bg);
+    border: 2px solid var(--subtle);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+  }
+  .hwt-wide { grid-column: 1 / -1; }
+  .hwt-kv {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.3em 1em;
+    margin: 0.6em 0 !important;
+  }
+  .hwt-kv dt { color: var(--muted); }
+  .hwt-kv dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+  .hwt-note { color: var(--muted); font-size: 0.85em; line-height: 1.5; }
+  .hwt-card .hwt-note + .hwt-note, .hwt-card .hwt-note { margin-top: 0.6em; }
+  .hwt-actions, .hwt-modes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 0.8em;
+  }
+  .hwt-actions .hwt-note { margin-top: 0; }
+  .hwt-ok { color: color-mix(in srgb, var(--hwt-ok) 85%, var(--foreground)); }
+  .hwt-warn { color: color-mix(in srgb, var(--hwt-warn) 85%, var(--foreground)); }
+  .hwt-bad { color: color-mix(in srgb, var(--hwt-bad) 85%, var(--foreground)); }
+  .hwt-warn-text strong { color: color-mix(in srgb, var(--hwt-warn) 85%, var(--foreground)); }
+  .hwt-hints { list-style: none; padding: 0; display: grid; gap: 0.5em; }
+  .hwt-hints li {
+    padding: 0.5em 0.8em;
+    border-left: 4px solid var(--subtle);
+    background: color-mix(in srgb, var(--foreground) 4%, transparent);
+    border-radius: 4px;
+    line-height: 1.5;
+  }
+  .hwt-hints li::marker { content: none; }
+  .hwt-hints li::before { content: none !important; }
+  .hwt-hints li.ok { border-left-color: var(--hwt-ok); }
+  .hwt-hints li.info { border-left-color: var(--muted); }
+  .hwt-hints li.warn { border-left-color: var(--hwt-warn); }
+  .hwt-hints li.bad { border-left-color: var(--hwt-bad); }
+  .hwt-hints li strong { text-transform: uppercase; font-size: 0.85em; letter-spacing: 0.04em; margin-right: 0.4em; }
+  .hwt-table { border-collapse: collapse; width: 100%; font-size: 0.9em; }
+  .hwt-table th, .hwt-table td {
+    border: 1px solid var(--subtle);
+    padding: 0.3em 0.5em;
+    text-align: center;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .hwt-table thead th, .hwt-table tbody th { color: var(--muted); background: transparent; font-weight: normal; }
+  .hwt-table tbody th { text-align: left; }
+  .hwt-scroll { overflow-x: auto; margin-top: 0.8em; }
+  .hwt-matrix td { min-width: 3em; font-weight: 600; }
+  .hwt-matrix td.hwt-hit { background: color-mix(in srgb, var(--hwt-ok) 30%, transparent); }
+  .hwt-dot {
+    display: inline-block;
+    width: 0.75em;
+    height: 0.75em;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    margin-right: 0.35em;
+    vertical-align: -0.05em;
+  }
+  .hwt-dot.hwt-high { background: var(--accent); }
+  .hwt-stale .hwt-grid dd, .hwt-stale .hwt-grid td { opacity: 0.5; }
+  .hwt-console { margin-top: 1em; }
+  .hwt-console summary { cursor: pointer; color: var(--accent); }
+  .hwt-console label { display: block; margin-top: 0.8em; }
+  .hwt-log {
+    margin-top: 0.6em !important;
+    padding: 0.6em;
+    height: 16em;
+    overflow: auto;
+    font-size: 0.75em;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    background: var(--background) !important;
+    border: 1px solid var(--subtle);
+    border-radius: 6px;
+  }
+  .hwt-send { display: flex; gap: 0.5em; margin-top: 0.6em !important; }
+  .hwt-send input { flex: 1; min-width: 0; padding: 0.4em 0.6em; border: 1px solid var(--subtle); }
+  @media (max-width: 684px) {
+    .hwt-grid { grid-template-columns: 1fr; }
+    .hwt-card { padding: 0.9em; }
+    .hwt-bar > button { flex: 1 1 auto; }
+  }
+</style>
+
+<script src="{{ "js/arythmatik-hwtest.js" | relURL }}" defer></script>

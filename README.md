@@ -34,6 +34,29 @@ hugo server -D
 # Visit http://localhost:1313
 ```
 
+### Local Preview with Unreleased Firmware
+
+The flash buttons load `/releases/<Name>.<board>.hex`. On the live site these files come from the
+latest GitHub release of each module repo (the deploy workflow stores them in `releases/` and copies
+them into the built site). `hugo server` does not serve `releases/`, so copy them into the
+git-ignored `static/releases/` first - optionally with local builds on top:
+
+```bash
+# released firmware only
+scripts/local-firmware.sh
+
+# plus local A-RYTH-MATIK builds (ARYTHMATIK_<Name>.hex / ARYTHMATIK_<Name>.reversed.hex,
+# e.g. the artifacts of a pull request build); each is used for the nano and nanoOldBootloader buttons
+scripts/local-firmware.sh "/path/to/firmware_hex"
+
+hugo server
+# remove the local copies again
+scripts/local-firmware.sh --clean
+```
+
+The A-RYTH-MATIK hardware test page (`/arythmatik/test/`) also has a demo mode without hardware:
+`http://localhost:1313/arythmatik/test/?mock=1` (healthy module) or `?mock=bad` (weak display supply).
+
 ### Adding New Firmware
 
 1. Add firmware documentation to `content/`
