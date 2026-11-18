@@ -62,7 +62,7 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
     <h4>Features</h4>
     <ul>
       <li>Two independent clock processors: side A runs from RST, side B from CLK, each at its own tempo</li>
-      <li>Five modes per side: Buds (coin flip with adjustable probability), Toggle, Swing, Factor (divider 1-8), Bounce (a burst of ever faster hits, like a bouncing ball)</li>
+      <li>Five modes per side: Buds (coin flip with adjustable probability), Toggle, Swing, Factor (divider 1-8), Bounce (a dropped ball: ever faster impacts until it comes to rest, plus a gate that shrinks with the ball's energy; the display shows the ball bouncing)</li>
       <li>Main, inverted and clock output per side</li>
       <li>Swing worked out from the measured clock period</li>
       <li>12 ms triggers from a hardware timer, independent of the display</li>
