@@ -1,0 +1,300 @@
+{{/* A-RYTH-MATIK Stitch pattern editor (Stitch sequencer firmware) over Web Serial.
+     Logic: static/js/arythmatik-stitch.js. Add ?mock=1 to the page URL to try it
+     against a simulated module, without hardware. */}}
+<div class="stx" id="stx" data-flash="{{ "arythmatik/" | relURL }}#stitch-sequencer">
+  <noscript><p class="stx-msg stx-bad">This editor needs JavaScript.</p></noscript>
+
+  <div class="stx-msg stx-bad" data-f="unsupported" hidden>
+    <strong>Your browser can't talk to the module.</strong>
+    The editor needs Web Serial: please open it in <strong>Chrome</strong> or <strong>Edge</strong>
+    on a computer (Windows, macOS, Linux, ChromeOS). Firefox, Safari and phones/tablets don't support it.
+    <br><a href="?mock=1">Try the demo with a simulated module</a>
+  </div>
+  <div class="stx-msg" data-f="mockinfo" hidden>
+    <strong>Demo mode:</strong> the editor talks to a simulated module, not to real hardware.
+    <a href="?">Use a real module</a>
+  </div>
+
+  <div class="stx-bar">
+    <button type="button" class="stx-primary" data-act="connect">Connect</button>
+    <span class="stx-state" data-f="state" role="status" aria-live="polite">Not connected.</span>
+  </div>
+  <ul class="stx-hints" data-f="hints"></ul>
+
+  <section class="stx-card">
+    <h3>Pattern</h3>
+    <p class="stx-note">Click a step to switch it on or off. Steps 1, 5, 9 and 13 are the beats.
+      Changed steps are marked until you press <strong>Send</strong>.</p>
+    <div class="stx-pattern" data-f="grid" role="group" aria-label="Pattern: 6 channels, 16 steps"></div>
+    <p class="stx-note stx-status" data-f="patstate" aria-live="polite"></p>
+    <div class="stx-actions">
+      <button type="button" class="stx-primary" data-act="send" data-live>Send to module</button>
+      <button type="button" data-act="loadpat" data-load>Load from module</button>
+    </div>
+    <div class="stx-actions">
+      <span class="stx-note">On the module:</span>
+      <button type="button" data-act="gen" data-live>Generate (GEN)</button>
+      <button type="button" data-act="mut" data-live>Mutate (MUT)</button>
+    </div>
+    <p class="stx-note">Generate makes a new pattern, Mutate changes a few steps of the pattern shown here
+      (unsent changes are sent first). Both play at once; press <strong>Send</strong> to save the result on the module.</p>
+
+    <h4>Presets</h4>
+    <div class="stx-actions">
+      <select data-f="preset" aria-label="Preset" data-live></select>
+      <button type="button" data-act="preset" data-live>Load into grid</button>
+      <button type="button" data-act="presetsend" data-live>Load and send</button>
+    </div>
+    <p class="stx-note">The grooves from the module's AUTO banks, each with the fill the module plays with it. <strong>Load into grid</strong> only changes the grid: press Send to put it on the module.</p>
+    <p class="stx-note">Pattern code: <span class="stx-code" data-f="hex">–</span></p>
+  </section>
+
+  <section class="stx-card">
+    <h3>Settings</h3>
+    <p class="stx-note">Each change goes to the module at once, and the module saves it by itself.
+      The names in brackets are the items on the module's display.</p>
+
+    <h4>Sequencer</h4>
+    <div class="stx-fields">
+      <label class="stx-field" data-fk="clk"><span>Clock (CLK)</span>
+        <select data-k="clk"><option value="0">External (CLK jack)</option><option value="1">Internal</option></select></label>
+      <label class="stx-field" data-fk="bpm"><span>Tempo (BPM) <strong data-f="bpmval">–</strong></span>
+        <input type="range" data-k="bpm" min="60" max="240" step="1" value="120">
+        <small class="stx-note">Internal clock only</small></label>
+      <label class="stx-field" data-fk="mode"><span>Mode (MODE)</span>
+        <select data-k="mode"><option value="0">MAN – your pattern</option><option value="1">AUTO – presets</option></select></label>
+      <label class="stx-field" data-fk="out"><span>Outputs (OUT)</span>
+        <select data-k="out"><option value="0">Triggers 10 ms (TRG)</option><option value="1">Gates (GAT)</option><option value="2">Flip-flop (FF)</option></select></label>
+      <label class="stx-field" data-fk="style"><span>Style (STYLE)</span>
+        <select data-k="style"><option value="0">Tech (TC)</option><option value="1">Dub (DB)</option><option value="2">House (HS)</option><option value="3">Half-time (HF)</option><option value="4">Generative (GE)</option></select>
+        <small class="stx-note">AUTO only</small></label>
+      <label class="stx-field" data-fk="rep"><span>Repeat (REP)</span>
+        <select data-k="rep"><option value="0">4</option><option value="1">8</option><option value="2">16</option><option value="3">32</option><option value="4">Endless (ET)</option></select>
+        <small class="stx-note">AUTO only</small></label>
+      <label class="stx-field" data-fk="sw"><span>Switch (SW)</span>
+        <select data-k="sw"><option value="0">2</option><option value="1">4</option><option value="2">8</option><option value="3">16</option><option value="4">Endless (ET)</option></select>
+        <small class="stx-note">AUTO only</small></label>
+      <label class="stx-field" data-fk="fill"><span>Fills (FILL)</span>
+        <select data-k="fill"><option value="0">Off</option><option value="1">On</option></select>
+        <small class="stx-note">AUTO only</small></label>
+      <div class="stx-field" data-fk="fper"><span>Fill every (F-EV)</span>
+        <strong class="stx-value" data-f="fper">–</strong>
+        <small class="stx-note">Set on the module, AUTO only</small></div>
+    </div>
+    <p class="stx-note">In AUTO mode the module plays each pattern for REP × 16 steps and picks a new preset after SW of these blocks;
+      with fills on it plays a fill every F-EV repeats. F-EV has no USB command, so the editor only shows it.</p>
+
+    <h4>Module</h4>
+    <div class="stx-fields">
+      <label class="stx-field" data-fk="rst"><span>RST jack at power-up (RIN)</span>
+        <select data-k="rst"><option value="0">Reset</option><option value="1">Fill</option><option value="2">Generate</option><option value="3">Mutate</option></select></label>
+      <label class="stx-field" data-fk="enc"><span>Encoder (ENC)</span>
+        <select data-k="enc"><option value="0">Normal (CW)</option><option value="1">Reversed (CCW)</option></select></label>
+      <label class="stx-field" data-fk="oled"><span>Display (ROT)</span>
+        <select data-k="oled"><option value="0">Normal (0°)</option><option value="1">Upside down (180°)</option></select></label>
+    </div>
+    <p class="stx-note">The IN item in the module's bottom menu changes the RST action live; RIN is the action it starts with.
+      Display 180° is for a module mounted upside down: CLK/RST and the outputs are swapped to match.</p>
+    <div class="stx-actions">
+      <button type="button" data-act="loadcfg" data-load>Reload settings</button>
+    </div>
+  </section>
+
+  <details class="stx-card stx-console">
+    <summary>Console (messages to and from the module)</summary>
+    <pre class="stx-log" data-f="log"></pre>
+    <form class="stx-send" data-f="sendform">
+      <input type="text" data-f="sendtext" maxlength="40" placeholder="command, e.g. C?" aria-label="Command to send" autocomplete="off" disabled>
+      <button type="submit" data-f="sendbtn" disabled>Send</button>
+    </form>
+    <p class="stx-note">Commands: P? pattern · P=hhhh,… set and save the pattern · C? settings · B60–B240 tempo · K0/1 clock ·
+      M0/1 mode · S0–4 style · F0/1 fills · R0–4 repeat · W0–4 switch · T0–2 outputs · N0–3 RIN · E0/1 encoder · O0/1 display ·
+      G generate · U mutate · X run the RST action · Q factory settings</p>
+  </details>
+</div>
+
+<style>
+  .stx {
+    --stx-ok: #22c55e;
+    --stx-warn: #f59e0b;
+    --stx-bad: #ef4444;
+    margin: 1.5em 0;
+    font-size: 0.95em;
+  }
+  .stx p, .stx ul, .stx h3, .stx h4, .stx pre, .stx form { margin: 0; }
+  .stx h3 {
+    font-size: 1em;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.7em;
+  }
+  .stx h4 {
+    font-size: 0.85em;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 1.4em;
+  }
+  .stx button {
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.4em 0.8em;
+    font-size: 0.8em;
+    background: transparent;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .stx button:hover:not(:disabled) { background: color-mix(in srgb, var(--accent) 15%, transparent); }
+  .stx button.stx-primary { background: var(--accent); color: var(--background); }
+  .stx button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .stx select {
+    max-width: 100%;
+    padding: 0.45em 2.4em 0.45em 0.6em;
+    font-size: 0.9em;
+    border-color: var(--subtle);
+    border-width: 2px;
+    background-position: calc(100% - 20px), calc(100% - 15px);  /* theme chevron, fixed for the smaller font */
+  }
+  .stx select:disabled { opacity: 0.5; cursor: not-allowed; }
+  .stx input[type="range"] {
+    -webkit-appearance: auto;
+    appearance: auto;
+    width: 100%;
+    margin: 0.35em 0 0;
+    padding: 0;
+    border: 0;
+    accent-color: var(--accent);
+    background: transparent;
+  }
+  .stx input[type="range"]:disabled { opacity: 0.5; cursor: not-allowed; }
+  .stx-msg {
+    padding: 1em;
+    margin-bottom: 1em;
+    border: 2px solid var(--subtle);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+    background: var(--card-bg);
+  }
+  .stx-msg.stx-bad { border-left-color: var(--stx-bad); }
+  .stx-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7em 1em;
+    padding: 1em;
+    background: var(--card-bg);
+    border: 2px solid var(--subtle);
+    border-radius: 12px;
+  }
+  .stx-bar .stx-primary, .stx-bar button { font-size: 0.95em; padding: 0.6em 1.4em; }
+  .stx-state { flex: 1 1 14em; color: var(--muted); }
+  .stx-state.stx-live { color: var(--foreground); }
+  .stx-hints { list-style: none; padding: 0; display: grid; gap: 0.5em; margin: 1em 0 0 !important; }
+  .stx-hints:empty { display: none; }
+  .stx-hints li {
+    padding: 0.5em 0.8em;
+    border-left: 4px solid var(--subtle);
+    background: color-mix(in srgb, var(--foreground) 4%, transparent);
+    border-radius: 4px;
+    line-height: 1.5;
+  }
+  .stx-hints li::marker { content: none; }
+  .stx-hints li::before { content: none !important; }
+  .stx-hints li.info { border-left-color: var(--muted); }
+  .stx-hints li.warn { border-left-color: var(--stx-warn); }
+  .stx-hints li.bad { border-left-color: var(--stx-bad); }
+  .stx-hints li strong { text-transform: uppercase; font-size: 0.85em; letter-spacing: 0.04em; margin-right: 0.4em; }
+  .stx-card {
+    min-width: 0;
+    margin-top: 1em;
+    padding: 1em 1.2em;
+    background: var(--card-bg);
+    border: 2px solid var(--subtle);
+    border-left: 4px solid var(--accent);
+    border-radius: 12px;
+  }
+  .stx-note { color: var(--muted); font-size: 0.85em; line-height: 1.5; }
+  .stx-card > .stx-note { margin-top: 0.6em; }
+  .stx-card > h3 + .stx-note { margin-top: 0; }
+  .stx-ok { color: color-mix(in srgb, var(--stx-ok) 85%, var(--foreground)); }
+  .stx-warn { color: color-mix(in srgb, var(--stx-warn) 85%, var(--foreground)); }
+  .stx-bad { color: color-mix(in srgb, var(--stx-bad) 85%, var(--foreground)); }
+  .stx-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5em;
+    margin-top: 0.8em;
+  }
+  .stx-actions select { flex: 0 1 14em; }
+  .stx-code { font-family: inherit; color: var(--foreground); overflow-wrap: anywhere; }
+
+  /* step grid: 16 steps per row, 2 x 8 on narrow screens (the script picks the layout) */
+  .stx-pattern { display: grid; gap: 1em; margin-top: 0.9em; }
+  .stx-steps {
+    display: grid;
+    grid-template-columns: 2.8em repeat(var(--n, 16), minmax(0, 1fr));
+    gap: 4px;
+    align-items: center;
+  }
+  .stx-num { text-align: center; font-size: 0.7em; color: var(--muted); }
+  .stx-num.stx-beat { color: var(--foreground); font-weight: bold; }
+  .stx-lab { font-size: 0.8em; color: var(--muted); }
+  .stx .stx-cell {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 2px solid var(--subtle);
+    border-radius: 4px;
+    background: transparent;
+  }
+  .stx .stx-cell.stx-beat { background: color-mix(in srgb, var(--foreground) 10%, transparent); }
+  .stx .stx-cell.stx-on { background: var(--accent); border-color: var(--accent); }
+  .stx .stx-cell:hover:not(:disabled) { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 25%, transparent); }
+  .stx .stx-cell.stx-on:hover:not(:disabled) { background: color-mix(in srgb, var(--accent) 75%, transparent); }
+  .stx .stx-cell.stx-diff { box-shadow: inset 0 0 0 3px var(--stx-warn); border-color: var(--stx-warn); }
+  .stx .stx-cell:disabled { opacity: 0.45; cursor: default; }
+  .stx-status { min-height: 1.5em; }
+
+  .stx-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13em, 1fr));
+    gap: 1em 1.2em;
+    margin-top: 0.7em;
+  }
+  .stx-field { display: flex; flex-direction: column; gap: 0.35em; min-width: 0; }
+  .stx-field > span { color: var(--muted); font-size: 0.85em; }
+  .stx-field > span strong { color: var(--foreground); margin-left: 0.3em; }
+  .stx-field small.stx-note { font-size: 0.75em; }
+  .stx-value { font-weight: 600; padding: 0.45em 0; }
+  .stx-field.stx-dim > span, .stx-field.stx-dim select, .stx-field.stx-dim input, .stx-field.stx-dim .stx-value { opacity: 0.55; }
+
+  .stx-console summary { cursor: pointer; color: var(--accent); }
+  .stx-log {
+    margin-top: 0.8em !important;
+    padding: 0.6em;
+    height: 14em;
+    overflow: auto;
+    font-size: 0.75em;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    background: var(--background) !important;
+    border: 1px solid var(--subtle);
+    border-radius: 6px;
+  }
+  .stx-send { display: flex; gap: 0.5em; margin-top: 0.6em !important; }
+  .stx-send input { flex: 1; min-width: 0; padding: 0.4em 0.6em; border: 1px solid var(--subtle); }
+  .stx-console > .stx-note { margin-top: 0.6em; }
+  @media (max-width: 684px) {
+    .stx-card { padding: 0.9em; }
+    .stx-bar > button { flex: 1 1 auto; }
+    .stx-steps { grid-template-columns: 2.4em repeat(var(--n, 8), minmax(0, 1fr)); }
+  }
+</style>
+
+<script src="{{ "js/arythmatik-stitch.js" | relURL }}" defer></script>
