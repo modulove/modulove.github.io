@@ -62,7 +62,7 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
     <h4>Features</h4>
     <ul>
       <li>Two independent clock processors: side A runs from RST, side B from CLK, each at its own tempo</li>
-      <li>Four modes per side: Buds (coin flip with adjustable probability), Toggle, Swing, Factor (divider 1-8)</li>
+      <li>Five modes per side: Buds (coin flip with adjustable probability), Toggle, Swing, Factor (divider 1-8), Bounce (a dropped ball: ever faster impacts until it comes to rest, plus a gate that shrinks with the ball's energy; the display shows the ball bouncing)</li>
       <li>Main, inverted and clock output per side</li>
       <li>Swing worked out from the measured clock period</li>
       <li>12 ms triggers from a hardware timer, independent of the display</li>
@@ -71,13 +71,13 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
   </div>
 </div>
 
-**Perfect for:** Bernoulli gates, swinging hi-hats, two clock processors in one module
+**Perfect for:** Bernoulli gates, swinging hi-hats, bouncing-ball ratchets, two clock processors in one module
 
 **Controls:**
 - **Click**: Select side A or side B
 - **Press + Turn**: Next mode for the selected side
-- **Turn**: Probability, swing amount or divider of the selected side
-- **Long Press**: Flip the toggle state (Toggle mode)
+- **Turn**: Probability, swing amount, divider or Bounce value of the selected side
+- **Long Press**: Flip the toggle state (Toggle mode); next Bounce value: Start, Min, Rest (Bounce mode)
 - **RST Input**: Clock for side A (outputs 1-3: inverted, main, clock)
 - **CLK Input**: Clock for side B (outputs 4-6: inverted, main, clock)
 
@@ -119,6 +119,8 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
 - **RST Input**: The action set with IN: reset, fill, generate or mutate
 
 [Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Stitch)
+
+Edit the pattern and settings from your computer in the [Stitch pattern editor](/arythmatik/stitch/) (Chrome or Edge, over USB).
 
 {{< encoder_firmware_button hex="ARYTHMATIK_Stitch" buttonText="Flash Stitch Firmware" oledImage="/images/arythmatik/Stitch_OLED.gif" >}}
 
@@ -227,6 +229,150 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
 [Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Labor)
 
 {{< encoder_firmware_button hex="ARYTHMATIK_Labor" buttonText="Flash Labor Firmware" oledImage="/images/arythmatik/Labor_OLED.gif" >}}
+
+</div>
+
+---
+
+<div class="firmware-section">
+
+## Cat (Show Piece)
+
+<div class="firmware-header">
+  <div class="firmware-image">🐈</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>A cat gallops across the display, one of 24 animation frames per clock (after Muybridge, 1887)</li>
+      <li>Four outputs follow the paws, two more mark each stride</li>
+      <li>Runs from CLK, or from its own clock (30-600 BPM) when nothing is patched</li>
+      <li>Clock divider /1, /2, /4, /8 for an external clock</li>
+      <li>Four looks: classic, mirror, night, night mirror</li>
+    </ul>
+  </div>
+</div>
+
+**Perfect for:** Galloping rhythms, demos and shows
+
+**Controls:**
+- **Turn**: Tempo (own clock) or clock divider (external clock)
+- **Click**: Info box with clock source, tempo, divider and look
+- **Hold 0.7 s**: Next look
+- **CLK Input**: Next animation frame
+- **RST Input**: Back to the first frame
+
+[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Cat)
+
+{{< encoder_firmware_button hex="ARYTHMATIK_Cat" buttonText="Flash Cat Firmware" oledImage="/images/arythmatik/Cat_OLED.gif" >}}
+
+</div>
+
+---
+
+<div class="firmware-section">
+
+## Kiss (Show Piece)
+
+<div class="firmware-header">
+  <div class="firmware-image">💋</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>Two figures meet for a kiss on the display, one of 13 animation frames per clock</li>
+      <li>The outputs follow the kiss, plus a square wave at half the loop speed</li>
+      <li>Runs from CLK, or from its own clock (30-600 BPM) when nothing is patched</li>
+      <li>Clock divider /1, /2, /4, /8 for an external clock</li>
+      <li>Four looks: classic, mirror, night, night mirror</li>
+    </ul>
+  </div>
+</div>
+
+**Perfect for:** Demos and shows, a little love in the rack
+
+**Controls:**
+- **Turn**: Tempo (own clock) or clock divider (external clock)
+- **Click**: Info box with clock source, tempo, divider and look
+- **Hold 0.7 s**: Next look
+- **CLK Input**: Next animation frame
+- **RST Input**: Back to the first frame
+
+[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Kiss)
+
+{{< encoder_firmware_button hex="ARYTHMATIK_Kiss" buttonText="Flash Kiss Firmware" oledImage="/images/arythmatik/Kiss_OLED.gif" >}}
+
+</div>
+
+---
+
+<div class="firmware-section">
+
+## Walz (Show Piece)
+
+<div class="firmware-header">
+  <div class="firmware-image">💃</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>A couple dances a waltz on the display, one of 13 animation frames per clock</li>
+      <li>The outputs count the 3/4 time: beat 1, 2 and 3 on their own outputs</li>
+      <li>One output marks the 13-step dance loop, a polymeter against the waltz</li>
+      <li>Runs from CLK, or from its own clock (30-600 BPM) when nothing is patched</li>
+      <li>Clock divider /1, /2, /4, /8 for an external clock</li>
+      <li>Four looks: classic, mirror, night, night mirror</li>
+    </ul>
+  </div>
+</div>
+
+**Perfect for:** 3/4 grooves, polymeters, demos and shows
+
+**Controls:**
+- **Turn**: Tempo (own clock) or clock divider (external clock)
+- **Click**: Info box with clock source, tempo, divider and look
+- **Hold 0.7 s**: Next look
+- **CLK Input**: Next step (animation frame and beat)
+- **RST Input**: Back to the first frame and beat 1
+
+[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Walz)
+
+{{< encoder_firmware_button hex="ARYTHMATIK_Walz" buttonText="Flash Walz Firmware" oledImage="/images/arythmatik/Walz_OLED.gif" >}}
+
+</div>
+
+---
+
+<div class="firmware-section">
+
+## Fungi (Slime Mold)
+
+<div class="firmware-header">
+  <div class="firmware-image">🍄</div>
+  <div class="firmware-description">
+    <h4>Features</h4>
+    <ul>
+      <li>A Game of Life colony grows, dies back and is fed under three dancing mushrooms, one generation per clock</li>
+      <li>Six outputs fire 10 ms triggers on what happens in the colony: deaths, births, stability, growth, decline, crowding</li>
+      <li>Three parameters keep it alive: attraction (feeding), repulsion (population cap), randomness</li>
+      <li>RST replays the same colony; hold the button for a new one</li>
+      <li>Runs from CLK, or from its own clock (30-600 BPM) when nothing is patched</li>
+      <li>Settings and the colony's seed are saved automatically</li>
+    </ul>
+  </div>
+</div>
+
+**Perfect for:** Organic, ever-changing trigger patterns that still repeat on reset
+
+*Dedicated to Omri Cohen: developed for him and inspired by working with him.*
+
+**Controls:**
+- **Turn**: Change the selected parameter
+- **Click**: Show the selected parameter; click again for the next one (tempo or divider, attraction, repulsion, randomness)
+- **Hold 0.7 s**: New colony
+- **CLK Input**: Next generation
+- **RST Input**: Back to the start of the colony
+
+[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Fungi)
+
+{{< encoder_firmware_button hex="ARYTHMATIK_Fungi" buttonText="Flash Fungi Firmware" oledImage="/images/arythmatik/Fungi_OLED.gif" >}}
 
 </div>
 
