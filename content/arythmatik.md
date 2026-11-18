@@ -7,9 +7,9 @@ layout: "single"
 
 # A-RYTH-MATIK Firmware Collection
 
-The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on the Hagiwo design. Choose from multiple firmware options below, each offering a unique approach to rhythm generation.
+The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on the Hagiwo design. Choose from multiple firmware options below, each offering a unique approach to rhythm generation. The animations show the real display of each firmware.
 
-**Hardware:** Arduino Nano · OLED Display (SSD1306) · Rotary Encoder · 6 Output Channels
+**Hardware:** Arduino Nano or LGT8F328P Nano board · OLED Display (SSD1306) · Rotary Encoder · 6 Output Channels
 
 > **Module not working as expected?** Flash the [DEBUG firmware](#hardware-test-debug) and check display, inputs and outputs in your browser on the [hardware test page](/arythmatik/test/).
 
@@ -24,26 +24,29 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
   <div class="firmware-description">
     <h4>Features</h4>
     <ul>
-      <li>6 independent Euclidean rhythm generators</li>
-      <li>Adjustable steps, hits, rotation, and rest per channel</li>
-      <li>Multiple output modes: trigger, gate, flip</li>
-      <li>Save/load patterns to memory banks</li>
-      <li>Individual channel reset and randomization</li>
-      <li>Interactive OLED with visual feedback</li>
+      <li>6 channels, each plays a Euclidean rhythm over 16 steps</li>
+      <li>Per channel: hits, offset, length, mute and probability</li>
+      <li>External clock at CLK or internal clock (40-240 BPM)</li>
+      <li>20 presets (Techno, Samba, Clave, Aksak ...) and 20 memory slots</li>
+      <li>Re-roll all channels at once, or automatically every 4-16 bars</li>
+      <li>Exact 10 ms triggers straight from the clock, even while the display redraws</li>
     </ul>
   </div>
 </div>
 
-**Perfect for:** Mathematical polyrhythms, complex evolving patterns, generative music
+**Perfect for:** Mathematical polyrhythms, world rhythms, generative music
 
 **Controls:**
-- **Encoder Short Press**: Toggle between menu options
-- **Encoder Long Press**: Access global settings
-- **Encoder Double Click**: Reset all patterns
-- **CLK Input**: Clock source to advance patterns
-- **RST Input**: Reset all patterns to first step
+- **Turn**: Step through the menu (channels 1-6, random, save, load, preset, clock, reset, mute)
+- **Click**: Open the item; on a channel step through hits, offset, length, mute, reset, random, probability
+- **Long Press**: Mute a channel · save, load or pick a preset on its page · switch internal/external clock
+- **Press + Turn**: Change a channel's hits directly
+- **CLK Input**: Next step on all channels
+- **RST Input**: All channels start again from step 1
 
-{{< encoder_firmware_button hex="ARYTHMATIK_Euclid" buttonText="Flash Euclidean Firmware" oledImage="https://dl.modulove.de/module/arythmatik/img/A-Ryth-Matik_Firmware_UI_Euclidean_887x512.png" >}}
+[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Euclid)
+
+{{< encoder_firmware_button hex="ARYTHMATIK_Euclid" buttonText="Flash Euclidean Firmware" oledImage="/images/arythmatik/Euclid_OLED.gif" >}}
 
 </div>
 
@@ -58,23 +61,29 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
   <div class="firmware-description">
     <h4>Features</h4>
     <ul>
-      <li>Organic, evolving gate sequences</li>
-      <li>Algorithmic pattern generation</li>
-      <li>Probability-based gate generation</li>
-      <li>Visual feedback on OLED display</li>
-      <li>Patterns grow and mutate over time</li>
+      <li>Two independent clock processors: side A runs from RST, side B from CLK, each at its own tempo</li>
+      <li>Four modes per side: Buds (coin flip with adjustable probability), Toggle, Swing, Factor (divider 1-8)</li>
+      <li>Main, inverted and clock output per side</li>
+      <li>Swing worked out from the measured clock period</li>
+      <li>12 ms triggers from a hardware timer, independent of the display</li>
+      <li>Settings are saved automatically</li>
     </ul>
   </div>
 </div>
 
-**Perfect for:** Generative patches, organic rhythms, evolving patterns
+**Perfect for:** Bernoulli gates, swinging hi-hats, two clock processors in one module
 
 **Controls:**
-- **Encoder**: Adjust evolution parameters
-- **CLK Input**: Clock source
-- **RST Input**: Reset pattern evolution
+- **Click**: Select side A or side B
+- **Press + Turn**: Next mode for the selected side
+- **Turn**: Probability, swing amount or divider of the selected side
+- **Long Press**: Flip the toggle state (Toggle mode)
+- **RST Input**: Clock for side A (outputs 1-3: inverted, main, clock)
+- **CLK Input**: Clock for side B (outputs 4-6: inverted, main, clock)
 
-{{< encoder_firmware_button hex="ARYTHMATIK_Buds" buttonText="Flash Buds Firmware" >}}
+[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Buds)
+
+{{< encoder_firmware_button hex="ARYTHMATIK_Buds" buttonText="Flash Buds Firmware" oledImage="/images/arythmatik/Buds_OLED.gif" >}}
 
 </div>
 
@@ -89,21 +98,29 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
   <div class="firmware-description">
     <h4>Features</h4>
     <ul>
-      <li>Classic step sequencer with 6 channels</li>
-      <li>Per-step gate on/off control</li>
-      <li>Visual step display</li>
+      <li>6 tracks × 16 steps with a fast text display</li>
+      <li>MAN mode: edit the steps on a 6×16 grid</li>
+      <li>AUTO mode: preset banks (Tech, Dub, House, Half-time) or generative patterns, with automatic switching and fills</li>
+      <li>Output modes: triggers, gates or flip-flop</li>
+      <li>RST jack assignable: reset, fill, generate or mutate</li>
+      <li>Internal clock (60-240 BPM) or external clock, settings saved automatically</li>
     </ul>
   </div>
 </div>
 
-**Perfect for:** Traditional EDM patterns, hands-on control, performance oriented
+**Perfect for:** Live drum grooves, performance, generative variations
 
 **Controls:**
-- **Encoder**: Navigate and edit sequence steps
-- **CLK Input**: Advance sequencer
-- **RST Input**: Return to first step
+- **Turn**: Move the cursor through the grid, then the bottom menu
+- **Click**: Toggle a step or run the menu item
+- **Press + Turn on BPM**: Change the tempo
+- **Hold 5 s** (or 3 s while powering on): Secret menu (display rotation, encoder direction, defaults)
+- **CLK Input**: Next step (with CLK:E)
+- **RST Input**: The action set with IN: reset, fill, generate or mutate
 
-{{< encoder_firmware_button hex="ARYTHMATIK_Stitch" buttonText="Flash Gate Sequencer Firmware" oledImage="https://dl.modulove.de/module/arythmatik/img/A-Ryth-Matik_Firmware_UI_Gate_887x512.png" >}}
+[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Stitch)
+
+{{< encoder_firmware_button hex="ARYTHMATIK_Stitch" buttonText="Flash Stitch Firmware" oledImage="/images/arythmatik/Stitch_OLED.gif" >}}
 
 </div>
 
@@ -118,24 +135,26 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
   <div class="firmware-description">
     <h4>Features</h4>
     <ul>
-      <li>Classic step sequencer with 6 channels</li>
-      <li>Per-step gate on/off control</li>
-      <li>Adjustable pattern length</li>
-      <li>Step probability control</li>
-      <li>Save/load sequences</li>
-      <li>Visual step display</li>
+      <li>6 channels × 16 steps, after HAGIWO's 6CH gate sequencer</li>
+      <li>Gates as long as the clock pulse</li>
+      <li>MANUAL mode: switch steps on and off, mute channels, save the pattern</li>
+      <li>AUTO mode: built-in drum patterns (Techno, Dub Techno, House, Half-step) with fill-ins, a new pattern at random after a set number of bars</li>
+      <li>Needs an external clock at CLK</li>
     </ul>
   </div>
 </div>
 
-**Perfect for:** Traditional sequencing, rhythmic patterns, hands-on control
+**Perfect for:** Traditional sequencing, drum patterns, hands-on control
 
 **Controls:**
-- **Encoder**: Navigate and edit sequence steps
-- **CLK Input**: Advance sequencer
-- **RST Input**: Return to first step
+- **Turn**: Move the cursor (steps, then MNAL / RESET / SAVE, then the channel names)
+- **Click**: Toggle the step, run the item, or mute/unmute the channel
+- **CLK Input**: Next step; outputs stay high while CLK is high
+- **RST Input**: Back to the start, the next clock plays step 1
 
-{{< encoder_firmware_button hex="ARYTHMATIK_Gate-seq" buttonText="Flash Gate Sequencer Firmware" oledImage="https://dl.modulove.de/module/arythmatik/img/A-Ryth-Matik_Firmware_UI_Gate_887x512.png" >}}
+[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Gate-seq)
+
+{{< encoder_firmware_button hex="ARYTHMATIK_Gate-seq" buttonText="Flash Gate Sequencer Firmware" oledImage="/images/arythmatik/Gate-seq_OLED.gif" >}}
 
 </div>
 
@@ -150,11 +169,12 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
   <div class="firmware-description">
     <h4>Features</h4>
     <ul>
-      <li>Physics-based rhythm generation</li>
-      <li>Multiple balls with different speeds</li>
-      <li>Adjustable gravity and bounce parameters</li>
-      <li>Visual representation on display</li>
-      <li>Chaotic yet musical patterns</li>
+      <li>Playable Pong: you play the right paddle with the encoder, the computer the left one</li>
+      <li>1-3 balls with different speeds</li>
+      <li>Adjustable gravity and bounce: arcs, and balls that die down and get launched again</li>
+      <li>Every wall and paddle hit fires a trigger on its own output, OUT6 on every hit</li>
+      <li>Follows a clock at CLK (physics steps per clock), optional quantize to the clock</li>
+      <li>Settings are saved automatically</li>
     </ul>
   </div>
 </div>
@@ -162,11 +182,16 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
 **Perfect for:** Experimental rhythms, chaotic patterns, visual performance
 
 **Controls:**
-- **Encoder**: Adjust physics parameters
-- **CLK Input**: Update ball physics
-- **RST Input**: Reset ball positions
+- **Turn**: Move your paddle
+- **Click**: Show the next parameter (gravity, bounce, balls, speed, steps per clock, quantize)
+- **Press + Turn**: Change the shown parameter
+- **Long Press**: New serve with a new random pattern
+- **CLK Input**: The game runs in sync with the clock
+- **RST Input**: Restart the serve (the same pattern again)
 
-{{< encoder_firmware_button hex="ARYTHMATIK_Pong" buttonText="Flash Pong Firmware" >}}
+[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Pong)
+
+{{< encoder_firmware_button hex="ARYTHMATIK_Pong" buttonText="Flash Pong Firmware" oledImage="/images/arythmatik/Pong_OLED.gif" >}}
 
 </div>
 
@@ -174,30 +199,34 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
 
 <div class="firmware-section">
 
-## Labor (Experimental)
+## Labor (Show Piece)
 
 <div class="firmware-header">
-  <div class="firmware-image">🧪</div>
+  <div class="firmware-image">🔨</div>
   <div class="firmware-description">
     <h4>Features</h4>
     <ul>
-      <li>Multiple experimental rhythm algorithms</li>
-      <li>Deep parameter control</li>
-      <li>Modulation options</li>
-      <li>Research-focused feature set</li>
-      <li>Bleeding-edge algorithms</li>
+      <li>Two blacksmiths hammer away on the display, one animation frame per clock</li>
+      <li>Four outputs play the hammer blows, two more a fixed beat pattern</li>
+      <li>Runs from CLK, or from its own clock (30-600 BPM) when nothing is patched</li>
+      <li>Clock divider /1, /2, /4, /8 for an external clock</li>
+      <li>Four looks: classic, mirror, night, night mirror</li>
     </ul>
   </div>
 </div>
 
-**Perfect for:** Experimentation, discovering new rhythms, research
+**Perfect for:** A light-hearted break, demos and shows (made for Labour Day)
 
 **Controls:**
-- **Encoder**: Navigate experimental parameters
-- **CLK Input**: Clock source
-- **RST Input**: Reset current algorithm
+- **Turn**: Tempo (own clock) or clock divider (external clock)
+- **Click**: Info box with clock source, tempo, divider and look
+- **Hold 0.7 s**: Next look
+- **CLK Input**: Next animation frame
+- **RST Input**: Back to the first frame
 
-{{< encoder_firmware_button hex="ARYTHMATIK_Labor" buttonText="Flash Labor Firmware" >}}
+[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Labor)
+
+{{< encoder_firmware_button hex="ARYTHMATIK_Labor" buttonText="Flash Labor Firmware" oledImage="/images/arythmatik/Labor_OLED.gif" >}}
 
 </div>
 
@@ -228,7 +257,7 @@ The A-RYTH-MATIK is a versatile **6-channel gate/trigger generator** based on th
 - **Encoder Click**: Screen action (EEPROM test, display speed test, clear counters, next output mode)
 - **CLK / RST Input**: Measured on the INPUTS and LOOP screens
 
-{{< encoder_firmware_button hex="ARYTHMATIK_DEBUG" buttonText="Flash DEBUG Firmware" >}}
+{{< encoder_firmware_button hex="ARYTHMATIK_DEBUG" buttonText="Flash DEBUG Firmware" oledImage="/images/arythmatik/DEBUG_OLED.gif" >}}
 
 <a class="tool-button" href="/arythmatik/test/">🩺 Open the hardware test page</a>
 
@@ -240,7 +269,7 @@ Flash the DEBUG firmware with the button above, then open the test page and pres
 
 ## Hardware Requirements
 
-- **Arduino Nano** or **Arduino Nano (Old Bootloader)**
+- **Arduino Nano** (new or old bootloader) or an **LGT8F328P Nano board** – the same firmware files run on both
 - **OLED Display**: SSD1306, 128x64 pixels, I2C
 - **Rotary Encoder** with push button
 - **6 output channels** with LED indicators
@@ -256,7 +285,7 @@ Flash the DEBUG firmware with the button above, then open the test page and pres
 
 ### 2. Select Firmware
 - Choose the firmware that matches your needs above
-- Click the appropriate button (Nano or Old Bootloader)
+- Tick "Use new bootloader" only for a Nano with the new bootloader; leave it unticked for an old-bootloader Nano or an LGT8F328P board
 
 ### 3. Flash Firmware
 - Your browser will prompt you to select the serial port
