@@ -342,7 +342,7 @@ Edit the pattern and settings from your computer in the [Stitch pattern editor](
 
 <div class="firmware-section">
 
-## Funghi (Slime Mold)
+## Fungi (Slime Mold)
 
 <div class="firmware-header">
   <div class="firmware-image">🍄</div>
@@ -361,6 +361,8 @@ Edit the pattern and settings from your computer in the [Stitch pattern editor](
 
 **Perfect for:** Organic, ever-changing trigger patterns that still repeat on reset
 
+*Dedicated to Omri Cohen: developed for him and inspired by working with him.*
+
 **Controls:**
 - **Turn**: Change the selected parameter
 - **Click**: Show the selected parameter; click again for the next one (tempo or divider, attraction, repulsion, randomness)
@@ -368,9 +370,9 @@ Edit the pattern and settings from your computer in the [Stitch pattern editor](
 - **CLK Input**: Next generation
 - **RST Input**: Back to the start of the colony
 
-[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Funghi)
+[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Fungi)
 
-{{< encoder_firmware_button hex="ARYTHMATIK_Funghi" buttonText="Flash Funghi Firmware" oledImage="/images/arythmatik/Funghi_OLED.gif" >}}
+{{< encoder_firmware_button hex="ARYTHMATIK_Fungi" buttonText="Flash Fungi Firmware" oledImage="/images/arythmatik/Fungi_OLED.gif" >}}
 
 </div>
 
