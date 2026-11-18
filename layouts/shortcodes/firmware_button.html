@@ -1,7 +1,7 @@
 {{ if .Get "hex" }}
 {{ if .Get "oledImage" }}
 <div class="oled-preview-container">
-  <img src="{{ .Get "oledImage" }}" alt="{{ .Get "buttonText" }} OLED preview" class="oled-preview-image">
+  <img src="{{ .Get "oledImage" }}" alt="{{ .Get "buttonText" }} OLED preview" class="oled-preview-image" loading="lazy" decoding="async">
 </div>
 {{ end }}
 
