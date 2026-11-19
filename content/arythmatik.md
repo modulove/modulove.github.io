@@ -164,14 +164,16 @@ Edit the pattern and settings from your computer in the [Stitch pattern editor](
 
 <div class="firmware-section">
 
-## Pong
+## Ping
+
+_Formerly called Pong._
 
 <div class="firmware-header">
   <div class="firmware-image">🏓</div>
   <div class="firmware-description">
     <h4>Features</h4>
     <ul>
-      <li>Playable Pong: you play the right paddle with the encoder, the computer the left one</li>
+      <li>A playable ping-pong game: you play the right paddle with the encoder, the computer the left one</li>
       <li>1-3 balls with different speeds</li>
       <li>Adjustable gravity and bounce: arcs, and balls that die down and get launched again</li>
       <li>Every wall and paddle hit fires a trigger on its own output, OUT6 on every hit</li>
@@ -191,9 +193,9 @@ Edit the pattern and settings from your computer in the [Stitch pattern editor](
 - **CLK Input**: The game runs in sync with the clock
 - **RST Input**: Restart the serve (the same pattern again)
 
-[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Pong)
+[Full manual](https://github.com/modulove/A-RYTH-MATIK/tree/main/Firmware/ARYTHMATIK_Ping)
 
-{{< encoder_firmware_button hex="ARYTHMATIK_Pong" buttonText="Flash Pong Firmware" oledImage="/images/arythmatik/Pong_OLED.gif" >}}
+{{< encoder_firmware_button hex="ARYTHMATIK_Ping" buttonText="Flash Ping Firmware" oledImage="/images/arythmatik/Ping_OLED.gif" >}}
 
 </div>
 
